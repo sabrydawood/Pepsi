@@ -148,3 +148,154 @@
 {"level":30,"time":1664989729311,"pid":976,"hostname":"cc3ca4062034","msg":"Mongoose: Database connection established"}
 {"level":40,"time":1664989729522,"pid":976,"hostname":"cc3ca4062034","msg":"VersionCheck: 5.0.1 update is available"}
 {"level":40,"time":1664989729522,"pid":976,"hostname":"cc3ca4062034","msg":"download: https://github.com/saiteja-madha/discord-js-bot/releases/latest"}
+{"level":30,"time":1664990418994,"pid":2474,"hostname":"cc3ca4062034","msg":"Validating config file and environment variables"}
+{"level":30,"time":1664990419088,"pid":2474,"hostname":"cc3ca4062034","msg":"Loading commands..."}
+{"level":20,"time":1664990419115,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command anti. Category AUTOMOD is disabled"}
+{"level":20,"time":1664990419115,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command autodelete. Category AUTOMOD is disabled"}
+{"level":20,"time":1664990419155,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command automod. Category AUTOMOD is disabled"}
+{"level":20,"time":1664990419179,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command bank. Category ECONOMY is disabled"}
+{"level":20,"time":1664990419180,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command beg. Category ECONOMY is disabled"}
+{"level":20,"time":1664990419180,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command daily. Category ECONOMY is disabled"}
+{"level":20,"time":1664990419183,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command gamble. Category ECONOMY is disabled"}
+{"level":20,"time":1664990419862,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command giveaway. Category GIVEAWAY is disabled"}
+{"level":20,"time":1664990419863,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command filter. Category IMAGE is disabled"}
+{"level":20,"time":1664990419864,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command generator. Category IMAGE is disabled"}
+{"level":20,"time":1664990419868,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command avatar. Disabled!"}
+{"level":20,"time":1664990419869,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command botinvite. Disabled!"}
+{"level":20,"time":1664990419870,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command botstats. Disabled!"}
+{"level":20,"time":1664990419872,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command channelinfo. Disabled!"}
+{"level":20,"time":1664990419872,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command emojiinfo. Disabled!"}
+{"level":20,"time":1664990419885,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command guildinfo. Disabled!"}
+{"level":20,"time":1664990419886,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command uptime. Disabled!"}
+{"level":20,"time":1664990419886,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command userinfo. Disabled!"}
+{"level":20,"time":1664990419887,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping command bot. Disabled!"}
+{"level":20,"time":1664990419888,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping command info. Disabled!"}
+{"level":20,"time":1664990419947,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command ban. Category MODERATION is disabled"}
+{"level":20,"time":1664990419948,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command kick. Category MODERATION is disabled"}
+{"level":20,"time":1664990419948,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command deafen. Category MODERATION is disabled"}
+{"level":20,"time":1664990419949,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command disconnect. Category MODERATION is disabled"}
+{"level":20,"time":1664990419950,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command move. Category MODERATION is disabled"}
+{"level":20,"time":1664990419950,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purge. Category MODERATION is disabled"}
+{"level":20,"time":1664990419957,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purgeattach. Category MODERATION is disabled"}
+{"level":20,"time":1664990419958,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purgebots. Category MODERATION is disabled"}
+{"level":20,"time":1664990419958,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purgelinks. Category MODERATION is disabled"}
+{"level":20,"time":1664990419959,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purgetoken. Category MODERATION is disabled"}
+{"level":20,"time":1664990419959,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purgeuser. Category MODERATION is disabled"}
+{"level":20,"time":1664990419960,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command undeafen. Category MODERATION is disabled"}
+{"level":20,"time":1664990419961,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command vmute. Category MODERATION is disabled"}
+{"level":20,"time":1664990419961,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command vunmute. Category MODERATION is disabled"}
+{"level":20,"time":1664990419962,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command nick. Category MODERATION is disabled"}
+{"level":20,"time":1664990419963,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command purge. Category MODERATION is disabled"}
+{"level":20,"time":1664990419964,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command voice. Category MODERATION is disabled"}
+{"level":20,"time":1664990419964,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command softban. Category MODERATION is disabled"}
+{"level":20,"time":1664990419965,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command timeout. Category MODERATION is disabled"}
+{"level":20,"time":1664990419967,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command unban. Category MODERATION is disabled"}
+{"level":20,"time":1664990419968,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command untimeout. Category MODERATION is disabled"}
+{"level":20,"time":1664990419968,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command warn. Category MODERATION is disabled"}
+{"level":20,"time":1664990419969,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command warnings. Category MODERATION is disabled"}
+{"level":20,"time":1664990419969,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command bassboost. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419970,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command loop. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419970,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command np. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419971,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command pause. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419974,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command play. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419975,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command queue. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419975,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command resume. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419976,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command search. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419976,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command seek. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419976,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command shuffle. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419977,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command skip. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419977,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command stop. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419977,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command volume. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990419978,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command eval. Disabled!"}
+{"level":20,"time":1664990419978,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command leaveserver. Disabled!"}
+{"level":20,"time":1664990419979,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping slash command listservers. Disabled!"}
+{"level":20,"time":1664990419988,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command suggest. Category SUGGESTION is disabled"}
+{"level":20,"time":1664990419990,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command suggestion. Category SUGGESTION is disabled"}
+{"level":20,"time":1664990419993,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command ticket. Category TICKET is disabled"}
+{"level":20,"time":1664990419998,"pid":2474,"hostname":"cc3ca4062034","msg":"Skipping Command ticketcat. Category TICKET is disabled"}
+{"level":30,"time":1664990420048,"pid":2474,"hostname":"cc3ca4062034","msg":"Loaded 54 commands"}
+{"level":30,"time":1664990420048,"pid":2474,"hostname":"cc3ca4062034","msg":"Loaded 45 slash commands"}
+{"level":30,"time":1664990420048,"pid":2474,"hostname":"cc3ca4062034","msg":"Loading contexts..."}
+{"level":30,"time":1664990420051,"pid":2474,"hostname":"cc3ca4062034","msg":"Loaded 0 USER contexts"}
+{"level":30,"time":1664990420051,"pid":2474,"hostname":"cc3ca4062034","msg":"Loaded 0 MESSAGE contexts"}
+{"level":30,"time":1664990420051,"pid":2474,"hostname":"cc3ca4062034","msg":"Loading events..."}
+{"level":30,"time":1664990420165,"pid":2474,"hostname":"cc3ca4062034","msg":"Loaded 16 events. Success (16) Failed (0)"}
+{"level":30,"time":1664990420166,"pid":2474,"hostname":"cc3ca4062034","msg":"Connecting to MongoDb..."}
+{"level":30,"time":1664990421171,"pid":2474,"hostname":"cc3ca4062034","msg":"Mongoose: Database connection established"}
+{"level":40,"time":1664990421356,"pid":2474,"hostname":"cc3ca4062034","msg":"VersionCheck: 5.0.1 update is available"}
+{"level":40,"time":1664990421358,"pid":2474,"hostname":"cc3ca4062034","msg":"download: https://github.com/virgel1995/Pepsi/releases/latest"}
+{"level":30,"time":1664990532946,"pid":2819,"hostname":"cc3ca4062034","msg":"Validating config file and environment variables"}
+{"level":30,"time":1664990532980,"pid":2819,"hostname":"cc3ca4062034","msg":"Loading commands..."}
+{"level":20,"time":1664990532986,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command anti. Category AUTOMOD is disabled"}
+{"level":20,"time":1664990532987,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command autodelete. Category AUTOMOD is disabled"}
+{"level":20,"time":1664990533058,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command automod. Category AUTOMOD is disabled"}
+{"level":20,"time":1664990533076,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command bank. Category ECONOMY is disabled"}
+{"level":20,"time":1664990533078,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command beg. Category ECONOMY is disabled"}
+{"level":20,"time":1664990533078,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command daily. Category ECONOMY is disabled"}
+{"level":20,"time":1664990533079,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command gamble. Category ECONOMY is disabled"}
+{"level":20,"time":1664990534269,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command giveaway. Category GIVEAWAY is disabled"}
+{"level":20,"time":1664990534270,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command filter. Category IMAGE is disabled"}
+{"level":20,"time":1664990534286,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command generator. Category IMAGE is disabled"}
+{"level":20,"time":1664990534293,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command avatar. Disabled!"}
+{"level":20,"time":1664990534293,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command botinvite. Disabled!"}
+{"level":20,"time":1664990534294,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command botstats. Disabled!"}
+{"level":20,"time":1664990534295,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command channelinfo. Disabled!"}
+{"level":20,"time":1664990534296,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command emojiinfo. Disabled!"}
+{"level":20,"time":1664990534349,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command guildinfo. Disabled!"}
+{"level":20,"time":1664990534350,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command uptime. Disabled!"}
+{"level":20,"time":1664990534351,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command userinfo. Disabled!"}
+{"level":20,"time":1664990534352,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping command bot. Disabled!"}
+{"level":20,"time":1664990534353,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping command info. Disabled!"}
+{"level":20,"time":1664990534358,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command ban. Category MODERATION is disabled"}
+{"level":20,"time":1664990534358,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command kick. Category MODERATION is disabled"}
+{"level":20,"time":1664990534359,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command deafen. Category MODERATION is disabled"}
+{"level":20,"time":1664990534360,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command disconnect. Category MODERATION is disabled"}
+{"level":20,"time":1664990534361,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command move. Category MODERATION is disabled"}
+{"level":20,"time":1664990534361,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purge. Category MODERATION is disabled"}
+{"level":20,"time":1664990534361,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purgeattach. Category MODERATION is disabled"}
+{"level":20,"time":1664990534362,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purgebots. Category MODERATION is disabled"}
+{"level":20,"time":1664990534362,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purgelinks. Category MODERATION is disabled"}
+{"level":20,"time":1664990534362,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purgetoken. Category MODERATION is disabled"}
+{"level":20,"time":1664990534363,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purgeuser. Category MODERATION is disabled"}
+{"level":20,"time":1664990534363,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command undeafen. Category MODERATION is disabled"}
+{"level":20,"time":1664990534364,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command vmute. Category MODERATION is disabled"}
+{"level":20,"time":1664990534365,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command vunmute. Category MODERATION is disabled"}
+{"level":20,"time":1664990534365,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command nick. Category MODERATION is disabled"}
+{"level":20,"time":1664990534366,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command purge. Category MODERATION is disabled"}
+{"level":20,"time":1664990534367,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command voice. Category MODERATION is disabled"}
+{"level":20,"time":1664990534367,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command softban. Category MODERATION is disabled"}
+{"level":20,"time":1664990534368,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command timeout. Category MODERATION is disabled"}
+{"level":20,"time":1664990534368,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command unban. Category MODERATION is disabled"}
+{"level":20,"time":1664990534369,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command untimeout. Category MODERATION is disabled"}
+{"level":20,"time":1664990534369,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command warn. Category MODERATION is disabled"}
+{"level":20,"time":1664990534370,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command warnings. Category MODERATION is disabled"}
+{"level":20,"time":1664990534373,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command bassboost. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534374,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command loop. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534375,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command np. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534375,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command pause. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534375,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command play. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534376,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command queue. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534376,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command resume. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534377,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command search. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534377,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command seek. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534378,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command shuffle. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534378,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command skip. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534378,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command stop. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534379,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command volume. Category ERELA_JS is disabled"}
+{"level":20,"time":1664990534379,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command eval. Disabled!"}
+{"level":20,"time":1664990534380,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command leaveserver. Disabled!"}
+{"level":20,"time":1664990534380,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping slash command listservers. Disabled!"}
+{"level":20,"time":1664990534447,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command suggest. Category SUGGESTION is disabled"}
+{"level":20,"time":1664990534448,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command suggestion. Category SUGGESTION is disabled"}
+{"level":20,"time":1664990534457,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command ticket. Category TICKET is disabled"}
+{"level":20,"time":1664990534457,"pid":2819,"hostname":"cc3ca4062034","msg":"Skipping Command ticketcat. Category TICKET is disabled"}
+{"level":30,"time":1664990534699,"pid":2819,"hostname":"cc3ca4062034","msg":"Loaded 54 commands"}
+{"level":30,"time":1664990534700,"pid":2819,"hostname":"cc3ca4062034","msg":"Loaded 45 slash commands"}
+{"level":30,"time":1664990534700,"pid":2819,"hostname":"cc3ca4062034","msg":"Loading contexts..."}
+{"level":30,"time":1664990534701,"pid":2819,"hostname":"cc3ca4062034","msg":"Loaded 0 USER contexts"}
+{"level":30,"time":1664990534701,"pid":2819,"hostname":"cc3ca4062034","msg":"Loaded 0 MESSAGE contexts"}
+{"level":30,"time":1664990534701,"pid":2819,"hostname":"cc3ca4062034","msg":"Loading events..."}
+{"level":30,"time":1664990534874,"pid":2819,"hostname":"cc3ca4062034","msg":"Loaded 16 events. Success (16) Failed (0)"}
+{"level":30,"time":1664990534874,"pid":2819,"hostname":"cc3ca4062034","msg":"Connecting to MongoDb..."}
+{"level":30,"time":1664990535987,"pid":2819,"hostname":"cc3ca4062034","msg":"Mongoose: Database connection established"}
+{"level":50,"time":1664990536102,"pid":2819,"hostname":"cc3ca4062034","msg":"VersionCheck: Failed to check for bot updates"}
