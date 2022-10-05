@@ -6,7 +6,7 @@ require("@helpers/extenders/Message");
 require("@helpers/extenders/Guild");
 require("@helpers/extenders/GuildChannel");
 
-const { checkForUpdates } = require("@helpers/BotUtils");
+//const { checkForUpdates } = require("@helpers/BotUtils");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { BotClient } = require("@src/structures");
 const { validateConfiguration } = require("@helpers/Validator");
@@ -27,7 +27,7 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
   await initializeMongoose();
 
   // check for updates
-  await checkForUpdates();
+ // await checkForUpdates();
 
   // start the dashboard
   if (client.config.DASHBOARD.enabled) {

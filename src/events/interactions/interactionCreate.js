@@ -12,11 +12,14 @@ module.exports = async (client, interaction) => {
       .reply({ content: "Command can only be executed in a discord server", ephemeral: true })
       .catch(() => {});
   }
+//const user = interaction.options.getUser('target');
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
-      if (client.config.Maintenance.ENABLED && !client.config.OWNER_ID.includes(interaction.author.id) ) {
+      if (client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(interaction.user.id) ) {
     await commandHandler.handleSlashCommand(interaction);
+      } else {
+return interaction.reply({ content: "Sorry But Am Maintance Now \n Just Admins Can Use Interaction's", ephemeral: true })
       }
   }
 
