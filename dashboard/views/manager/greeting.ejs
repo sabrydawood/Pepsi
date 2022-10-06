@@ -20,7 +20,7 @@
 				<section class="content-header">
 					<h3> Greeting </h3>
 					<ol class="breadcrumb">
-                        <li><a href="/"><i class="fa fa-home"></i>Selector</a></li>
+                        <li><a href="/selector"><i class="fa fa-home"></i>Guilds</a></li>
                         <li><a href="<%=`/manage/${guild.id}/`%>"><%=guild.name%></a></li>
                         <li class="active">Greeting</li>
 					</ol>
@@ -100,13 +100,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <!-- FAREWELL CONFIGURATION -->
-                            <div class="box box-danger">
+                                    <!-- leave guild div start -->
+  <div class="col-md-6">
+  <!-- FAREWELL CONFIGURATION -->
+ <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Farewell Configuration</h3>
-                                </div>
-                                <form role="form" action="/manage/<%= guild.id %>/greeting" method="POST">
+ </div>
+<!-- leave form start -->
+<form role="form" action="/manage/<%= guild.id %>/greeting" method="POST">
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label>Content</label>
@@ -168,13 +170,14 @@
                                         <% } %>
                                     </div>
                                 </form>
-                            </div>
 
-                        </div>
-                    <div>
+<!-- leave form end -->
+                              
+</div>
+</div>
+<!-- leave guild div end-->
 				</section>
-				
-			</div>
+				                        </div>
             <!-- /.content-wrapper -->
 
             <%- include('../includes/footer') %>

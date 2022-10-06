@@ -10,6 +10,7 @@ const Schema = new mongoose.Schema({
   data: {
     name: String,
     region: String,
+    
     owner: { type: String, ref: "users" },
     joinedAt: Date,
     leftAt: Date,
@@ -108,6 +109,17 @@ const Schema = new mongoose.Schema({
     rejected_channel: String,
     staff_roles: [String],
   },
+  share:{
+    channel_id : String,
+    description: String,
+    auto : Boolean,
+    image : String,
+    premium : Boolean,
+    trusted : Boolean,
+    tags : [String],
+    guild_lang : [String],
+    badges : [String],
+  }
 });
 
 const Model = mongoose.model("guild", Schema);

@@ -3,6 +3,7 @@ const { OWNER_IDS, PREFIX, EMBED_COLORS } = require("@root/config");
 const { parsePermissions } = require("@helpers/Utils");
 const { timeformat } = require("@helpers/Utils");
 const { getSettings } = require("@schemas/Guild");
+const { getUser } = require("@schemas/User");
 
 const cooldownCache = new Map();
 
@@ -17,11 +18,18 @@ module.exports = {
     const args = message.content.replace(prefix, "").split(/\s+/);
     const invoke = args.shift().toLowerCase();
 
+  const userDb = await getUser(message.author);
+
+  let language = userDb.lang;
+  if (!language) language = "en";
+  const lang = require(`@root/lang/bot/${language}`);
+
     const data = {};
     data.settings = settings;
+    data.userDb = userDb;
     data.prefix = prefix;
     data.invoke = invoke;
-
+    
     if (!message.channel.permissionsFor(message.guild.members.me).has("SendMessages")) return;
 
     // callback validations
@@ -67,7 +75,8 @@ module.exports = {
     }
 
     try {
-      await cmd.messageRun(message, args, data);
+/************ Run Commands *****/
+      await cmd.messageRun(message, args, data, lang);
     } catch (ex) {
       message.client.logger.error("messageRun", ex);
       message.safeReply("An error occurred while running this command");
@@ -137,7 +146,16 @@ module.exports = {
     try {
       await interaction.deferReply({ ephemeral: cmd.slashCommand.ephemeral });
       const settings = await getSettings(interaction.guild);
-      await cmd.interactionRun(interaction, { settings });
+    const userDb = await getUser(interaction.user);
+  let language = userDb.lang;
+  if (!language) language = "en";
+  const lang = require(`@root/lang/bot/${language}`);
+/************ Run intractions *****/
+      await cmd.interactionRun(interaction, { 
+        settings,
+        userDb,
+        lang
+      });
     } catch (ex) {
       await interaction.followUp("Oops! An error occurred while running the command");
       interaction.client.logger.error("interactionRun", ex);

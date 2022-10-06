@@ -13,7 +13,7 @@ module.exports = {
   botPermissions: ["EmbedLinks"],
   command: {
     enabled: true,
-    aliases: ["listserver", "findserver", "findservers"],
+    aliases: ["listserver", "findserver", "servers"],
     usage: "[match]",
   },
   slashCommand: {

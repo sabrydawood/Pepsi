@@ -1,6 +1,7 @@
 { pkgs }: {
 	deps = [
-		pkgs.unzip
+		pkgs.docker
+  pkgs.unzip
   pkgs.nodejs-16_x
         pkgs.nodePackages.typescript-language-server
         pkgs.yarn

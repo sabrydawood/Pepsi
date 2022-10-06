@@ -1,17 +1,27 @@
 const { commandHandler, automodHandler, statsHandler } = require("@src/handlers");
 const { getSettings } = require("@schemas/Guild");
-
+const { getUser } = require("@schemas/User");
 /**
  * @param {import('@src/structures').BotClient} client
  * @param {import('discord.js').Message} message
  */
 module.exports = async (client, message) => {
+  //define User language 
+  const userDb = await getUser(message.author);
+
+  let language = userDb.lang;
+    if (!language) language = "en";
+    const lang = require(`@root/lang/bot/${language}`);
+
+
+  
   if (!message.guild || message.author.bot) return;
-  const settings = await getSettings(message.guild);
+  const settings = await getSettings(message.guild),
+    prefix = settings.prefix
 
   // check for bot mentions
   if (message.content.includes(`${client.user.id}`)) {
-    message.channel.safeSend(`> My prefix is \`${settings.prefix}\``);
+    message.channel.safeSend(lang.EVENTS.MESSAGE_EVENT.MENTION_REPLY.replace("{prefix}", prefix))
   }
 
   // command handler
@@ -24,7 +34,7 @@ module.exports = async (client, message) => {
       isCommand = true;
     commandHandler.handlePrefixCommand(message, cmd, settings);
   }else {
-    message.channel.send("Sorry But Am Maintance Now \n Just Admins Can Use Command's")
+    message.channel.send(lang.EVENTS.MESSAGE_EVENT.MAINTACE_MESSAGE)
   }
     }
   }

@@ -9,17 +9,10 @@ router.get("/login", async function (req, res) {
   if (!req.user || !req.user.id || !req.user.guilds) {
     // check if client user is ready
     if (!req.client.user?.id) {
-      req.client.logger.debug("Client is not ready! Redirecting to /login");
+    req.client.logger.debug("Client is not ready! Redirecting to /login");
       return res.redirect("/login");
     }
-
-    return res.redirect(
-      `https://discordapp.com/api/oauth2/authorize?client_id=${
-        req.client.user.id
-      }&scope=identify%20guilds&response_type=code&redirect_uri=${encodeURIComponent(
-        req.client.config.DASHBOARD.baseURL + "/api/callback"
-      )}&state=${req.query.state || "no"}`
-    );
+return res.redirect("/login")
   }
   res.redirect("/selector");
 });

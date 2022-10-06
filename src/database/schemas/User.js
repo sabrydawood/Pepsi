@@ -10,8 +10,18 @@ const Schema = new mongoose.Schema(
     username: String,
     discriminator: String,
     logged: Boolean,
-    coins: { type: Number, default: 0 },
-    bank: { type: Number, default: 0 },
+    coins: { 
+      type: Number, 
+      default: 0 
+    },
+  lang : {
+    type: String,
+    default: "en",
+  },
+    bank: { 
+      type: Number,
+      default: 0 
+    },
     reputation: {
       received: { type: Number, default: 0 },
       given: { type: Number, default: 0 },

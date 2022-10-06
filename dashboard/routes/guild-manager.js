@@ -19,6 +19,7 @@ router.get("/:serverID/basic", CheckAuth, async (req, res) => {
   ) {
     return res.render("404", {
       user: req.userInfos,
+      bot: req.client,
       currentURL: `${req.client.config.DASHBOARD.baseURL}/${req.originalUrl}`,
     });
   }
@@ -34,6 +35,8 @@ router.get("/:serverID/basic", CheckAuth, async (req, res) => {
   });
 });
 
+
+    
 router.get("/:serverID/greeting", CheckAuth, async (req, res) => {
   // Check if the user has the permissions to edit this guild
   const guild = req.client.guilds.cache.get(req.params.serverID);
@@ -59,6 +62,10 @@ router.get("/:serverID/greeting", CheckAuth, async (req, res) => {
   });
 });
 
+
+
+
+
 router.post("/:serverID/basic", CheckAuth, async (req, res) => {
   // Check if the user has the permissions to edit this guild
   const guild = req.client.guilds.cache.get(req.params.serverID);
@@ -69,6 +76,7 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
   ) {
     return res.render("404", {
       user: req.userInfos,
+      bot: req.client,
       currentURL: `${req.client.config.DASHBOARD.baseURL}/${req.originalUrl}`,
     });
   }
@@ -183,15 +191,19 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
     }
 
     if (data.channels?.length) {
-      settings.automod.wh_channels = data.channels
-        .map((ch) => guild.channels.cache.find((c) => "#" + c.name === ch)?.id)
+      console.log(data.channel)
+      settings.automod.wh_channels = data.channels.map((ch) => guild.channels.cache.find((c) => "#" + c.name === ch)?.id)
         .filter((c) => c);
     }
   }
 
   await settings.save();
+  req.flash('success', 'SETTINGS UPDATED');
+       
   res.redirect(303, `/manage/${guild.id}/basic`);
 });
+
+
 
 router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
   // Check if the user has the permissions to edit this guild
@@ -299,5 +311,9 @@ router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
   await settings.save();
   res.redirect(303, `/manage/${guild.id}/greeting`);
 });
+
+
+
+
 
 module.exports = router;

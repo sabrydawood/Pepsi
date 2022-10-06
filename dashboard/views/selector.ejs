@@ -14,10 +14,10 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>Selector <small> Version 1.0.0-beta </small></h1>
+          <h1>Guilds <small> </small></h1>
           <ol class="breadcrumb">
             <li class="active">
-              <a href="/"><i class="fa fa-home"></i>Selector</a>
+              <a href="/selector"><i class="fa fa-home"></i>Guilds</a>
             </li>
           </ol>
         </section>
@@ -47,7 +47,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                   <% if(guild.settingsUrl.includes('discordapp.com')) { %>
-                  <a href="<%= guild.settingsUrl %>"><button class="btn btn-block btn-primary">Invite</button></a>
+<a href="https://discord.com/api/oauth2/authorize?client_id=<%= bot.config.CLIENT_ID%>&permissions=8&redirect_uri=<%= bot.config.DASHBOARD.baseURL%>/api/callback&response_type=code&scope=applications.commands%20bot"><button class="btn btn-block btn-primary">Invite</button></a>
                   <% } else { %>
                   <a href="<%= guild.settingsUrl %>"><button class="btn btn-block btn-success">Manage</button></a>
                   <% } %>

@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 require("module-alias/register");
 
@@ -23,6 +24,7 @@ client.loadEvents("src/events");
 process.on("unhandledRejection", (err) => client.logger.error(`Unhandled exception`, err));
 
 (async () => {
+  await console.clear();
   // initialize the database
   await initializeMongoose();
 

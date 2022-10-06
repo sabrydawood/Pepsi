@@ -1,4 +1,5 @@
 const { getSettings } = require("@schemas/Guild");
+const { getUser } = require("@schemas/User");
 const { commandHandler, contextHandler, statsHandler, suggestionHandler, ticketHandler } = require("@src/handlers");
 const { InteractionType } = require("discord.js");
 
@@ -7,9 +8,16 @@ const { InteractionType } = require("discord.js");
  * @param {import('discord.js').BaseInteraction} interaction
  */
 module.exports = async (client, interaction) => {
+    //define User language 
+  const userDb = await getUser(interaction.user);
+
+  let language = userDb.lang;
+    if (!language) language = "en";
+    const lang = require(`@root/lang/bot/${language}`);
+
   if (!interaction.guild) {
     return interaction
-      .reply({ content: "Command can only be executed in a discord server", ephemeral: true })
+      .reply({ content: lang.EVENTS.MESSAGE_EVENT.MAINTACE_MESSAGE, ephemeral: true })
       .catch(() => {});
   }
 //const user = interaction.options.getUser('target');
