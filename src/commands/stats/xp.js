@@ -63,7 +63,7 @@ module.exports = {
     // message
     if (sub === "message") {
       const message = subcommandArgs.join(" ");
-      response = await setMessage(message, data.settings);
+      response = await setMessage(message, data.settings, data.lang);
     }
 
     // channel
@@ -77,7 +77,7 @@ module.exports = {
         if (match.length === 0) return message.safeReply("Invalid channel. Please provide a valid channel");
         channel = match[0];
       }
-      response = await setChannel(channel, data.settings);
+      response = await setChannel(channel, data.settings, data.lang);
     }
 
     // invalid
@@ -90,21 +90,21 @@ module.exports = {
     let response;
 
     if (sub === "message") response = await setMessage(interaction.options.getString("message"), data.settings);
-    else if (sub === "channel") response = await setChannel(interaction.options.getChannel("channel"), data.settings);
+    else if (sub === "channel") response = await setChannel(interaction.options.getChannel("channel"), data.settings, data.lang);
     else response = "Invalid subcommand";
 
     await interaction.followUp(response);
   },
 };
 
-async function setMessage(message, settings) {
+async function setMessage(message, settings, lang) {
   if (!message) return "Invalid message. Please provide a message";
   settings.stats.xp.message = message;
   await settings.save();
   return `Configuration saved. Level up message updated!`;
 }
 
-async function setChannel(channel, settings) {
+async function setChannel(channel, settings,lang) {
   if (!channel) return "Invalid channel. Please provide a channel";
 
   if (channel === "off") settings.stats.xp.channel = null;

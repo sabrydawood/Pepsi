@@ -209,7 +209,7 @@ module.exports = {
       const status = args[1]?.toUpperCase();
       if (!status || !["ON", "OFF"].includes(status))
         return message.safeReply("Invalid status. Value must be `on/off`");
-      response = await setStatus(data.settings, status);
+      response = await setStatus(data.settings, status, data.lang);
     }
 
     // channel
@@ -218,7 +218,7 @@ module.exports = {
       let matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
       else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
-      else response = await setChannel(data.settings, matched[0]);
+      else response = await setChannel(data.settings, matched[0], data.lang);
     }
 
     // appch
@@ -227,7 +227,7 @@ module.exports = {
       let matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
       else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
-      else response = await setApprovedChannel(data.settings, matched[0]);
+      else response = await setApprovedChannel(data.settings, matched[0], data.lang);
     }
 
     // appch
@@ -236,7 +236,7 @@ module.exports = {
       let matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
       else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
-      else response = await setRejectedChannel(data.settings, matched[0]);
+      else response = await setRejectedChannel(data.settings, matched[0], data.lang);
     }
 
     // approve
@@ -248,7 +248,7 @@ module.exports = {
       else {
         const messageId = args[2];
         const reason = args.slice(3).join(" ");
-        response = await approveSuggestion(message.member, matched[0], messageId, reason);
+        response = await approveSuggestion(message.member, matched[0], messageId, reason, data.lang);
       }
     }
 
@@ -261,7 +261,7 @@ module.exports = {
       else {
         const messageId = args[2];
         const reason = args.slice(3).join(" ");
-        response = await rejectSuggestion(message.member, matched[0], messageId, reason);
+        response = await rejectSuggestion(message.member, matched[0], messageId, reason, data.lang);
       }
     }
 
@@ -271,7 +271,7 @@ module.exports = {
       let matched = message.guild.findMatchingRoles(input);
       if (matched.length == 0) response = `No matching roles found for ${input}`;
       else if (matched.length > 1) response = `Multiple roles found for ${input}. Please be more specific.`;
-      else response = await addStaffRole(data.settings, matched[0]);
+      else response = await addStaffRole(data.settings, matched[0], data.lang);
     }
 
     // staffremove
@@ -280,7 +280,7 @@ module.exports = {
       let matched = message.guild.findMatchingRoles(input);
       if (matched.length == 0) response = `No matching roles found for ${input}`;
       else if (matched.length > 1) response = `Multiple roles found for ${input}. Please be more specific.`;
-      else response = await removeStaffRole(data.settings, matched[0]);
+      else response = await removeStaffRole(data.settings, matched[0], data.lang);
     }
 
     // else
@@ -301,45 +301,45 @@ module.exports = {
     // channel
     else if (sub == "channel") {
       const channel = interaction.options.getChannel("channel_name");
-      response = await setChannel(data.settings, channel);
+      response = await setChannel(data.settings, channel, data.lang);
     }
 
     // app_channel
     else if (sub == "appch") {
       const channel = interaction.options.getChannel("channel_name");
-      response = await setApprovedChannel(data.settings, channel);
+      response = await setApprovedChannel(data.settings, channel, data.lang);
     }
 
     // rej_channel
     else if (sub == "rejch") {
       const channel = interaction.options.getChannel("channel_name");
-      response = await setRejectedChannel(data.settings, channel);
+      response = await setRejectedChannel(data.settings, channel, data.lang);
     }
 
     // approve
     else if (sub == "approve") {
       const channel = interaction.options.getChannel("channel_name");
       const messageId = interaction.options.getString("message_id");
-      response = await approveSuggestion(interaction.member, channel, messageId);
+      response = await approveSuggestion(interaction.member, channel, messageId, data.lang);
     }
 
     // reject
     else if (sub == "reject") {
       const channel = interaction.options.getChannel("channel_name");
       const messageId = interaction.options.getString("message_id");
-      response = await rejectSuggestion(interaction.member, channel, messageId);
+      response = await rejectSuggestion(interaction.member, channel, messageId, data.lang);
     }
 
     // staffadd
     else if (sub == "staffadd") {
       const role = interaction.options.getRole("role");
-      response = await addStaffRole(data.settings, role);
+      response = await addStaffRole(data.settings, role, data.lang);
     }
 
     // staffremove
     else if (sub == "staffremove") {
       const role = interaction.options.getRole("role");
-      response = await removeStaffRole(data.settings, role);
+      response = await removeStaffRole(data.settings, role, data.lang);
     }
 
     // else
@@ -348,14 +348,14 @@ module.exports = {
   },
 };
 
-async function setStatus(settings, status) {
+async function setStatus(settings, status, lang) {
   const enabled = status.toUpperCase() === "ON" ? true : false;
   settings.suggestions.enabled = enabled;
   await settings.save();
   return `Suggestion system is now ${enabled ? "enabled" : "disabled"}`;
 }
 
-async function setChannel(settings, channel) {
+async function setChannel(settings, channel, lang) {
   if (!channel) {
     settings.suggestions.channel_id = null;
     await settings.save();
@@ -371,7 +371,7 @@ async function setChannel(settings, channel) {
   return `Suggestions will now be sent to ${channel}`;
 }
 
-async function setApprovedChannel(settings, channel) {
+async function setApprovedChannel(settings, channel, lang) {
   if (!channel) {
     settings.suggestions.approved_channel = null;
     await settings.save();
@@ -387,7 +387,7 @@ async function setApprovedChannel(settings, channel) {
   return `Approved suggestions will now be sent to ${channel}`;
 }
 
-async function setRejectedChannel(settings, channel) {
+async function setRejectedChannel(settings, channel, lang) {
   if (!channel) {
     settings.suggestions.rejected_channel = null;
     await settings.save();
@@ -403,7 +403,7 @@ async function setRejectedChannel(settings, channel) {
   return `Rejected suggestions will now be sent to ${channel}`;
 }
 
-async function addStaffRole(settings, role) {
+async function addStaffRole(settings, role, lang) {
   if (settings.suggestions.staff_roles.includes(role.id)) {
     return `\`${role.name}\` is already a staff role`;
   }
@@ -412,7 +412,7 @@ async function addStaffRole(settings, role) {
   return `\`${role.name}\` is now a staff role`;
 }
 
-async function removeStaffRole(settings, role) {
+async function removeStaffRole(settings, role, lang) {
   if (!settings.suggestions.staff_roles.includes(role.id)) {
     return `${role} is not a staff role`;
   }

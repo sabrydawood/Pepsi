@@ -58,7 +58,7 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const sub = args[0];
     let response;
 
@@ -69,14 +69,14 @@ module.exports = {
         const resolved = (await message.guild.resolveMember(args[1])) || message.member;
         if (resolved) target = resolved.user;
       }
-      response = await viewReputation(target);
+      response = await viewReputation(target, data.lang);
     }
 
     // give
     else if (sub === "give") {
       const target = await message.guild.resolveMember(args[1]);
       if (!target) return message.safeReply("Please provide a valid user to give reputation to");
-      response = await giveReputation(message.author, target.user);
+      response = await giveReputation(message.author, target.user, data.lang);
     }
 
     //
@@ -87,27 +87,27 @@ module.exports = {
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     let response;
 
     // status
     if (sub === "view") {
       const target = interaction.options.getUser("user") || interaction.user;
-      response = await viewReputation(target);
+      response = await viewReputation(target, data.lang);
     }
 
     // give
     if (sub === "give") {
       const target = interaction.options.getUser("user");
-      response = await giveReputation(interaction.user, target);
+      response = await giveReputation(interaction.user, target, data.lang);
     }
 
     await interaction.followUp(response);
   },
 };
 
-async function viewReputation(target) {
+async function viewReputation(target, lang) {
   const userData = await getUser(target);
   if (!userData) return `${target.tag} has no reputation yet`;
 
@@ -131,7 +131,7 @@ async function viewReputation(target) {
   return { embeds: [embed] };
 }
 
-async function giveReputation(user, target) {
+async function giveReputation(user, target, lang) {
   if (target.bot) return "You cannot give reputation to bots";
   if (target.id === user.id) return "You cannot give reputation to yourself";
 

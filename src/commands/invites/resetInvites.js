@@ -29,21 +29,21 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply("Incorrect syntax. You must mention a target");
-    const response = await clearInvites(message, target.user);
+    const response = await clearInvites(message, target.user, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
-    const response = await clearInvites(interaction, user);
+    const response = await clearInvites(interaction, user, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function clearInvites({ guild }, user) {
+async function clearInvites({ guild }, user, lang) {
   const memberDb = await getMember(guild.id, user.id);
   memberDb.invite_data.added = 0;
   await memberDb.save();

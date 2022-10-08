@@ -24,11 +24,11 @@ module.exports = async (client, interaction) => {
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
-      if (client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(interaction.user.id) ) {
-    await commandHandler.handleSlashCommand(interaction);
-      } else {
+      //if (client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(interaction.user.id) ) {
+  await commandHandler.handleSlashCommand(interaction);
+     /* } else {
 return interaction.reply({ content: "Sorry But Am Maintance Now \n Just Admins Can Use Interaction's", ephemeral: true })
-      }
+      }*/
   }
 
   // Context Menu

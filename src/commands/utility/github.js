@@ -30,22 +30,22 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const username = args.join(" ");
-    const response = await getGithubUser(username, message.author);
+    const response = await getGithubUser(username, message.author, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const username = interaction.options.getString("username");
-    const response = await getGithubUser(username, interaction.user);
+    const response = await getGithubUser(username, interaction.user, data.lang);
     await interaction.followUp(response);
   },
 };
 
 const websiteProvided = (text) => (text.startsWith("http://") ? true : text.startsWith("https://"));
 
-async function getGithubUser(target, author) {
+async function getGithubUser(target, author, lang) {
   const response = await getJson(`https://api.github.com/users/${target}`);
   if (response.status === 404) return "```No user found with that name```";
   if (!response.success) return MESSAGES.API_ERROR;

@@ -8,7 +8,7 @@ const withdraw = require("./sub/withdraw");
  * @type {import("@structures/Command")}
  */
 module.exports = {
-  name: "bank",
+  name: "coins",
   description: "access to bank operations",
   category: "ECONOMY",
   botPermissions: ["EmbedLinks"],
@@ -98,27 +98,27 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const sub = args[0];
     let response;
 
     if (sub === "balance") {
       const resolved = (await message.guild.resolveMember(args[1])) || message.member;
-      response = await balance(resolved.user);
+      response = await balance(resolved.user, data.lang);
     }
 
     //
     else if (sub === "deposit") {
       const coins = args.length && parseInt(args[1]);
       if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to deposit");
-      response = await deposit(message.author, coins);
+      response = await deposit(message.author, coins, data.lang);
     }
 
     //
     else if (sub === "withdraw") {
       const coins = args.length && parseInt(args[1]);
       if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to withdraw");
-      response = await withdraw(message.author, coins);
+      response = await withdraw(message.author, coins, data.lang);
     }
 
     //
@@ -128,7 +128,7 @@ module.exports = {
       if (!target) return message.safeReply("Provide a valid user to transfer coins to");
       const coins = parseInt(args[2]);
       if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to transfer");
-      response = await transfer(message.author, target.user, coins);
+      response = await transfer(message.author, target.user, coins, data.lang);
     }
 
     //
@@ -139,14 +139,14 @@ module.exports = {
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     let response;
 
     // balance
     if (sub === "balance") {
       const user = interaction.options.getUser("user") || interaction.user;
-      response = await balance(user);
+      response = await balance(user, data.lang);
     }
 
     // deposit
@@ -158,14 +158,14 @@ module.exports = {
     // withdraw
     else if (sub === "withdraw") {
       const coins = interaction.options.getInteger("coins");
-      response = await withdraw(interaction.user, coins);
+      response = await withdraw(interaction.user, coins, data.lang);
     }
 
     // transfer
     else if (sub === "transfer") {
       const user = interaction.options.getUser("user");
       const coins = interaction.options.getInteger("coins");
-      response = await transfer(interaction.user, user, coins);
+      response = await transfer(interaction.user, user, coins, data.lang);
     }
 
     await interaction.followUp(response);

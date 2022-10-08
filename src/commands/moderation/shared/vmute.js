@@ -1,7 +1,7 @@
 const { vMuteTarget } = require("@helpers/ModUtils");
 
 module.exports = async ({ member }, target, reason) => {
-  const response = await vMuteTarget(member, target, reason);
+  const response = await vMuteTarget(member, target, reason,lang);
   if (typeof response === "boolean") {
     return `${target.user.tag}'s voice is muted in this server`;
   }

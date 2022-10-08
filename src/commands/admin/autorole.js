@@ -90,7 +90,7 @@ module.exports = {
   },
 };
 
-async function setAutoRole({ guild }, role, settings) {
+async function setAutoRole({ guild }, role, settings, lang) {
   if (role) {
     if (!guild.members.me.permissions.has("ManageRoles")) return "I don't have the `ManageRoles` permission";
     if (guild.members.me.roles.highest.position < role.position)

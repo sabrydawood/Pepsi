@@ -145,7 +145,7 @@ module.exports = {
     ],
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     const reason = interaction.options.getString("reason");
 
@@ -154,14 +154,14 @@ module.exports = {
 
     let response;
 
-    if (sub === "mute") response = await vmute(interaction, target, reason);
-    else if (sub === "unmute") response = await vunmute(interaction, target, reason);
-    else if (sub === "deafen") response = await deafen(interaction, target, reason);
-    else if (sub === "undeafen") response = await undeafen(interaction, target, reason);
-    else if (sub === "kick") response = await disconnect(interaction, target, reason);
+    if (sub === "mute") response = await vmute(interaction, target, reason, data.lang);
+    else if (sub === "unmute") response = await vunmute(interaction, target, reason, data.lang);
+    else if (sub === "deafen") response = await deafen(interaction, target, reason, data.lang);
+    else if (sub === "undeafen") response = await undeafen(interaction, target, reason, data.lang);
+    else if (sub === "kick") response = await disconnect(interaction, target, reason, data.lang);
     else if (sub == "move") {
       const channel = interaction.options.getChannel("channel");
-      response = await move(interaction, target, reason, channel);
+      response = await move(interaction, target, reason, channel, data.lang);
     }
 
     await interaction.followUp(response);

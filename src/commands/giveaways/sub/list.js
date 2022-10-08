@@ -3,7 +3,7 @@ const { EMBED_COLORS } = require("@root/config");
 /**
  * @param {import('discord.js').GuildMember} member
  */
-module.exports = async (member) => {
+module.exports = async (member, lang) => {
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
     return "You need to have the manage messages permissions to manage giveaways.";

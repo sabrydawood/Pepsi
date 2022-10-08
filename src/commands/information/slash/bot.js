@@ -41,13 +41,13 @@ module.exports = {
     ],
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     if (!sub) return interaction.followUp("Not a valid subcommand");
 
     // Invite
     if (sub === "invite") {
-      const response = botInvite(interaction.client);
+      const response = botInvite(interaction.client, data.lang);
       try {
         await interaction.user.send(response);
         return interaction.followUp("Check your DM for my information! :envelope_with_arrow:");
@@ -58,7 +58,7 @@ module.exports = {
 
     // Stats
     else if (sub === "stats") {
-      const response = botstats(interaction.client);
+      const response = botstats(interaction.client, data.lang);
       return interaction.followUp(response);
     }
 
@@ -69,7 +69,7 @@ module.exports = {
   },
 };
 
-function botInvite(client) {
+function botInvite(client, lang) {
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Invite" })
     .setColor(EMBED_COLORS.BOT_EMBED)

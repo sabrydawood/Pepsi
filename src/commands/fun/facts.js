@@ -33,23 +33,23 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const choice = args[0];
     if (!animals.includes(choice)) {
       return message.safeReply(`Invalid animal selected. Available animals:\n${animals.join(", ")}`);
     }
-    const response = await getFact(message.author, choice);
+    const response = await getFact(message.author, choice, data.lang);
     return message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const choice = interaction.options.getString("name");
-    const response = await getFact(interaction.user, choice);
+    const response = await getFact(interaction.user, choice, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getFact(user, choice) {
+async function getFact(user, choice, lang) {
   const response = await getJson(`${BASE_URL}/${choice}`);
   if (!response.success) return MESSAGES.API_ERROR;
 

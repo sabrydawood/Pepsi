@@ -5,7 +5,7 @@
  * @param {string} newPrize
  * @param {number} newWinnerCount
  */
-module.exports = async (member, messageId, addDuration, newPrize, newWinnerCount) => {
+module.exports = async (member, messageId, addDuration, newPrize, newWinnerCount, lang) => {
   if (!messageId) return "You must provide a valid message id.";
 
   // Permissions

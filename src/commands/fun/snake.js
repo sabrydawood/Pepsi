@@ -16,18 +16,18 @@ module.exports = {
     enabled: true,
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     await message.safeReply("**Starting Snake Game**");
-    await startSnakeGame(message);
+    await startSnakeGame(message, data.lang);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     await interaction.followUp("**Starting Snake Game**");
-    await startSnakeGame(interaction);
+    await startSnakeGame(interaction, data.lang);
   },
 };
 
-async function startSnakeGame(data) {
+async function startSnakeGame(data, lang) {
   const snakeGame = new SnakeGame({
     title: "Snake Game",
     color: "BLUE",

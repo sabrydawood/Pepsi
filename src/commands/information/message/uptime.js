@@ -12,7 +12,7 @@ module.exports = {
     enabled: true,
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     await message.safeReply(`My Uptime: \`${timeformat(process.uptime())}\``);
   },
 };

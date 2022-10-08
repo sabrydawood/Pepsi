@@ -33,20 +33,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const match = await message.client.resolveUsers(args[0], true);
     const target = match[0];
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
     const reason = message.content.split(args[0])[1].trim();
-    const response = await ban(message.member, target, reason);
+    const response = await ban(message.member, target, reason, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const target = interaction.options.getUser("user");
     const reason = interaction.options.getString("reason");
 
-    const response = await ban(interaction.member, target, reason);
+    const response = await ban(interaction.member, target, reason, data.lang);
     await interaction.followUp(response);
   },
 };
@@ -56,7 +56,7 @@ module.exports = {
  * @param {import('discord.js').User} target
  * @param {string} reason
  */
-async function ban(issuer, target, reason) {
+async function ban(issuer, target, reason, lang) {
   const response = await banTarget(issuer, target, reason);
   if (typeof response === "boolean") return `${target.tag} is banned!`;
   if (response === "BOT_PERM") return `I do not have permission to ban ${target.tag}`;

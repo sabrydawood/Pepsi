@@ -34,13 +34,13 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const choice = args[0];
 
     const buttonRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId("regenMemeBtn").setStyle(ButtonStyle.Secondary).setEmoji("🔁")
     );
-    const embed = await getRandomEmbed(choice);
+    const embed = await getRandomEmbed(choice, data.lang);
 
     const sentMsg = await message.safeReply({
       embeds: [embed],
@@ -58,7 +58,7 @@ module.exports = {
       if (response.customId !== "regenMemeBtn") return;
       await response.deferUpdate();
 
-      const embed = await getRandomEmbed(choice);
+      const embed = await getRandomEmbed(choice, data.lang);
       await sentMsg.edit({
         embeds: [embed],
         components: [buttonRow],
@@ -73,13 +73,13 @@ module.exports = {
     });
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const choice = interaction.options.getString("category");
 
     const buttonRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId("regenMemeBtn").setStyle(ButtonStyle.Secondary).setEmoji("🔁")
     );
-    const embed = await getRandomEmbed(choice);
+    const embed = await getRandomEmbed(choice, data.lang);
 
     await interaction.followUp({
       embeds: [embed],
@@ -97,7 +97,7 @@ module.exports = {
       if (response.customId !== "regenMemeBtn") return;
       await response.deferUpdate();
 
-      const embed = await getRandomEmbed(choice);
+      const embed = await getRandomEmbed(choice, data.lang);
       await interaction.editReply({
         embeds: [embed],
         components: [buttonRow],
@@ -113,7 +113,7 @@ module.exports = {
   },
 };
 
-async function getRandomEmbed(choice) {
+async function getRandomEmbed(choice, lang) {
   const subReddits = ["meme", "Memes_Of_The_Dank", "memes", "dankmemes"];
   let rand = choice ? choice : subReddits[getRandomInt(subReddits.length)];
 

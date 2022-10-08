@@ -29,7 +29,7 @@ module.exports = {
     data.userDb = userDb;
     data.prefix = prefix;
     data.invoke = invoke;
-    
+    data.lang = lang
     if (!message.channel.permissionsFor(message.guild.members.me).has("SendMessages")) return;
 
     // callback validations
@@ -76,7 +76,7 @@ module.exports = {
 
     try {
 /************ Run Commands *****/
-      await cmd.messageRun(message, args, data, lang);
+      await cmd.messageRun(message, args, data);
     } catch (ex) {
       message.client.logger.error("messageRun", ex);
       message.safeReply("An error occurred while running this command");

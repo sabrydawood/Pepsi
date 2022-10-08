@@ -151,7 +151,7 @@ module.exports = {
       if (!targetChannel) {
         return message.safeReply("I could not find channel with that name");
       }
-      return ticketModalSetup(message, targetChannel, data.settings);
+      return ticketModalSetup(message, targetChannel, data.settings, data.lang);
     }
 
     // log ticket
@@ -159,7 +159,7 @@ module.exports = {
       if (args.length < 2) return message.safeReply("Please provide a channel where ticket logs must be sent");
       const target = message.guild.findMatchingChannels(args[1]);
       if (target.length === 0) return message.safeReply("Could not find any matching channel");
-      response = await setupLogChannel(target[0], data.settings);
+      response = await setupLogChannel(target[0], data.settings, data.lang);
     }
 
     // Set limit
@@ -167,19 +167,19 @@ module.exports = {
       if (args.length < 2) return message.safeReply("Please provide a number");
       const limit = args[1];
       if (isNaN(limit)) return message.safeReply("Please provide a number input");
-      response = await setupLimit(message, limit, data.settings);
+      response = await setupLimit(message, limit, data.settings, data.lang);
     }
 
     // Close ticket
     else if (input === "close") {
-      response = await close(message, message.author);
+      response = await close(message, message.author, data.lang);
       if (!response) return;
     }
 
     // Close all tickets
     else if (input === "closeall") {
       let sent = await message.safeReply("Closing tickets ...");
-      response = await closeAll(message, message.author);
+      response = await closeAll(message, message.author, data.lang);
       return sent.editable ? sent.edit(response) : message.channel.send(response);
     }
 
@@ -190,7 +190,7 @@ module.exports = {
       if (message.mentions.users.size > 0) inputId = message.mentions.users.first().id;
       else if (message.mentions.roles.size > 0) inputId = message.mentions.roles.first().id;
       else inputId = args[1];
-      response = await addToTicket(message, inputId);
+      response = await addToTicket(message, inputId, data.lang);
     }
 
     // Remove user from ticket
@@ -200,7 +200,7 @@ module.exports = {
       if (message.mentions.users.size > 0) inputId = message.mentions.users.first().id;
       else if (message.mentions.roles.size > 0) inputId = message.mentions.roles.first().id;
       else inputId = args[1];
-      response = await removeFromTicket(message, inputId);
+      response = await removeFromTicket(message, inputId, data.lang);
     }
 
     // Invalid input
@@ -224,41 +224,41 @@ module.exports = {
       }
 
       await interaction.deleteReply();
-      return ticketModalSetup(interaction, channel, data.settings);
+      return ticketModalSetup(interaction, channel, data.settings, data.lang);
     }
 
     // Log channel
     else if (sub === "log") {
       const channel = interaction.options.getChannel("channel");
-      response = await setupLogChannel(channel, data.settings);
+      response = await setupLogChannel(channel, data.settings, data.lang);
     }
 
     // Limit
     else if (sub === "limit") {
       const limit = interaction.options.getInteger("amount");
-      response = await setupLimit(interaction, limit, data.settings);
+      response = await setupLimit(interaction, limit, data.settings, data.lang);
     }
 
     // Close
     else if (sub === "close") {
-      response = await close(interaction, interaction.user);
+      response = await close(interaction, interaction.user, data.lang);
     }
 
     // Close all
     else if (sub === "closeall") {
-      response = await closeAll(interaction, interaction.user);
+      response = await closeAll(interaction, interaction.user, data.lang);
     }
 
     // Add to ticket
     else if (sub === "add") {
       const inputId = interaction.options.getString("user_id");
-      response = await addToTicket(interaction, inputId);
+      response = await addToTicket(interaction, inputId, data.lang);
     }
 
     // Remove from ticket
     else if (sub === "remove") {
       const user = interaction.options.getUser("user");
-      response = await removeFromTicket(interaction, user.id);
+      response = await removeFromTicket(interaction, user.id, data.lang);
     }
 
     if (response) await interaction.followUp(response);
@@ -270,7 +270,7 @@ module.exports = {
  * @param {import('discord.js').GuildTextBasedChannel} targetChannel
  * @param {object} settings
  */
-async function ticketModalSetup({ guild, channel, member }, targetChannel, settings) {
+async function ticketModalSetup({ guild, channel, member }, targetChannel, settings, lang) {
   const buttonRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId("ticket_btnSetup").setLabel("Setup Message").setStyle(ButtonStyle.Primary)
   );
@@ -369,7 +369,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
   await sentMsg.edit({ content: "Done! Ticket Message Created", components: [] });
 }
 
-async function setupLogChannel(target, settings) {
+async function setupLogChannel(target, settings, lang) {
   if (!target.canSendEmbeds()) return `Oops! I do have have permission to send embed to ${target}`;
 
   settings.ticket.log_channel = target.id;
@@ -378,7 +378,7 @@ async function setupLogChannel(target, settings) {
   return `Configuration saved! Ticket logs will be sent to ${target.toString()}`;
 }
 
-async function setupLimit(limit, settings) {
+async function setupLimit(limit, settings, lang) {
   if (Number.parseInt(limit, 10) < 5) return "Ticket limit cannot be less than 5";
 
   settings.ticket.limit = limit;
@@ -387,7 +387,7 @@ async function setupLimit(limit, settings) {
   return `Configuration saved. You can now have a maximum of \`${limit}\` open tickets`;
 }
 
-async function close({ channel }, author) {
+async function close({ channel }, author, lang) {
   if (!isTicketChannel(channel)) return "This command can only be used in ticket channels";
   const status = await closeTicket(channel, author, "Closed by a moderator");
   if (status === "MISSING_PERMISSIONS") return "I do not have permission to close tickets";
@@ -395,12 +395,12 @@ async function close({ channel }, author) {
   return null;
 }
 
-async function closeAll({ guild }, user) {
+async function closeAll({ guild }, user, lang) {
   const stats = await closeAllTickets(guild, user);
   return `Completed! Success: \`${stats[0]}\` Failed: \`${stats[1]}\``;
 }
 
-async function addToTicket({ channel }, inputId) {
+async function addToTicket({ channel }, inputId, lang) {
   if (!isTicketChannel(channel)) return "This command can only be used in ticket channel";
   if (!inputId || isNaN(inputId)) return "Oops! You need to input a valid userId/roleId";
 
@@ -416,7 +416,7 @@ async function addToTicket({ channel }, inputId) {
   }
 }
 
-async function removeFromTicket({ channel }, inputId) {
+async function removeFromTicket({ channel }, inputId, lang) {
   if (!isTicketChannel(channel)) return "This command can only be used in ticket channel";
   if (!inputId || isNaN(inputId)) return "Oops! You need to input a valid userId/roleId";
 

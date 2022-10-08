@@ -41,7 +41,7 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
 
@@ -50,11 +50,11 @@ module.exports = {
     if (!ms) return message.safeReply("Please provide a valid duration. Example: 1d/1h/1m/1s");
 
     const reason = args.slice(2).join(" ").trim();
-    const response = await timeout(message.member, target, ms, reason);
+    const response = await timeout(message.member, target, ms, reason, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
 
     // parse time
@@ -65,12 +65,12 @@ module.exports = {
     const reason = interaction.options.getString("reason");
     const target = await interaction.guild.members.fetch(user.id);
 
-    const response = await timeout(interaction.member, target, ms, reason);
+    const response = await timeout(interaction.member, target, ms, reason, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function timeout(issuer, target, ms, reason) {
+async function timeout(issuer, target, ms, reason, lang) {
   if (!NaN(Number(ms))) return "Please provide a valid duration. Example: 1d/1h/1m/1s";
   const response = await timeoutTarget(issuer, target, ms, reason);
   if (typeof response === "boolean") return `${target.user.tag} is timed out!`;

@@ -56,21 +56,21 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const sub = args[0]?.toLowerCase();
     let response = "";
 
     if (sub === "list") {
       const target = (await message.guild.resolveMember(args[1], true)) || message.member;
       if (!target) return message.safeReply(`No user found matching ${args[1]}`);
-      response = await listWarnings(target, message);
+      response = await listWarnings(target, message, data.lang);
     }
 
     //
     else if (sub === "clear") {
       const target = await message.guild.resolveMember(args[1], true);
       if (!target) return message.safeReply(`No user found matching ${args[1]}`);
-      response = await clearWarnings(target, message);
+      response = await clearWarnings(target, message, data.lang);
     }
 
     // else
@@ -81,21 +81,21 @@ module.exports = {
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     let response = "";
 
     if (sub === "list") {
       const user = interaction.options.getUser("user");
       const target = (await interaction.guild.members.fetch(user.id)) || interaction.member;
-      response = await listWarnings(target, interaction);
+      response = await listWarnings(target, interaction, data.lang);
     }
 
     //
     else if (sub === "clear") {
       const user = interaction.options.getUser("user");
       const target = await interaction.guild.members.fetch(user.id);
-      response = await clearWarnings(target, interaction);
+      response = await clearWarnings(target, interaction, data.lang);
     }
 
     // else
@@ -107,7 +107,7 @@ module.exports = {
   },
 };
 
-async function listWarnings(target, { guildId }) {
+async function listWarnings(target, { guildId }, lang) {
   if (!target) return "No user provided";
   if (target.user.bot) return "Bots don't have warnings";
 
@@ -123,7 +123,7 @@ async function listWarnings(target, { guildId }) {
   return { embeds: [embed] };
 }
 
-async function clearWarnings(target, { guildId }) {
+async function clearWarnings(target, { guildId }, lang) {
   if (!target) return "No user provided";
   if (target.user.bot) return "Bots don't have warnings";
 

@@ -9,7 +9,7 @@ const { ChannelType } = require("discord.js");
  * @param {import('discord.js').User} [host]
  * @param {string[]} [allowedRoles]
  */
-module.exports = async (member, giveawayChannel, duration, prize, winners, host, allowedRoles = []) => {
+module.exports = async (member, giveawayChannel, duration, prize, winners, host, allowedRoles = [], lang) => {
   try {
     if (!host) host = member.user;
     if (!member.permissions.has("ManageMessages")) {

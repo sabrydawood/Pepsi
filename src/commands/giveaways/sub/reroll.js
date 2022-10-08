@@ -2,7 +2,7 @@
  * @param {import('discord.js').GuildMember} member
  * @param {string} messageId
  */
-module.exports = async (member, messageId) => {
+module.exports = async (member, messageId,lang) => {
   if (!messageId) return "You must provide a valid message id.";
 
   // Permissions

@@ -40,18 +40,18 @@ module.exports = {
   async messageRun(message, args, data) {
     const status = args[0].toLowerCase();
     if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
-    const response = await setStatus(message, status, data.settings);
+    const response = await setStatus(message, status, data.settings, data.lang);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
     const status = interaction.options.getString("status");
-    const response = await setStatus(interaction, status, data.settings);
+    const response = await setStatus(interaction, status, data.settings, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function setStatus({ guild }, input, settings) {
+async function setStatus({ guild }, input, settings, lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
 
   if (status) {

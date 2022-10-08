@@ -36,7 +36,7 @@ module.exports = {
   command: {
     enabled: true,
     minArgsCount: 1,
-    aliases: ["discordtogether"],
+    aliases: ["discordtogether", "distogether", "distog"],
     usage: "<game>",
   },
   slashCommand: {
@@ -52,20 +52,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const input = args[0];
-    const response = await getTogetherInvite(message.member, input);
+    const response = await getTogetherInvite(message.member, input, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const choice = interaction.options.getString("type");
-    const response = await getTogetherInvite(interaction.member, choice);
+    const response = await getTogetherInvite(interaction.member, choice, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getTogetherInvite(member, choice) {
+async function getTogetherInvite(member, choice, lang) {
   choice = choice.toLowerCase();
 
   const vc = member.voice.channel?.id;

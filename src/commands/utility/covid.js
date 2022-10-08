@@ -29,20 +29,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const country = args.join(" ");
-    const response = await getCovid(country);
+    const response = await getCovid(country, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const country = interaction.options.getString("country");
-    const response = await getCovid(country);
+    const response = await getCovid(country, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getCovid(country) {
+async function getCovid(country, lang) {
   const response = await getJson(`https://disease.sh/v2/countries/${country}`);
 
   if (response.status === 404) return "```css\nCountry with the provided name is not found```";

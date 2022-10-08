@@ -4,7 +4,7 @@ const { EMBED_COLORS } = require("@root/config");
 /**
  * @param {import('discord.js').User} user
  */
-module.exports = (user) => {
+module.exports = (user, lang) => {
   const x64 = user.displayAvatarURL({ extension: "png", size: 64 });
   const x128 = user.displayAvatarURL({ extension: "png", size: 128 });
   const x256 = user.displayAvatarURL({ extension: "png", size: 256 });

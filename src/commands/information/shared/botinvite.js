@@ -1,7 +1,7 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const { EMBED_COLORS, SUPPORT_SERVER, DASHBOARD } = require("@root/config");
 
-module.exports = (client) => {
+module.exports = (client, lang) => {
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Invite" })
     .setColor(EMBED_COLORS.BOT_EMBED)

@@ -32,12 +32,12 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const choice = args[0];
     if (!animals.includes(choice)) {
       return message.safeReply(`Invalid animal selected. Available animals:\n${animals.join(", ")}`);
     }
-    const response = await getAnimal(message.author, choice);
+    const response = await getAnimal(message.author, choice, data.lang);
     return message.safeReply(response);
   },
 
@@ -48,7 +48,7 @@ module.exports = {
   },
 };
 
-async function getAnimal(user, choice) {
+async function getAnimal(user, choice, lang) {
   const response = await getJson(`${BASE_URL}/${choice}`);
   if (!response.success) return MESSAGES.API_ERROR;
 

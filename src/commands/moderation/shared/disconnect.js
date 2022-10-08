@@ -1,6 +1,6 @@
 const { disconnectTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason) => {
+module.exports = async ({ member }, target, reason,lang) => {
   const response = await disconnectTarget(member, target, reason);
   if (typeof response === "boolean") {
     return `${target.user.tag} is disconnected from the voice channel`;

@@ -18,18 +18,18 @@ module.exports = {
     enabled: true,
   },
 
-  async messageRun(message, args) {
-    const response = await beg(message.author);
+  async messageRun(message, args, data) {
+    const response = await beg(message.author, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
-    const response = await beg(interaction.user);
+  async interactionRun(interaction, data) {
+    const response = await beg(interaction.user, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function beg(user) {
+async function beg(user, lang) {
   let users = [
     "PewDiePie",
     "T-Series",

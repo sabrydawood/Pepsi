@@ -36,14 +36,14 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const suggestion = args.join(" ");
-    const response = await suggest(message.member, suggestion, data.settings);
+    const response = await suggest(message.member, suggestion, data.settings, data.lang);
     if (typeof response === "boolean") return message.channel.safeSend("Your suggestion has been submitted!", 5);
     else await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
     const suggestion = interaction.options.getString("suggestion");
-    const response = await suggest(interaction.member, suggestion, data.settings);
+    const response = await suggest(interaction.member, suggestion, data.settings, data.lang);
     if (typeof response === "boolean") interaction.followUp("Your suggestion has been submitted!");
     else await interaction.followUp(response);
   },
@@ -54,7 +54,7 @@ module.exports = {
  * @param {string} suggestion
  * @param {object} settings
  */
-async function suggest(member, suggestion, settings) {
+async function suggest(member, suggestion, settings, lang) {
   if (!settings.suggestions.enabled) return "Suggestion system is disabled.";
   if (!settings.suggestions.channel_id) return "Suggestion channel not configured!";
   const channel = member.guild.channels.cache.get(settings.suggestions.channel_id);

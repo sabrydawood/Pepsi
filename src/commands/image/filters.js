@@ -47,7 +47,7 @@ module.exports = {
     const image = await getImageFromMessage(message, args);
 
     // use invoke as an endpoint
-    const url = getFilter(data.invoke.toLowerCase(), image);
+    const url = getFilter(data.invoke.toLowerCase(), image, data.lang);
     const response = await getBuffer(url);
 
     if (!response.success) return message.safeReply("Failed to generate image");
@@ -61,7 +61,7 @@ module.exports = {
     await message.safeReply({ embeds: [embed], files: [attachment] });
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const author = interaction.user;
     const user = interaction.options.getUser("user");
     const imageLink = interaction.options.getString("link");
@@ -87,7 +87,7 @@ module.exports = {
   },
 };
 
-function getFilter(filter, image) {
+function getFilter(filter, image, lang) {
   const endpoint = new URL(`${IMAGE.BASE_API}/filters/${filter}`);
   endpoint.searchParams.append("image", image);
   return endpoint.href;

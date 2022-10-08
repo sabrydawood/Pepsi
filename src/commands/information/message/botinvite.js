@@ -10,10 +10,11 @@ module.exports = {
   botPermissions: ["EmbedLinks"],
   command: {
     enabled: true,
+    aliases: ["botinv", "invite"],
   },
 
-  async messageRun(message, args) {
-    const response = botinvite(message.client);
+  async messageRun(message, args, data) {
+    const response = botinvite(message.client, data.lang);
     try {
       await message.author.send(response);
       return message.safeReply("Check your DM for my information! :envelope_with_arrow:");

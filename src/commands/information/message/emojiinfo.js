@@ -12,11 +12,12 @@ module.exports = {
     enabled: true,
     usage: "<emoji>",
     minArgsCount: 1,
+    aliases: ["emojiinf"],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const emoji = args[0];
-    const response = emojiInfo(emoji);
+    const response = emojiInfo(emoji, data.lang);
     await message.safeReply(response);
   },
 };

@@ -14,11 +14,11 @@ module.exports = {
     minArgsCount: 1,
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
     const reason = message.content.split(args[0])[1].trim();
-    const response = await disconnect(message, target, reason);
+    const response = await disconnect(message, target, reason, data.lang);
     await message.safeReply(response);
   },
 };

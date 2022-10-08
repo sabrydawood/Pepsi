@@ -1,6 +1,6 @@
 const { vUnmuteTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason) => {
+module.exports = async ({ member }, target, reason,lang) => {
   const response = await vUnmuteTarget(member, target, reason);
   if (typeof response === "boolean") {
     return `${target.user.tag}'s voice is unmuted in this server`;

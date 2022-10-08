@@ -158,45 +158,45 @@ module.exports = {
 
     let response;
     if (input === "status") {
-      response = await getStatus(settings, message.guild);
+      response = await getStatus(settings, message.guild, data.lang);
     } else if (input === "strikes") {
       const strikes = args[1];
       if (isNaN(strikes) || Number.parseInt(strikes) < 1) {
-        return message.safeReply("Strikes must be a valid number greater than 0");
+        return message.safeReply(data.lang.MAX_LINES_ERR);
       }
-      response = await setStrikes(settings, strikes);
+      response = await setStrikes(settings, strikes, data.lang);
     } else if (input === "action") {
       const action = args[1].toUpperCase();
       if (!action || !["TIMEOUT", "KICK", "BAN"].includes(action))
-        return message.safeReply("Not a valid action. Action can be `Timeout`/`Kick`/`Ban`");
-      response = await setAction(settings, message.guild, action);
+        return message.safeReply(data.lang.COMMANDS.AUTO_MOD.INVALID_ACTION);
+      response = await setAction(settings, message.guild, action, data.lang);
     } else if (input === "debug") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
-      response = await setDebug(settings, status);
+      if (!["on", "off"].includes(status)) return message.safeReply(data.lang.INVALID_STATUS);
+      response = await setDebug(settings, status, data.lang);
     }
 
     // whitelist
     else if (input === "whitelist") {
-      response = getWhitelist(message.guild, settings);
+      response = getWhitelist(message.guild, settings, data.lang);
     }
 
     // whitelist add
     else if (input === "whitelistadd") {
       const match = message.guild.findMatchingChannels(args[1]);
-      if (!match.length) return message.safeReply(`No channel found matching ${args[1]}`);
-      response = await whiteListAdd(settings, match[0].id);
+      if (!match.length) return message.safeReply(data.lang.NO_CHANNEL.replace("{channel}", args[1]));
+      response = await whiteListAdd(settings, match[0].id, data.lang);
     }
 
     // whitelist remove
     else if (input === "whitelistremove") {
       const match = message.guild.findMatchingChannels(args[1]);
-      if (!match.length) return message.safeReply(`No channel found matching ${args[1]}`);
-      response = await whiteListRemove(settings, match[0].id);
+      if (!match.length) return message.safeReply(data.lang.NO_CHANNEL.replace("{channel}", args[1]));
+      response = await whiteListRemove(settings, match[0].id, data.lang);
     }
 
     //
-    else response = "Invalid command usage!";
+    else response = data.lang.INVALID_USAGE ;
     await message.safeReply(response);
   },
 
@@ -206,65 +206,66 @@ module.exports = {
 
     let response;
 
-    if (sub === "status") response = await getStatus(settings, interaction.guild);
-    else if (sub === "strikes") response = await setStrikes(settings, interaction.options.getInteger("amount"));
+    if (sub === "status") response = await getStatus(settings, interaction.guild, data.lang);
+    else if (sub === "strikes") response = await setStrikes(settings, interaction.options.getInteger("amount"), data.lang);
     else if (sub === "action")
-      response = await setAction(settings, interaction.guild, interaction.options.getString("action"));
+      response = await setAction(settings, interaction.guild, interaction.options.getString("action"), data.lang);
     else if (sub === "debug") response = await setDebug(settings, interaction.options.getString("status"));
     else if (sub === "whitelist") {
-      response = getWhitelist(interaction.guild, settings);
+      response = getWhitelist(interaction.guild, settings, data.lang);
     } else if (sub === "whitelistadd") {
       const channelId = interaction.options.getChannel("channel").id;
-      response = await whiteListAdd(settings, channelId);
+      response = await whiteListAdd(settings, channelId, data.lang);
     } else if (sub === "whitelistremove") {
       const channelId = interaction.options.getChannel("channel").id;
-      response = await whiteListRemove(settings, channelId);
-    }
+      response = await whiteListRemove(settings, channelId, data.lang);
+    }    
+		else response = data.lang.INVALID_USAGE ;
 
     await interaction.followUp(response);
   },
 };
 
-async function getStatus(settings, guild) {
+async function getStatus(settings, guild, lang) {
   const { automod } = settings;
 
   const logChannel = settings.modlog_channel
     ? guild.channels.cache.get(settings.modlog_channel).toString()
-    : "Not Configured";
+    : lang.COMMANDS.AUTO_MOD.NO_CONFIG ;
 
   // String Builder
   let desc = stripIndent`
-    ❯ **Max Lines**: ${automod.max_lines || "NA"}
-    ❯ **Anti-Massmention**: ${automod.anti_massmention > 0 ? "✓" : "✕"}
-    ❯ **Anti-Attachment**: ${automod.anti_attachment ? "✓" : "✕"}
-    ❯ **Anti-Links**: ${automod.anti_links ? "✓" : "✕"}
-    ❯ **Anti-Invites**: ${automod.anti_invites ? "✓" : "✕"}
-    ❯ **Anti-Spam**: ${automod.anti_spam ? "✓" : "✕"}
-    ❯ **Anti-Ghostping**: ${automod.anti_ghostping ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC1}: ${automod.max_lines || "NA"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC2}: ${automod.anti_massmention > 0 ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC3}: ${automod.anti_attachment ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC4}: ${automod.anti_links ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC5}: ${automod.anti_invites ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC6}: ${automod.anti_spam ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.AUTO_MOD.DESC7}: ${automod.anti_ghostping ? "✓" : "✕"}
   `;
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "Automod Configuration", icon_url: guild.iconURL() })
+    .setAuthor({ name: lang.COMMANDS.AUTO_MOD.EMBED_AUTHOR , icon_url: guild.iconURL() })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {
-        name: "Log Channel",
+        name: lang.COMMANDS.AUTO_MOD.EMBED_F1,
         value: logChannel,
         inline: true,
       },
       {
-        name: "Max Strikes",
+        name: lang.COMMANDS.AUTO_MOD.EMBED_F3,
         value: automod.strikes.toString(),
         inline: true,
       },
       {
-        name: "Action",
+        name: lang.COMMANDS.AUTO_MOD.EMBED_F3,
         value: automod.action,
         inline: true,
       },
       {
-        name: "Debug",
+        name: lang.COMMANDS.AUTO_MOD.EMBED_F4,
         value: automod.debug ? "✓" : "✕",
         inline: true,
       }
@@ -273,46 +274,46 @@ async function getStatus(settings, guild) {
   return { embeds: [embed] };
 }
 
-async function setStrikes(settings, strikes) {
+async function setStrikes(settings, strikes, lang) {
   settings.automod.strikes = strikes;
   await settings.save();
-  return `Configuration saved! Maximum strikes is set to ${strikes}`;
+  return lang.COMMANDS.AUTO_MOD.STRIKE_DONE.replace("{strike}", strikes);
 }
 
-async function setAction(settings, guild, action) {
+async function setAction(settings, guild, action, lang) {
   if (action === "TIMEOUT") {
     if (!guild.members.me.permissions.has("ModerateMembers")) {
-      return "I do not permission to timeout members";
+      return lang.NO_PERMISSIONS;
     }
   }
 
   if (action === "KICK") {
     if (!guild.members.me.permissions.has("KickMembers")) {
-      return "I do not have permission to kick members";
+      return lang.NO_PERMISSIONS;
     }
   }
 
   if (action === "BAN") {
     if (!guild.members.me.permissions.has("BanMembers")) {
-      return "I do not have permission to ban members";
+      return lang.NO_PERMISSIONS;
     }
   }
 
   settings.automod.action = action;
   await settings.save();
-  return `Configuration saved! Automod action is set to ${action}`;
+  return lang.COMMANDS.AUTO_MOD.ACTION_DONE.replace("{action}", action);
 }
 
-async function setDebug(settings, input) {
+async function setDebug(settings, input, lang) {
   const status = input.toLowerCase() === "on" ? true : false;
   settings.automod.debug = status;
   await settings.save();
-  return `Configuration saved! Automod debug is now ${status ? "enabled" : "disabled"}`;
+  return lang.COMMANDS.AUTO_MOD.DEBUG_DONE + `${status ? lang.ENABELD: lang.DIASBELD}`;
 }
 
-function getWhitelist(guild, settings) {
+function getWhitelist(guild, settings, lang) {
   const whitelist = settings.automod.wh_channels;
-  if (!whitelist || !whitelist.length) return "No channels are whitelisted";
+  if (!whitelist || !whitelist.length) return lang.COMMANDS.AUTO_MOD.NO_WHITELISTED ;
 
   const channels = [];
   for (const channelId of whitelist) {
@@ -321,19 +322,19 @@ function getWhitelist(guild, settings) {
     if (channel) channels.push(channel.toString());
   }
 
-  return `Whitelisted channels: ${channels.join(", ")}`;
+  return lang.COMMANDS.AUTO_MOD.WHITELISTED_CH + `${channels.join(", ")}`;
 }
 
-async function whiteListAdd(settings, channelId) {
-  if (settings.automod.wh_channels.includes(channelId)) return "Channel is already whitelisted";
+async function whiteListAdd(settings, channelId, lang) {
+  if (settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.AUTO_MOD.ALR_WHITELIATED;
   settings.automod.wh_channels.push(channelId);
   await settings.save();
-  return `Channel whitelisted!`;
+  return lang.COMMANDS.AUTO_MOD.WHITELISTED ;
 }
 
-async function whiteListRemove(settings, channelId) {
-  if (!settings.automod.wh_channels.includes(channelId)) return "Channel is not whitelisted";
+async function whiteListRemove(settings, channelId, lang) {
+  if (!settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.AUTO_MOD.NOT_WHITELISTED ;
   settings.automod.wh_channels.splice(settings.automod.wh_channels.indexOf(channelId), 1);
   await settings.save();
-  return `Channel removed from whitelist!`;
+  return lang.COMMANDS.AUTO_MOD.REMOVED_WHITELISTED;
 }

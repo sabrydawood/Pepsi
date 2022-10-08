@@ -21,7 +21,6 @@
     "url": "https://github.com/virgel1995/pepsi/issues"
   },
   "dependencies": {
-    "@types/node": "^18.0.6",
     "@vitalets/google-translate-api": "^8.0.0",
     "ascii-table": "0.0.9",
     "btoa": "^1.2.1",

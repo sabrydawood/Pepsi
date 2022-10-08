@@ -16,7 +16,7 @@ module.exports = {
     minArgsCount: 1,
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
 
@@ -28,7 +28,7 @@ module.exports = {
     }
 
     const reason = args.slice(2).join(" ");
-    const response = await move(message, target, reason, targetChannel);
+    const response = await move(message, target, reason, targetChannel, data.lang);
     await message.safeReply(response);
   },
 };

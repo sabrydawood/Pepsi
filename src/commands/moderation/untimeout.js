@@ -34,25 +34,25 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
     const reason = args.slice(1).join(" ").trim();
-    const response = await untimeout(message.member, target, reason);
+    const response = await untimeout(message.member, target, reason, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
     const reason = interaction.options.getString("reason");
     const target = await interaction.guild.members.fetch(user.id);
 
-    const response = await untimeout(interaction.member, target, reason);
+    const response = await untimeout(interaction.member, target, reason, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function untimeout(issuer, target, reason) {
+async function untimeout(issuer, target, reason, lang) {
   const response = await unTimeoutTarget(issuer, target, reason);
   if (typeof response === "boolean") return `Timeout of ${target.user.tag} is removed!`;
   if (response === "BOT_PERM") return `I do not have permission to remove timeout of ${target.user.tag}`;

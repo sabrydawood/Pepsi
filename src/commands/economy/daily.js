@@ -18,18 +18,18 @@ module.exports = {
     enabled: true,
   },
 
-  async messageRun(message, args) {
-    const response = await daily(message.author);
+  async messageRun(message, args, data) {
+    const response = await daily(message.author, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
-    const response = await daily(interaction.user);
+  async interactionRun(interaction, data) {
+    const response = await daily(interaction.user, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function daily(user) {
+async function daily(user, lang) {
   const userDb = await getUser(user);
   let streak = 0;
 

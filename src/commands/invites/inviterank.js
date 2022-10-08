@@ -73,7 +73,7 @@ module.exports = {
       const role = message.guild.findMatchingRoles(query)[0];
       if (!role) return message.safeReply(`No roles found matching \`${query}\``);
 
-      const response = await addInviteRank(message, role, invites, data.settings);
+      const response = await addInviteRank(message, role, invites, data.settings, data.lang);
       await message.safeReply(response);
     }
 
@@ -82,7 +82,7 @@ module.exports = {
       const query = args[1];
       const role = message.guild.findMatchingRoles(query)[0];
       if (!role) return message.safeReply(`No roles found matching \`${query}\``);
-      const response = await removeInviteRank(message, role, data.settings);
+      const response = await removeInviteRank(message, role, data.settings, data.lang);
       await message.safeReply(response);
     }
 
@@ -99,20 +99,20 @@ module.exports = {
       const role = interaction.options.getRole("role");
       const invites = interaction.options.getInteger("invites");
 
-      const response = await addInviteRank(interaction, role, invites, data.settings);
+      const response = await addInviteRank(interaction, role, invites, data.settings, data.lang);
       await interaction.followUp(response);
     }
 
     //
     else if (sub === "remove") {
       const role = interaction.options.getRole("role");
-      const response = await removeInviteRank(interaction, role, data.settings);
+      const response = await removeInviteRank(interaction, role, data.settings, data.lang);
       await interaction.followUp(response);
     }
   },
 };
 
-async function addInviteRank({ guild }, role, invites, settings) {
+async function addInviteRank({ guild }, role, invites, settings, lang) {
   if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
 
   if (role.managed) {
@@ -140,7 +140,7 @@ async function addInviteRank({ guild }, role, invites, settings) {
   return `${msg}Success! Configuration saved.`;
 }
 
-async function removeInviteRank({ guild }, role, settings) {
+async function removeInviteRank({ guild }, role, settings, lang) {
   if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
 
   if (role.managed) {

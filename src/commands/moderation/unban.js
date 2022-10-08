@@ -34,22 +34,22 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const match = args[0];
     const reason = message.content.split(args[0])[1].trim();
 
-    const response = await getMatchingBans(message.guild, match);
+    const response = await getMatchingBans(message.guild, match, data.lang);
     const sent = await message.safeReply(response);
-    if (typeof response !== "string") await waitForBan(message.member, reason, sent);
+    if (typeof response !== "string") await waitForBan(message.member, reason, sent, data.lang);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, lang) {
     const match = interaction.options.getString("name");
     const reason = interaction.options.getString("reason");
 
-    const response = await getMatchingBans(interaction.guild, match);
+    const response = await getMatchingBans(interaction.guild, match, data.lang);
     const sent = await interaction.followUp(response);
-    if (typeof response !== "string") await waitForBan(interaction.member, reason, sent);
+    if (typeof response !== "string") await waitForBan(interaction.member, reason, sent, data.lang);
   },
 };
 
@@ -57,7 +57,7 @@ module.exports = {
  * @param {import('discord.js').Guild} guild
  * @param {string} match
  */
-async function getMatchingBans(guild, match) {
+async function getMatchingBans(guild, match, lang) {
   const bans = await guild.bans.fetch({ cache: false });
 
   const matched = [];
@@ -95,7 +95,7 @@ async function getMatchingBans(guild, match) {
  * @param {string} reason
  * @param {import('discord.js').Message} sent
  */
-async function waitForBan(issuer, reason, sent) {
+async function waitForBan(issuer, reason, sent, lang) {
   const collector = sent.channel.createMessageComponentCollector({
     filter: (m) => m.member.id === issuer.id && m.customId === "unban-menu" && sent.id === m.message.id,
     time: 20000,

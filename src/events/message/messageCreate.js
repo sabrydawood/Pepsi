@@ -30,12 +30,12 @@ module.exports = async (client, message) => {
     const invoke = message.content.replace(`${settings.prefix}`, "").split(/\s+/)[0];
     const cmd = client.getCommand(invoke);
     if (cmd) {
-  if (client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(message.author.id)) {
+  //if (!client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(message.author.id)) {
       isCommand = true;
     commandHandler.handlePrefixCommand(message, cmd, settings);
-  }else {
+  /*}else {
     message.channel.send(lang.EVENTS.MESSAGE_EVENT.MAINTACE_MESSAGE)
-  }
+  }*/
     }
   }
 

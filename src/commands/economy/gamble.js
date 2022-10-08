@@ -29,16 +29,16 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const betAmount = parseInt(args[0]);
     if (isNaN(betAmount)) return message.safeReply("Bet amount needs to be a valid number input");
-    const response = await gamble(message.author, betAmount);
+    const response = await gamble(message.author, betAmount, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const betAmount = interaction.options.getInteger("coins");
-    const response = await gamble(interaction.user, betAmount);
+    const response = await gamble(interaction.user, betAmount, data.lang);
     await interaction.followUp(response);
   },
 };
@@ -75,7 +75,7 @@ function calculateReward(amount, var1, var2, var3) {
   return 0;
 }
 
-async function gamble(user, betAmount) {
+async function gamble(user, betAmount, lang) {
   if (isNaN(betAmount)) return "Bet amount needs to be a valid number input";
   if (betAmount < 0) return "Bet amount cannot be negative";
   if (betAmount < 10) return "Bet amount cannot be less than 10";

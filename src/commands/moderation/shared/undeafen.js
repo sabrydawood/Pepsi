@@ -1,6 +1,6 @@
 const { unDeafenTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason) => {
+module.exports = async ({ member }, target, reason,lang) => {
   const response = await unDeafenTarget(member, target, reason);
   if (typeof response === "boolean") {
     return `${target.user.tag} is deafened in this server`;

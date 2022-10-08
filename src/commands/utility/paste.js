@@ -33,22 +33,22 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const title = args.shift();
     const content = args.join(" ");
-    const response = await paste(content, title);
+    const response = await paste(content, title, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const title = interaction.options.getString("title");
     const content = interaction.options.getString("content");
-    const response = await paste(content, title);
+    const response = await paste(content, title, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function paste(content, title) {
+async function paste(content, title, lang) {
   const response = await postToBin(content, title);
   if (!response) return "❌ Something went wrong";
 

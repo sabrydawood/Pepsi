@@ -25,20 +25,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = (await message.guild.resolveMember(args[0])) || message.member;
-    const response = await getInviteCodes(message, target.user);
+    const response = await getInviteCodes(message, target.user, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user") || interaction.user;
-    const response = await getInviteCodes(interaction, user);
+    const response = await getInviteCodes(interaction, user, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getInviteCodes({ guild }, user) {
+async function getInviteCodes({ guild }, user, lang) {
   const invites = await guild.invites.fetch({ cache: false });
   const reqInvites = invites.filter((inv) => inv.inviter.id === user.id);
   if (reqInvites.size === 0) return `\`${user.tag}\` has no invites in this server`;

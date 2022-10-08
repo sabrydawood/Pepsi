@@ -44,9 +44,9 @@ module.exports = {
 
     // !help
     if (!trigger) {
-      const response = await getHelpMenu(message);
+      const response = await getHelpMenu(message, data.lang);
       const sentMsg = await message.safeReply(response);
-      return waiter(sentMsg, message.author.id, data.prefix);
+      return waiter(sentMsg, message.author.id, data.prefix, data.lang);
     }
 
     // check if command help (!help cat)
@@ -60,14 +60,14 @@ module.exports = {
     await message.safeReply("No matching command found");
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     let cmdName = interaction.options.getString("command");
 
     // !help
     if (!cmdName) {
-      const response = await getHelpMenu(interaction);
+      const response = await getHelpMenu(interaction, data.lang);
       const sentMsg = await interaction.followUp(response);
-      return waiter(sentMsg, interaction.user.id);
+      return waiter(sentMsg, interaction.user.id, data.lang);
     }
 
     // check if command help (!help cat)
@@ -85,7 +85,7 @@ module.exports = {
 /**
  * @param {CommandInteraction} interaction
  */
-async function getHelpMenu({ client, guild }) {
+async function getHelpMenu({ client, guild }, lang) {
   // Menu Row
   const options = [];
   for (const [k, v] of Object.entries(CommandCategory)) {
@@ -133,7 +133,7 @@ async function getHelpMenu({ client, guild }) {
  * @param {string} userId
  * @param {string} prefix
  */
-const waiter = (msg, userId, prefix) => {
+const waiter = (msg, userId, prefix, lang) => {
   const collector = msg.channel.createMessageComponentCollector({
     filter: (reactor) => reactor.user.id === userId && msg.id === reactor.message.id,
     idle: IDLE_TIMEOUT * 1000,
@@ -153,7 +153,7 @@ const waiter = (msg, userId, prefix) => {
     switch (response.customId) {
       case "help-menu": {
         const cat = response.values[0].toUpperCase();
-        arrEmbeds = prefix ? getMsgCategoryEmbeds(msg.client, cat, prefix) : getSlashCategoryEmbeds(msg.client, cat);
+        arrEmbeds = prefix ? getMsgCategoryEmbeds(msg.client, cat, prefix, lang) : getSlashCategoryEmbeds(msg.client, cat, lang);
         currentPage = 0;
 
         // Buttons Row
@@ -194,7 +194,7 @@ const waiter = (msg, userId, prefix) => {
  * @param {BotClient} client
  * @param {string} category
  */
-function getSlashCategoryEmbeds(client, category) {
+function getSlashCategoryEmbeds(client, category, lang) {
   let collector = "";
 
   // For IMAGE Category
@@ -275,7 +275,7 @@ function getSlashCategoryEmbeds(client, category) {
  * @param {string} category
  * @param {string} prefix
  */
-function getMsgCategoryEmbeds(client, category, prefix) {
+function getMsgCategoryEmbeds(client, category, prefix, lang) {
   let collector = "";
 
   // For IMAGE Category

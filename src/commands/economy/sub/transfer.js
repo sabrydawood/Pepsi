@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("@schemas/User");
 const { ECONOMY, EMBED_COLORS } = require("@root/config");
 
-module.exports = async (self, target, coins) => {
+module.exports = async (self, target, coins, lang) => {
   if (isNaN(coins) || coins <= 0) return "Please enter a valid amount of coins to transfer";
   if (target.bot) return "You cannot transfer coins to bots!";
   if (target.id === self.id) return "You cannot transfer coins to self!";

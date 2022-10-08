@@ -43,9 +43,9 @@ module.exports = {
     const type = args[0].toLowerCase();
     let response;
 
-    if (type === "xp") response = await getXpLeaderboard(message, message.author, data.settings);
-    else if (type === "invite") response = await getInviteLeaderboard(message, message.author, data.settings);
-    else response = "Invalid Leaderboard type. Choose either `xp` or `invite`";
+    if (type === "xp") response = await getXpLeaderboard(message, message.author, data.settings, data.lang);
+    else if (type === "invite") response = await getInviteLeaderboard(message, message.author, data.settings, data.lang);
+    else response = data.lang.COMMANDS.INFORMATION.LEADERBOARD.RES_ERR;
     await message.safeReply(response);
   },
 
@@ -53,44 +53,44 @@ module.exports = {
     const type = interaction.options.getString("type");
     let response;
 
-    if (type === "xp") response = await getXpLeaderboard(interaction, interaction.user, data.settings);
-    else if (type === "invite") response = await getInviteLeaderboard(interaction, interaction.user, data.settings);
-    else response = "Invalid Leaderboard type. Choose either `xp` or `invite`";
+    if (type === "xp") response = await getXpLeaderboard(interaction, interaction.user, data.settings, data.lang);
+    else if (type === "invite") response = await getInviteLeaderboard(interaction, interaction.user, data.settings , data.lang);
+    else response = data.lang.COMMANDS.INFORMATION.LEADERBOARD.RES_ERR;
 
     await interaction.followUp(response);
   },
 };
 
-async function getXpLeaderboard({ guild }, author, settings) {
-  if (!settings.stats.enabled) return "Ranking is disabled on this server";
+async function getXpLeaderboard({ guild }, author, settings, lang) {
+  if (!settings.stats.enabled) return  lang.COMMANDS.INFORMATION.LEADERBOARD.DISABELD;
 
   const lb = await getXpLb(guild.id, 10);
-  if (lb.length === 0) return "No users in the leaderboard";
+  if (lb.length === 0) return lang.COMMANDS.INFORMATION.LEADERBOARD.NO_USERS;
 
   let collector = "";
   for (let i = 0; i < lb.length; i++) {
     try {
       const user = await author.client.users.fetch(lb[i].member_id);
-      collector += `**#${(i + 1).toString()}** - ${escapeInlineCode(user.tag)}\n`;
+      collector += `**#${(i + 1).toString()}** - ${escapeInlineCode(user.tag)} - \`${lb[i].xp}\`\n`;
     } catch (ex) {
       // Ignore
     }
   }
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "XP Leaderboard" })
+    .setAuthor({ name: lang.COMMANDS.INFORMATION.LEADERBOARD.XP_AUTHOR })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(collector)
-    .setFooter({ text: `Requested by ${author.tag}` });
+    .setFooter({ text: lang.REQ_BY.replace("{author}",author.tag) });
 
   return { embeds: [embed] };
 }
 
-async function getInviteLeaderboard({ guild }, author, settings) {
-  if (!settings.invite.tracking) return "Invite tracking is disabled on this server";
+async function getInviteLeaderboard({ guild }, author, settings, lang) {
+  if (!settings.invite.tracking) return lang.COMMANDS.INFORMATION.LEADERBOARD.DISABELD;
 
   const lb = await getInvitesLb(guild.id, 10);
-  if (lb.length === 0) return "No users in the leaderboard";
+  if (lb.length === 0) return lang.COMMANDS.INFORMATION.LEADERBOARD.NO_USERS;
 
   let collector = "";
   for (let i = 0; i < lb.length; i++) {
@@ -107,10 +107,10 @@ async function getInviteLeaderboard({ guild }, author, settings) {
   }
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "Invite Leaderboard" })
+    .setAuthor({ name: lang.COMMANDS.INFORMATION.LEADERBOARD.INV_AUTHOR })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(collector)
-    .setFooter({ text: `Requested by ${author.tag}` });
+    .setFooter({ text: lang.REQ_BY.replace("{author}",author.tag) });
 
   return { embeds: [embed] };
 }

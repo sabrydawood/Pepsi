@@ -17,17 +17,17 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-    const response = await getInviteRanks(message, data.settings);
+    const response = await getInviteRanks(message, data.settings, data.lang);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
-    const response = await getInviteRanks(interaction, data.settings);
+    const response = await getInviteRanks(interaction, data.settings, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getInviteRanks({ guild }, settings) {
+async function getInviteRanks({ guild }, settings, lang) {
   if (settings.invite.ranks.length === 0) return "No invite ranks configured in this server";
   let str = "";
 

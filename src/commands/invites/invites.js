@@ -29,18 +29,18 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const target = (await message.guild.resolveMember(args[0])) || message.member;
-    const response = await getInvites(message, target.user, data.settings);
+    const response = await getInvites(message, target.user, data.settings, data.lang);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user") || interaction.user;
-    const response = await getInvites(interaction, user, data.settings);
+    const response = await getInvites(interaction, user, data.settings, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getInvites({ guild }, user, settings) {
+async function getInvites({ guild }, user, settings, lang) {
   if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
 
   const inviteData = (await getMember(guild.id, user.id)).invite_data;

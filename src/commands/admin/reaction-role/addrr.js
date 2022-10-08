@@ -49,7 +49,7 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const targetChannel = message.guild.findMatchingChannels(args[0]);
     if (targetChannel.length === 0) return message.safeReply(`No channels found matching ${args[0]}`);
 
@@ -60,22 +60,22 @@ module.exports = {
 
     const reaction = args[2];
 
-    const response = await addRR(message.guild, targetChannel[0], targetMessage, reaction, role);
+    const response = await addRR(message.guild, targetChannel[0], targetMessage, reaction, role, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const targetChannel = interaction.options.getChannel("channel");
     const messageId = interaction.options.getString("message_id");
     const reaction = interaction.options.getString("emoji");
     const role = interaction.options.getRole("role");
 
-    const response = await addRR(interaction.guild, targetChannel, messageId, reaction, role);
+    const response = await addRR(interaction.guild, targetChannel, messageId, reaction, role, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function addRR(guild, channel, messageId, reaction, role) {
+async function addRR(guild, channel, messageId, reaction, role, lang) {
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
     return `You need the following permissions in ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }

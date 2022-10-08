@@ -33,25 +33,25 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
     const reason = message.content.split(args[0])[1].trim();
-    const response = await softban(message.member, target, reason);
+    const response = await softban(message.member, target, reason, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
     const reason = interaction.options.getString("reason");
     const target = await interaction.guild.members.fetch(user.id);
 
-    const response = await softban(interaction.member, target, reason);
+    const response = await softban(interaction.member, target, reason, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function softban(issuer, target, reason) {
+async function softban(issuer, target, reason, lang) {
   const response = await softbanTarget(issuer, target, reason);
   if (typeof response === "boolean") return `${target.user.tag} is soft-banned!`;
   if (response === "BOT_PERM") return `I do not have permission to softban ${target.user.tag}`;

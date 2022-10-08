@@ -14,7 +14,7 @@ module.exports = {
     aliases: ["chinfo"],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     let targetChannel;
 
     if (message.mentions.channels.size > 0) {
@@ -32,7 +32,7 @@ module.exports = {
       targetChannel = message.channel;
     }
 
-    const response = channelInfo(targetChannel);
+    const response = channelInfo(targetChannel, data.lang);
     await message.safeReply(response);
   },
 };

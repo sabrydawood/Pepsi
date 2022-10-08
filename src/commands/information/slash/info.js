@@ -85,7 +85,7 @@ module.exports = {
     ],
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     if (!sub) return interaction.followUp("Not a valid subcommand");
     let response;
@@ -94,35 +94,35 @@ module.exports = {
     if (sub === "user") {
       let targetUser = interaction.options.getUser("name") || interaction.user;
       let target = await interaction.guild.members.fetch(targetUser);
-      response = user(target);
+      response = user(target, data.lang);
     }
 
     // channel
     else if (sub === "channel") {
       let targetChannel = interaction.options.getChannel("name") || interaction.channel;
-      response = channelInfo(targetChannel);
+      response = channelInfo(targetChannel, data.lang);
     }
 
     // guild
     else if (sub === "guild") {
-      response = await guildInfo(interaction.guild);
+      response = await guildInfo(interaction.guild, data.lang);
     }
 
     // bot
     else if (sub === "bot") {
-      response = botInfo(interaction.client);
+      response = botInfo(interaction.client, data.lang);
     }
 
     // avatar
     else if (sub === "avatar") {
       let target = interaction.options.getUser("name") || interaction.user;
-      response = avatar(target);
+      response = avatar(target, data.lang);
     }
 
     // emoji
     else if (sub === "emoji") {
       let emoji = interaction.options.getString("name");
-      response = emojiInfo(emoji);
+      response = emojiInfo(emoji, data.lang);
     }
 
     // return

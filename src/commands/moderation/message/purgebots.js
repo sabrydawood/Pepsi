@@ -15,7 +15,7 @@ module.exports = {
     aliases: ["purgebot"],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const amount = args[0] || 99;
 
     if (amount) {

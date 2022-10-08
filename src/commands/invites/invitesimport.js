@@ -26,20 +26,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0]);
-    const response = await importInvites(message, target?.user);
+    const response = await importInvites(message, target?.user, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
-    const response = await importInvites(interaction, user);
+    const response = await importInvites(interaction, user, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function importInvites({ guild }, user) {
+async function importInvites({ guild }, user, lang) {
   if (user && user.bot) return "Oops! You cannot import invites for bots";
 
   const invites = await guild.invites.fetch({ cache: false });

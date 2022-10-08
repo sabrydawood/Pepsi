@@ -6,7 +6,7 @@ const channelTypes = require("@helpers/channelTypes");
 /**
  * @param {import('discord.js').GuildChannel} channel
  */
-module.exports = (channel) => {
+module.exports = (channel, lang) => {
   const { id, name, parent, position, type } = channel;
 
   let desc = stripIndent`

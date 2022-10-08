@@ -35,26 +35,26 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     const amount = parseInt(args[1]);
 
     if (!target) return message.safeReply("Incorrect syntax. You must mention a target");
     if (isNaN(amount)) return message.safeReply("Invite amount must be a number");
 
-    const response = await addInvites(message, target.user, parseInt(amount));
+    const response = await addInvites(message, target.user, parseInt(amount), data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
     const amount = interaction.options.getInteger("invites");
-    const response = await addInvites(interaction, user, amount);
+    const response = await addInvites(interaction, user, amount, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function addInvites({ guild }, user, amount) {
+async function addInvites({ guild }, user, amount, lang) {
   if (user.bot) return "Oops! You cannot add invites to bots";
 
   const memberDb = await getMember(guild.id, user.id);

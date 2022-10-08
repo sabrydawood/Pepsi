@@ -56,7 +56,7 @@ module.exports = {
     args.shift();
     let channelName = args.join(" ");
 
-    const response = await setupCounter(message.guild, type, channelName, data.settings);
+    const response = await setupCounter(message.guild, type, channelName, data.settings, data.lang);
     return message.safeReply(response);
   },
 
@@ -64,7 +64,7 @@ module.exports = {
     const type = interaction.options.getString("type");
     const name = interaction.options.getString("name");
 
-    const response = await setupCounter(interaction.guild, type.toUpperCase(), name, data.settings);
+    const response = await setupCounter(interaction.guild, type.toUpperCase(), name, data.settings, data.lang);
     return interaction.followUp(response);
   },
 };
@@ -75,7 +75,7 @@ module.exports = {
  * @param {string} name
  * @param {object} settings
  */
-async function setupCounter(guild, type, name, settings) {
+async function setupCounter(guild, type, name, settings, lang) {
   let channelName = name;
 
   const stats = await guild.fetchMemberStats();

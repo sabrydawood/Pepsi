@@ -176,10 +176,10 @@ module.exports = {
     const type = args[0].toLowerCase();
     const settings = data.settings;
     let response;
-
+   let l = data.lang.COMMANDS
     // preview
     if (type === "preview") {
-      response = await sendPreview(settings, message.member);
+      response = await sendPreview(settings, message.member, data.lang);
     }
 
     // status
@@ -187,20 +187,20 @@ module.exports = {
       const status = args[1]?.toUpperCase();
       if (!status || !["ON", "OFF"].includes(status))
         return message.safeReply("Invalid status. Value must be `on/off`");
-      response = await setStatus(settings, status);
+      response = await setStatus(settings, status, data.lang);
     }
 
     // channel
     else if (type === "channel") {
       const channel = message.mentions.channels.first();
-      response = await setChannel(settings, channel);
+      response = await setChannel(settings, channel, data.lang);
     }
 
     // desc
     else if (type === "desc") {
       if (args.length < 2) return message.safeReply("Insufficient arguments! Please provide valid content");
       const desc = args.slice(1).join(" ");
-      response = await setDescription(settings, desc);
+      response = await setDescription(settings, desc, data.lang);
     }
 
     // thumbnail
@@ -208,28 +208,28 @@ module.exports = {
       const status = args[1]?.toUpperCase();
       if (!status || !["ON", "OFF"].includes(status))
         return message.safeReply("Invalid status. Value must be `on/off`");
-      response = await setThumbnail(settings, status);
+      response = await setThumbnail(settings, status, data.lang);
     }
 
     // color
     else if (type === "color") {
       const color = args[1];
       if (!color || !isHex(color)) return message.safeReply("Invalid color. Value must be a valid hex color");
-      response = await setColor(settings, color);
+      response = await setColor(settings, color, data.lang);
     }
 
     // footer
     else if (type === "footer") {
       if (args.length < 2) return message.safeReply("Insufficient arguments! Please provide valid content");
       const content = args.slice(1).join(" ");
-      response = await setFooter(settings, content);
+      response = await setFooter(settings, content, data.lang);
     }
 
     // image
     else if (type === "image") {
       const url = args[1];
       if (!url) return message.safeReply("Invalid image url. Please provide a valid url");
-      response = await setImage(settings, url);
+      response = await setImage(settings, url, data.lang);
     }
 
     //
@@ -238,41 +238,42 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
+			let l = data.lang.COMMANDS
     const sub = interaction.options.getSubcommand();
     const settings = data.settings;
 
     let response;
     switch (sub) {
       case "preview":
-        response = await sendPreview(settings, interaction.member);
+        response = await sendPreview(settings, interaction.member, data.lang);
         break;
 
       case "status":
-        response = await setStatus(settings, interaction.options.getString("status"));
+        response = await setStatus(settings, interaction.options.getString("status"), data.lang);
         break;
 
       case "channel":
-        response = await setChannel(settings, interaction.options.getChannel("channel"));
+        response = await setChannel(settings, interaction.options.getChannel("channel"), data.lang);
         break;
 
       case "desc":
-        response = await setDescription(settings, interaction.options.getString("content"));
+        response = await setDescription(settings, interaction.options.getString("content"), data.lang);
         break;
 
       case "thumbnail":
-        response = await setThumbnail(settings, interaction.options.getString("status"));
+        response = await setThumbnail(settings, interaction.options.getString("status"), data.lang);
         break;
 
       case "color":
-        response = await setColor(settings, interaction.options.getString("color"));
+        response = await setColor(settings, interaction.options.getString("color"), data.lang);
         break;
 
       case "footer":
-        response = await setFooter(settings, interaction.options.getString("content"));
+        response = await setFooter(settings, interaction.options.getString("content"), data.lang);
         break;
 
       case "image":
-        response = await setImage(settings, interaction.options.getString("url"));
+        response = await setImage(settings, interaction.options.getString("url"), data.lang);
         break;
 
       default:
@@ -283,7 +284,8 @@ module.exports = {
   },
 };
 
-async function sendPreview(settings, member) {
+async function sendPreview(settings, member, lang) {
+	let l = lang.COMMANDS
   if (!settings.farewell?.enabled) return "Farewell message not enabled in this server";
 
   const targetChannel = member.guild.channels.cache.get(settings.farewell.channel);
@@ -295,14 +297,15 @@ async function sendPreview(settings, member) {
   return `Sent farewell preview to ${targetChannel.toString()}`;
 }
 
-async function setStatus(settings, status) {
+async function setStatus(settings, status, lang) {
   const enabled = status.toUpperCase() === "ON" ? true : false;
   settings.farewell.enabled = enabled;
   await settings.save();
   return `Configuration saved! Farewell message ${status ? "enabled" : "disabled"}`;
 }
 
-async function setChannel(settings, channel) {
+async function setChannel(settings, channel, lang) {
+	let l = lang.COMMANDS
   if (!channel.canSendEmbeds()) {
     return (
       "Ugh! I cannot send greeting to that channel? I need the `Write Messages` and `Embed Links` permissions in " +
@@ -314,31 +317,36 @@ async function setChannel(settings, channel) {
   return `Configuration saved! Farewell message will be sent to ${channel ? channel.toString() : "Not found"}`;
 }
 
-async function setDescription(settings, desc) {
+async function setDescription(settings, desc, lang) {
+	let l = lang.COMMANDS
   settings.farewell.embed.description = desc;
   await settings.save();
   return "Configuration saved! Farewell message updated";
 }
 
-async function setThumbnail(settings, status) {
+async function setThumbnail(settings, status, lang) {
+		let l = lang.COMMANDS
   settings.farewell.embed.thumbnail = status.toUpperCase() === "ON" ? true : false;
   await settings.save();
   return "Configuration saved! Farewell message updated";
 }
 
-async function setColor(settings, color) {
+async function setColor(settings, color, lang) {
+		let l = lang.COMMANDS
   settings.farewell.embed.color = color;
   await settings.save();
   return "Configuration saved! Farewell message updated";
 }
 
-async function setFooter(settings, content) {
+async function setFooter(settings, content, lang) {
+		let l = lang.COMMANDS
   settings.farewell.embed.footer = content;
   await settings.save();
   return "Configuration saved! Farewell message updated";
 }
 
-async function setImage(settings, url) {
+async function setImage(settings, url, lang) {
+	let l = lang.COMMANDS
   settings.farewell.embed.image = url;
   await settings.save();
   return "Configuration saved! Farewell message updated";

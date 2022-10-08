@@ -29,13 +29,13 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const target = (await message.guild.resolveMember(args[0])) || message.member;
-    const response = await stats(target, data.settings);
+    const response = await stats(target, data.settings, data.lang);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
     const member = interaction.options.getMember("user") || interaction.member;
-    const response = await stats(member, data.settings);
+    const response = await stats(member, data.settings, data.lang);
     await interaction.followUp(response);
   },
 };
@@ -44,7 +44,7 @@ module.exports = {
  * @param {import('discord.js').GuildMember} member
  * @param {object} settings
  */
-async function stats(member, settings) {
+async function stats(member, settings, lang) {
   if (!settings.stats.enabled) return "Stats Tracking is disabled on this server";
   const memberStats = await getMemberStats(member.guild.id, member.id);
 

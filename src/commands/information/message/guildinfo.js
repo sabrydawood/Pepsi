@@ -11,11 +11,11 @@ module.exports = {
   cooldown: 5,
   command: {
     enabled: true,
-    aliases: ["serverinfo"],
+    aliases: ["serverinfo","server"],
   },
 
-  async messageRun(message, args) {
-    const response = await guildInfo(message.guild);
+  async messageRun(message, args, data) {
+    const response = await guildInfo(message.guild, data.lang);
     await message.safeReply(response);
   },
 };

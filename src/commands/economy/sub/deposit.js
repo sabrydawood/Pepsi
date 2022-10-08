@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("@schemas/User");
 const { ECONOMY, EMBED_COLORS } = require("@root/config");
 
-module.exports = async (user, coins) => {
+module.exports = async (user, coins, lang) => {
   if (isNaN(coins) || coins <= 0) return "Please enter a valid amount of coins to deposit";
   const userDb = await getUser(user);
 

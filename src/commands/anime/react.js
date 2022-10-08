@@ -33,24 +33,24 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const category = args[0].toLowerCase();
     if (!choices.includes(category)) {
       return message.safeReply(`Invalid choice: \`${category}\`.\nAvailable reactions: ${choices.join(", ")}`);
     }
 
-    const embed = await genReaction(category, message.author);
+    const embed = await genReaction(category, message.author, data.lang);
     await message.safeReply({ embeds: [embed] });
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const choice = interaction.options.getString("category");
-    const embed = await genReaction(choice, interaction.user);
+    const embed = await genReaction(choice, interaction.user, data.lang);
     await interaction.followUp({ embeds: [embed] });
   },
 };
 
-const genReaction = async (category, user) => {
+const genReaction = async (category, user, lang) => {
   try {
     let imageUrl;
 

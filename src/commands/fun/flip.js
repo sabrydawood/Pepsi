@@ -50,20 +50,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const sub = args[0].toLowerCase();
 
     if (sub === "coin") {
       const items = ["HEAD", "TAIL"];
       const toss = items[Math.floor(Math.random() * items.length)];
 
-      message.channel.send({ embeds: [firstEmbed(message.author)] }).then((coin) => {
+      message.channel.send({ embeds: [firstEmbed(message.author, data.lang)] }).then((coin) => {
         // 2nd embed
         setTimeout(() => {
-          coin.edit({ embeds: [secondEmbed()] }).catch(() => {});
+          coin.edit({ embeds: [secondEmbed(data.lang)] }).catch(() => {});
           // 3rd embed
           setTimeout(() => {
-            coin.edit({ embeds: [resultEmbed(toss)] }).catch(() => {});
+            coin.edit({ embeds: [resultEmbed(toss, data.lang)] }).catch(() => {});
           }, 2000);
         }, 2000);
       });
@@ -81,18 +81,18 @@ module.exports = {
     else await message.safeReply("Incorrect command usage");
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand("type");
 
     if (sub === "coin") {
       const items = ["HEAD", "TAIL"];
       const toss = items[Math.floor(Math.random() * items.length)];
-      await interaction.followUp({ embeds: [firstEmbed(interaction.user)] });
+      await interaction.followUp({ embeds: [firstEmbed(interaction.user, data.lang)] });
 
       setTimeout(() => {
-        interaction.editReply({ embeds: [secondEmbed()] }).catch(() => {});
+        interaction.editReply({ embeds: [secondEmbed(data.lang)] }).catch(() => {});
         setTimeout(() => {
-          interaction.editReply({ embeds: [resultEmbed(toss)] }).catch(() => {});
+          interaction.editReply({ embeds: [resultEmbed(toss, data.lang)] }).catch(() => {});
         }, 2000);
       }, 2000);
     }
@@ -100,23 +100,23 @@ module.exports = {
     //
     else if (sub === "text") {
       const input = interaction.options.getString("input");
-      const response = await flipText(input);
+      const response = await flipText(input, data.lang);
       await interaction.followUp(response);
     }
   },
 };
 
-const firstEmbed = (user) =>
+const firstEmbed = (user, lang) =>
   new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, started a coin toss`);
 
-const secondEmbed = () => new EmbedBuilder().setDescription("The coin is in the air");
+const secondEmbed = (lang) => new EmbedBuilder().setDescription("The coin is in the air");
 
-const resultEmbed = (toss) =>
+const resultEmbed = (toss, lang) =>
   new EmbedBuilder()
     .setDescription(`>> **${toss} Wins** <<`)
     .setImage(toss === "HEAD" ? "https://i.imgur.com/HavOS7J.png" : "https://i.imgur.com/u1pmQMV.png");
 
-async function flipText(text) {
+async function flipText(text, lang) {
   let builder = "";
   for (let i = 0; i < text.length; i += 1) {
     const letter = text.charAt(i);

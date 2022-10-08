@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("@schemas/User");
 const { EMBED_COLORS, ECONOMY } = require("@root/config");
 
-module.exports = async (user) => {
+module.exports = async (user, lang) => {
   const economy = await getUser(user);
 
   const embed = new EmbedBuilder()

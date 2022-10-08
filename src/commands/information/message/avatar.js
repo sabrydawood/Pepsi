@@ -13,9 +13,9 @@ module.exports = {
     usage: "[@member|id]",
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = (await message.guild.resolveMember(args[0])) || message.member;
-    const response = avatarInfo(target.user);
+    const response = avatarInfo(target.user, data.lang);
     await message.safeReply(response);
   },
 };

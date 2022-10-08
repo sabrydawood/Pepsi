@@ -28,20 +28,20 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const emoji = args[0];
-    const response = getEmoji(message.author, emoji);
+    const response = getEmoji(message.author, emoji, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, dat) {
     const emoji = interaction.options.getString("emoji");
-    const response = getEmoji(interaction.user, emoji);
+    const response = getEmoji(interaction.user, emoji, data.lang);
     await interaction.followUp(response);
   },
 };
 
-function getEmoji(user, emoji) {
+function getEmoji(user, emoji, lang) {
   const custom = parseEmoji(emoji);
 
   const embed = new EmbedBuilder()

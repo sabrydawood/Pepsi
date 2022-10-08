@@ -29,13 +29,13 @@ module.exports = {
   // PLUGINS
 
   AUTOMOD: {
-    ENABLED: true,
+    ENABLED: false,
     LOG_EMBED: "#36393F",
     DM_EMBED: "#36393F",
   },
 
   DASHBOARD: {
-    enabled: false, // enable or disable dashboard
+    enabled: true, // enable or disable dashboard
     baseURL: "http://Pepsi.virgel1995.repl.co", // base url
     failureURL: "http://Pepsi.virgel1995.repl.co", // failure redirect url
     port: "8080", // port to run the bot on
@@ -58,7 +58,7 @@ module.exports = {
     NODES: [
       {
         host: "localhost",
-        port: 2333,
+        port: 8080,
         password: "youshallnotpass",
         identifier: "Local Node",
         secure: false,
@@ -74,7 +74,7 @@ module.exports = {
   },
 
   IMAGE: {
-    ENABLED: false,
+    ENABLED: true,
     BASE_API: "https://image-api.strangebot.xyz",
   },
 
@@ -85,7 +85,7 @@ module.exports = {
     ENABLED: true,
   },
   MODERATION: {
-    ENABLED: true,
+    ENABLED: false,
     EMBED_COLORS: {
       TIMEOUT: "#102027",
       UNTIMEOUT: "#4B636E",
@@ -111,7 +111,7 @@ module.exports = {
 
   STATS: {
     ENABLED: true,
-    XP_COOLDOWN: 5, // Cooldown in seconds between messages
+    XP_COOLDOWN: 0, // Cooldown in seconds between messages
     DEFAULT_LVL_UP_MSG: "{member:tag}, You just advanced to **Level {level}**",
   },
 

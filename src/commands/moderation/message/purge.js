@@ -15,7 +15,7 @@ module.exports = {
     minArgsCount: 1,
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const amount = args[0];
 
     if (isNaN(amount)) return message.safeReply("Numbers are only allowed");

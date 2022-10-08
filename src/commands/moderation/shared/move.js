@@ -1,6 +1,6 @@
 const { moveTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason, channel) => {
+module.exports = async ({ member }, target, reason, channel,lang) => {
   const response = await moveTarget(member, target, reason, channel);
   if (typeof response === "boolean") {
     return `${target.user.tag} is deafened in this server`;

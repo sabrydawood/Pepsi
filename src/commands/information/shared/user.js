@@ -4,7 +4,7 @@ const { EMBED_COLORS } = require("@root/config");
 /**
  * @param {import('discord.js').GuildMember} member
  */
-module.exports = (member) => {
+module.exports = (member, lang) => {
   let color = member.displayHexColor;
   if (color === "#000000") color = EMBED_COLORS.BOT_EMBED;
 

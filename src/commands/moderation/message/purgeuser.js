@@ -16,7 +16,7 @@ module.exports = {
     minArgsCount: 1,
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0]);
     if (!target) return message.safeReply(`No users found matching ${args[0]}`);
     const amount = (args.length > 1 && args[1]) || 99;

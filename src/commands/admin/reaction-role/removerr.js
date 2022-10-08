@@ -37,26 +37,26 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const targetChannel = message.guild.findMatchingChannels(args[0]);
     if (targetChannel.length === 0) return message.safeReply(`No channels found matching ${args[0]}`);
 
     const targetMessage = args[1];
-    const response = await removeRR(message.guild, targetChannel[0], targetMessage);
+    const response = await removeRR(message.guild, targetChannel[0], targetMessage, data.lang);
 
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction , data) {
     const targetChannel = interaction.options.getChannel("channel");
     const messageId = interaction.options.getString("message_id");
 
-    const response = await removeRR(interaction.guild, targetChannel, messageId);
+    const response = await removeRR(interaction.guild, targetChannel, messageId, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function removeRR(guild, channel, messageId) {
+async function removeRR(guild, channel, messageId, lang) {
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
     return `You need the following permissions in ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }

@@ -32,25 +32,25 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(`No user found matching ${args[0]}`);
     const reason = message.content.split(args[0])[1].trim();
-    const response = await warn(message.member, target, reason);
+    const response = await warn(message.member, target, reason, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const user = interaction.options.getUser("user");
     const reason = interaction.options.getString("reason");
     const target = await interaction.guild.members.fetch(user.id);
 
-    const response = await warn(interaction.member, target, reason);
+    const response = await warn(interaction.member, target, reason, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function warn(issuer, target, reason) {
+async function warn(issuer, target, reason, lang) {
   const response = await warnTarget(issuer, target, reason);
   if (typeof response === "boolean") return `${target.user.tag} is warned!`;
   if (response === "BOT_PERM") return `I do not have permission to warn ${target.user.tag}`;

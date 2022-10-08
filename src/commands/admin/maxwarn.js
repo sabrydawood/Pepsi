@@ -77,14 +77,14 @@ module.exports = {
     if (input === "limit") {
       const max = parseInt(args[1]);
       if (isNaN(max) || max < 1) return message.safeReply("Max Warnings must be a valid number greater than 0");
-      response = await setLimit(max, data.settings);
+      response = await setLimit(max, data.settings, data.lang);
     }
 
     if (input === "action") {
       const action = args[1]?.toUpperCase();
       if (!action || !["TIMEOUT", "KICK", "BAN"].includes(action))
         return message.safeReply("Not a valid action. Action can be `Timeout`/`Kick`/`Ban`");
-      response = await setAction(message.guild, action, data.settings);
+      response = await setAction(message.guild, action, data.settings, data.lang);
     }
 
     await message.safeReply(response);
@@ -95,24 +95,24 @@ module.exports = {
 
     let response;
     if (sub === "limit") {
-      response = await setLimit(interaction.options.getInteger("amount"), data.settings);
+      response = await setLimit(interaction.options.getInteger("amount"), data.settings, data.lang);
     }
 
     if (sub === "action") {
-      response = await setAction(interaction.guild, interaction.options.getString("action"), data.settings);
+      response = await setAction(interaction.guild, interaction.options.getString("action"), data.settings, data.lang);
     }
 
     await interaction.followUp(response);
   },
 };
 
-async function setLimit(limit, settings) {
+async function setLimit(limit, settings, lang) {
   settings.max_warn.limit = limit;
   await settings.save();
   return `Configuration saved! Maximum warnings is set to ${limit}`;
 }
 
-async function setAction(guild, action, settings) {
+async function setAction(guild, action, settings, lang) {
   if (action === "TIMEOUT") {
     if (!guild.members.me.permissions.has("ModerateMembers")) {
       return "I do not permission to timeout members";

@@ -37,17 +37,17 @@ module.exports = {
       targetChannel = message.mentions.channels.first();
     }
 
-    const response = await setChannel(targetChannel, data.settings);
+    const response = await setChannel(targetChannel, data.settings, data.lang);
     return message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
-    const response = await setChannel(interaction.options.getChannel("channel"), data.settings);
+    const response = await setChannel(interaction.options.getChannel("channel"), data.settings, data.lang);
     return interaction.followUp(response);
   },
 };
 
-async function setChannel(targetChannel, settings) {
+async function setChannel(targetChannel, settings,lang) {
   if (targetChannel && !targetChannel.canSendEmbeds()) {
     return "Ugh! I cannot send logs to that channel? I need the `Write Messages` and `Embed Links` permissions in that channel";
   }

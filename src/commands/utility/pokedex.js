@@ -37,12 +37,12 @@ module.exports = {
 
   async interactionRun(interaction) {
     const pokemon = interaction.options.getString("pokemon");
-    const response = await pokedex(pokemon);
+    const response = await pokedex(pokemon, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function pokedex(pokemon) {
+async function pokedex(pokemon, lang) {
   const response = await getJson(`https://pokeapi.glitch.me/v1/pokemon/${pokemon}`);
   if (response.status === 404) return "```The given pokemon is not found```";
   if (!response.success) return MESSAGES.API_ERROR;

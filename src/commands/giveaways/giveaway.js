@@ -171,7 +171,7 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     const sub = args[0]?.toLowerCase();
     let response;
 
@@ -180,43 +180,43 @@ module.exports = {
       if (!args[1]) return message.safeReply("Incorrect usage! Please provide a channel to start the giveaway in");
       const match = message.guild.findMatchingChannels(args[1]);
       if (!match.length) return message.safeReply(`No channel found matching ${args[1]}`);
-      return await runModalSetup(message, match[0]);
+      return await runModalSetup(message, match[0], data.lang);
     }
 
     //
     else if (sub === "pause") {
       const messageId = args[1];
-      response = await pause(message.member, messageId);
+      response = await pause(message.member, messageId, data.lang);
     }
 
     //
     else if (sub === "resume") {
       const messageId = args[1];
-      response = await resume(message.member, messageId);
+      response = await resume(message.member, messageId, data.lang);
     }
 
     //
     else if (sub === "end") {
       const messageId = args[1];
-      response = await end(message.member, messageId);
+      response = await end(message.member, messageId, data.lang);
     }
 
     //
     else if (sub === "reroll") {
       const messageId = args[1];
-      response = await reroll(message.member, messageId);
+      response = await reroll(message.member, messageId, data.lang);
     }
 
     //
     else if (sub === "list") {
-      response = await list(message.member);
+      response = await list(message.member, data.lang);
     }
 
     //
     else if (sub === "edit") {
       const messageId = args[1];
       if (!messageId) return message.safeReply("Incorrect usage! Please provide a message id");
-      return await runModalEdit(message, messageId);
+      return await runModalEdit(message, messageId, data.lang);
     }
 
     //
@@ -232,36 +232,36 @@ module.exports = {
     //
     if (sub === "start") {
       const channel = interaction.options.getChannel("channel");
-      return await runModalSetup(interaction, channel);
+      return await runModalSetup(interaction, channel, data.lang);
     }
 
     //
     else if (sub === "pause") {
       const messageId = interaction.options.getString("message_id");
-      response = await pause(interaction.member, messageId);
+      response = await pause(interaction.member, messageId, data.lang);
     }
 
     //
     else if (sub === "resume") {
       const messageId = interaction.options.getString("message_id");
-      response = await resume(interaction.member, messageId);
+      response = await resume(interaction.member, messageId, data.lang);
     }
 
     //
     else if (sub === "end") {
       const messageId = interaction.options.getString("message_id");
-      response = await end(interaction.member, messageId);
+      response = await end(interaction.member, messageId, data.lang);
     }
 
     //
     else if (sub === "reroll") {
       const messageId = interaction.options.getString("message_id");
-      response = await reroll(interaction.member, messageId);
+      response = await reroll(interaction.member, messageId, data.lang);
     }
 
     //
     else if (sub === "list") {
-      response = await list(interaction.member);
+      response = await list(interaction.member, data.lang);
     }
 
     //
@@ -273,7 +273,7 @@ module.exports = {
       }
       const newPrize = interaction.options.getString("new_prize");
       const newWinnerCount = interaction.options.getInteger("new_winners");
-      response = await edit(interaction.member, messageId, addDurationMs, newPrize, newWinnerCount);
+      response = await edit(interaction.member, messageId, addDurationMs, newPrize, newWinnerCount, data.lang);
     }
 
     //
@@ -288,7 +288,7 @@ module.exports = {
  * @param {import('discord.js').Message|import('discord.js').CommandInteraction} args0
  * @param {import('discord.js').GuildTextBasedChannel} targetCh
  */
-async function runModalSetup({ member, channel, guild }, targetCh) {
+async function runModalSetup({ member, channel, guild }, targetCh, lang) {
   const SETUP_PERMS = ["ViewChannel", "SendMessages", "EmbedLinks"];
 
   // validate channel perms
@@ -408,7 +408,7 @@ async function runModalSetup({ member, channel, guild }, targetCh) {
     }
   }
 
-  const response = await start(member, targetCh, duration, prize, winners, host, allowedRoles);
+  const response = await start(member, targetCh, duration, prize, winners, host, allowedRoles, lang);
   await modal.editReply(response);
 }
 
@@ -417,7 +417,7 @@ async function runModalSetup({ member, channel, guild }, targetCh) {
  * @param {import('discord.js').Message} message
  * @param {string} messageId
  */
-async function runModalEdit(message, messageId) {
+async function runModalEdit(message, messageId, lang) {
   const { member, channel } = message;
 
   const buttonRow = new ActionRowBuilder().addComponents(
@@ -497,6 +497,6 @@ async function runModalEdit(message, messageId) {
     return modal.editReply("Update has been cancelled. You did not specify a valid winner count");
   }
 
-  const response = await edit(message.member, messageId, addDuration, newPrize, newWinnerCount);
+  const response = await edit(message.member, messageId, addDuration, newPrize, newWinnerCount, lang);
   await modal.editReply(response);
 }

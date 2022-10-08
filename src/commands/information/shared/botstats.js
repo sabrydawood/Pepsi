@@ -7,7 +7,7 @@ const { stripIndent } = require("common-tags");
 /**
  * @param {import('@structures/BotClient')} client
  */
-module.exports = (client) => {
+module.exports = (client, lang) => {
   // STATS
   const guilds = client.guilds.cache.size;
   const channels = client.channels.cache.size;

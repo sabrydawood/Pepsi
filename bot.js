@@ -1,6 +1,5 @@
-
+require('module-alias/register');
 require("dotenv").config();
-require("module-alias/register");
 
 // register extenders
 require("@helpers/extenders/Message");
@@ -10,6 +9,7 @@ require("@helpers/extenders/GuildChannel");
 //const { checkForUpdates } = require("@helpers/BotUtils");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { BotClient } = require("@src/structures");
+const { launch } = require("@root/dashboard/app");
 const { validateConfiguration } = require("@helpers/Validator");
 
 validateConfiguration();
@@ -31,17 +31,17 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
   // check for updates
  // await checkForUpdates();
 
+
+  // start the client
+  await client.login(process.env.BOT_TOKEN);
+  
   // start the dashboard
   if (client.config.DASHBOARD.enabled) {
     client.logger.log("Launching dashboard");
     try {
-      const { launch } = require("@root/dashboard/app");
-      await launch(client);
+       launch(client);
     } catch (ex) {
       client.logger.error("Failed to launch dashboard", ex);
     }
-  }
-
-  // start the client
-  await client.login(process.env.BOT_TOKEN);
+      }
 })();

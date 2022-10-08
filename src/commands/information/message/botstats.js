@@ -11,11 +11,11 @@ module.exports = {
   cooldown: 5,
   command: {
     enabled: true,
-    aliases: ["botstat", "botinfo"],
+    aliases: ["bot", "botinfo"],
   },
 
-  async messageRun(message, args) {
-    const response = botstats(message.client);
+  async messageRun(message, args, data) {
+    const response = botstats(message.client, data.lang);
     await message.safeReply(response);
   },
 };

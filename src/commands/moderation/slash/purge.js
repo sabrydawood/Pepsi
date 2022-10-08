@@ -150,7 +150,7 @@ module.exports = {
     ],
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const { options, member } = interaction;
 
     const sub = options.getSubcommand();
@@ -160,30 +160,30 @@ module.exports = {
     let response;
     switch (sub) {
       case "all":
-        response = await purgeMessages(member, channel, "ALL", amount);
+        response = await purgeMessages(member, channel, "ALL", amount, data.lang);
         break;
 
       case "attachments":
-        response = await purgeMessages(member, channel, "ATTACHMENT", amount);
+        response = await purgeMessages(member, channel, "ATTACHMENT", amount, data.lang);
         break;
 
       case "bots":
-        response = await purgeMessages(member, channel, "BOT", amount);
+        response = await purgeMessages(member, channel, "BOT", amount, data.lang);
         break;
 
       case "links":
-        response = await purgeMessages(member, channel, "LINK", amount);
+        response = await purgeMessages(member, channel, "LINK", amount, data.lang);
         break;
 
       case "token": {
         const token = interaction.options.getString("token");
-        response = await purgeMessages(member, channel, "TOKEN", amount, token);
+        response = await purgeMessages(member, channel, "TOKEN", amount, token, data.lang);
         break;
       }
 
       case "user": {
         const user = interaction.options.getUser("user");
-        response = await purgeMessages(member, channel, "TOKEN", amount, user);
+        response = await purgeMessages(member, channel, "TOKEN", amount, user, data.lang);
         break;
       }
 
