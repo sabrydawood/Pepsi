@@ -199,7 +199,7 @@ module.exports = {
 
     // desc
     else if (type === "desc") {
-      if (args.length < 2) return message.safeReply("Insufficient arguments! Please provide valid content");
+      if (args.length < 2) return message.safeReply(data.lang.INVALID_CONTENT);
       const desc = args.slice(1).join(" ");
       response = await setDescription(settings, desc, data.lang);
     }
@@ -208,20 +208,20 @@ module.exports = {
     else if (type === "thumbnail") {
       const status = args[1]?.toUpperCase();
       if (!status || !["ON", "OFF"].includes(status))
-        return message.safeReply("Invalid status. Value must be `on/off`");
+        return message.safeReply(data.lang.INVALID_STATUS);
       response = await setThumbnail(settings, status, data.lang);
     }
 
     // color
     else if (type === "color") {
       const color = args[1];
-      if (!color || !isHex(color)) return message.safeReply("Invalid color. Value must be a valid hex color");
+      if (!color || !isHex(color)) return message.safeReply(data.lang.INVALID_COLOR);
       response = await setColor(settings, color, data.lang);
     }
 
     // footer
     else if (type === "footer") {
-      if (args.length < 2) return message.safeReply("Insufficient arguments! Please provide valid content");
+      if (args.length < 2) return message.safeReply(data.lang.INVALID_CONTENT);
       const content = args.slice(1).join(" ");
       response = await setFooter(settings, content, data.lang);
     }
@@ -229,12 +229,12 @@ module.exports = {
     // image
     else if (type === "image") {
       const url = args[1];
-      if (!url) return message.safeReply("Invalid image url. Please provide a valid url");
+      if (!url) return message.safeReply(data.lang.INVALID_URL);
       response = await setImage(settings, url, data.lang);
     }
 
     //
-    else response = "Invalid command usage!";
+    else response = data.lang.INVALID_USAGE;
     return message.safeReply(response);
   },
 
@@ -278,7 +278,7 @@ module.exports = {
         break;
 
       default:
-        response = "Invalid subcommand";
+        response = data.lang.INVALID_SUBCOMMAND;
     }
 
     return interaction.followUp(response);
@@ -287,69 +287,69 @@ module.exports = {
 
 async function sendPreview(settings, member, lang) {
 		let l = lang.COMMANDS
-  if (!settings.welcome?.enabled) return "Welcome message not enabled in this server";
+  if (!settings.welcome?.enabled) return NOT_ENABLED;
 
   const targetChannel = member.guild.channels.cache.get(settings.welcome.channel);
-  if (!targetChannel) return "No channel is configured to send welcome message";
+  if (!targetChannel) return l.NO_CONFIG;
 
   const response = await buildGreeting(member, "WELCOME", settings.welcome);
   await targetChannel.safeSend(response);
 
-  return `Sent welcome preview to ${targetChannel.toString()}`;
+  return `${PREV_CHANNEL} ${targetChannel.toString()}`;
 }
 
 async function setStatus(settings, status, lang) {
-		let l = lang.COMMANDS
+	let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   const enabled = status.toUpperCase() === "ON" ? true : false;
   settings.welcome.enabled = enabled;
   await settings.save();
-  return `Configuration saved! Welcome message ${enabled ? "enabled" : "disabled"}`;
+  return `${l.SETTINGS_DONE} ${enabled ? lang.ENABLED :lang.DISABLED}`;
 }
 
 async function setChannel(settings, channel, lang) {
-		let l = lang.COMMANDS
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   if (!channel.canSendEmbeds()) {
     return (
-      "Ugh! I cannot send greeting to that channel? I need the `Write Messages` and `Embed Links` permissions in " +
+   l.NO_PERMS +
       channel.toString()
     );
   }
   settings.welcome.channel = channel.id;
   await settings.save();
-  return `Configuration saved! Welcome message will be sent to ${channel ? channel.toString() : "Not found"}`;
+  return `${l.SETTINGS_DONE} ${channel ? channel.toString() : lang.NOT_FOUND}`;
 }
 
 async function setDescription(settings, desc, lang) {
-		let l = lang.COMMANDS
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   settings.welcome.embed.description = desc;
   await settings.save();
-  return "Configuration saved! Welcome message updated";
+  return l.SETTINGS_DONE;
 }
 
 async function setThumbnail(settings, status, lang) {
-		let l = lang.COMMANDS
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   settings.welcome.embed.thumbnail = status.toUpperCase() === "ON" ? true : false;
   await settings.save();
-  return "Configuration saved! Welcome message updated";
+  return l.SETTINGS_DONE;
 }
 
 async function setColor(settings, color, lang) {
-		let l = lang.COMMANDS
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   settings.welcome.embed.color = color;
   await settings.save();
-  return "Configuration saved! Welcome message updated";
+  return l.SETTINGS_DONE;
 }
 
 async function setFooter(settings, content, lang) {
-		let l = lang.COMMANDS
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   settings.welcome.embed.footer = content;
   await settings.save();
-  return "Configuration saved! Welcome message updated";
+  return l.SETTINGS_DONE;
 }
 
 async function setImage(settings, url, lang) {
-		let l = lang.COMMANDS
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
   settings.welcome.embed.image = url;
   await settings.save();
-  return "Configuration saved! Welcome message updated";
+  return l.SETTINGS_DONE;
 }

@@ -162,14 +162,14 @@ async function antiGhostPing(settings, input, lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
   settings.automod.anti_ghostping = status;
   await settings.save();
-  return `${lang.COMMANDS.ADMIN.GHOSTPING_DONE}\` ${status ? "enabled" : "disabled"}\``;
+  return `${lang.COMMANDS.ADMIN.AUTO_MOD.ANTI_COMMAND.GHOSTPING_DONE}\` ${status ? lang.ENABELD : lang.DISABELD}\``;
 }
 
 async function antiSpam(settings, input, lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
   settings.automod.anti_spam = status;
   await settings.save();
-  return `${lang.COMMANDS.ADMIN.ANITESPAM_DONE}\` ${status ? "enabled" : "disabled"}\``;
+  return `${lang.COMMANDS.ADMIN.AUTO_MOD.ANTI_COMMAND.ANITESPAM_DONE}\` ${status ? lang.ENABELD : lang.DISABELD }\``;
 }
 
 async function antiMassMention(settings, input, threshold, lang) {
@@ -180,5 +180,5 @@ async function antiMassMention(settings, input, threshold, lang) {
     settings.automod.anti_massmention = threshold;
   }
   await settings.save();
-  return `${lang.COMMANDS.ADMIN.MASSMENTION_DONE}\` ${status ? "enabled" : "disabled"}\``;
+  return `${lang.COMMANDS.ADMIN.AUTO_MOD.ANTI_COMMAND.MASSMENTION_DONE}\` ${status ? lang.ENABELD : lang.DISABELD}\``;
 }

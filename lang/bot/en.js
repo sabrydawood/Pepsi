@@ -2,19 +2,24 @@ module.exports = {
 REQ_BY: "Requested by {author}",
 INVALID_USAGE:"Invalid command usage!",
 INVALID_STATUS:"Invalid status. Value must be `on/off`",
+INVALID_URL : "Please provide a valid url",
+INVALID_CONTENT:"Insufficient arguments! Please provide valid content",
+INVALID_COLOR : "Invalid color. Value must be a valid hex color",
+INVALID_SUBCOMMAND: "Invalid subcommand",
 MAX_LINES_ERR: "Must be a valid number greater than 0",
 NOT_NUMBER: "Please enter a valid number input",
 NO_PERMISSIONS: "Sorry but i don't have permission to fire this Action",
 NO_CHANNEL: "No channel found matching {channel}",
 ENABELD: "enabled",
-	DISABELD: "disabled",
+DISABELD: "disabled",
+	NOT_FOUND: "Not found",
 COMMANDS:{
 	
 ADMIN:{
   AUTO_MOD:{
     ANTI_COMMAND:{
       GHOSTPING_DONE:"Configuration saved! Anti-Ghostping is now",
-			ANTISPAM_DONE:"Antispam detection is now",
+			ANITESPAM_DONE:"Antispam detection is now",
 			MASSMENTION_DONE:"Mass mention detection is now"
     },
     AUTO_DELETE:{
@@ -55,14 +60,48 @@ STRIKE_DONE:`Configuration saved! Maximum strikes set to {strikes}`,
     },
   },
   GREETINGS:{
-    FARWELL:{},
-    WELCOME:{}
+    FARWELL:{
+			NOT_ENABLED: "Farewell message not enabled in this server",
+			NO_CONFIG: "No channel is configured to send farewell message",
+			PREV_CHANNEL: "Sent farewell preview to",
+			NO_PERMS: 
+      "Ugh! I cannot send greeting to that channel? I need the `Write Messages` and `Embed Links` permissions in ",
+			SETTINGS_DONE: "Configuration saved! Farewell message updated",
+			
+		},
+    WELCOME:{
+			NOT_ENABLED: "welcome message not enabled in this server",
+			NO_CONFIG: "No channel is configured to send welcome message",
+			PREV_CHANNEL: "Sent welcome preview to",
+			NO_PERMS: 
+      "Ugh! I cannot send greeting to that channel? I need the `Write Messages` and `Embed Links` permissions in ",
+			SETTINGS_DONE: "Configuration saved! Welcome message updated",
+		}
   },
   REACTION_ROLL:{
-    ADD_COMMAND:{},
-    REMOVE_COMMAND:{}
+    ADD:{
+			NO_CH : "No channels found matching",
+			NO_ROLE: "No roles found matching",
+			NEED_PERMS: "You need the following permissions in",
+			ERR_ID: "Could not fetch message. Did you provide a valid messageId?",
+			BOT_ROLES: "I cannot assign bot roles.",
+			EVERY_ROLE: "You cannot assign the everyone role.",
+			ROLE_POSTION: "Oops! I cannot add/remove members to that role. Is that role higher than mine?",
+			EMOJI_OUTSERVER: "This emoji does not belong to this server",
+			FAIL_REACT: "Oops! Failed to react. Is this a valid emoji",
+			ROLE_CONFIGED: "A role is already configured for this emoji. Overwriting data,\n",
+			DONE: "Done! Configuration saved"
+		},
+    REMOVE:{
+			ERR : "Oops! An unexpected error occurred. Try again later",
+			NEED_PERMS: "You need the following permissions in",
+			ERR_ID: "Could not fetch message. Did you provide a valid messageId?",
+			DONE: "Done! Configuration saved"
+		}
   },
-  AUTO_ROLE:{},
+  AUTO_ROLE:{
+		
+	},
   COUNTER_SETUP:{},
   FLAG_TRANSLATION:{},
   MAX_WARN:{},
@@ -195,13 +234,13 @@ SOCIAL:{
 	REP:{},
 },
 STATS:{
-	RANK:
-		STATS:
-	STATS_TRACKING
+	RANK:{},
+	STATS:{},
+	STATS_TRACKING:{},
 },
 SUGGESTIONS:{
 	SUGGEST:{},
-		SUGGESTION:{}
+		SUGGESTION:{},
 },
 TICKET:{
 	TICKET:{},

@@ -51,12 +51,12 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const targetChannel = message.guild.findMatchingChannels(args[0]);
-    if (targetChannel.length === 0) return message.safeReply(`No channels found matching ${args[0]}`);
+    if (targetChannel.length === 0) return message.safeReply(` ${data.lang.ADMIN.REACTION_ROLL.ADD.NO_CH} ${args[0]}`);
 
     const targetMessage = args[1];
 
     const role = message.guild.findMatchingRoles(args[3])[0];
-    if (!role) return message.safeReply(`No roles found matching ${args[3]}`);
+    if (!role) return message.safeReply(`${data.lang.ADMIN.REACTION_ROLL.ADD.NO_ROLE} ${args[3]}`);
 
     const reaction = args[2];
 
@@ -76,46 +76,47 @@ module.exports = {
 };
 
 async function addRR(guild, channel, messageId, reaction, role, lang) {
+	let l = lang.COMMANDS.ADMIN.REACTION_ROLL.ADD
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
-    return `You need the following permissions in ${channel.toString()}\n${parsePermissions(channelPerms)}`;
+    return `${l.NEED_PERMS} ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }
 
   let targetMessage;
   try {
     targetMessage = await channel.messages.fetch({ message: messageId });
   } catch (ex) {
-    return "Could not fetch message. Did you provide a valid messageId?";
+    return l.ERR_ID;
   }
 
   if (role.managed) {
-    return "I cannot assign bot roles.";
+    return l.BOT_ROLES;
   }
 
   if (guild.roles.everyone.id === role.id) {
-    return "You cannot assign the everyone role.";
+    return l.EVERY_ROLE ;
   }
 
   if (guild.members.me.roles.highest.position < role.position) {
-    return "Oops! I cannot add/remove members to that role. Is that role higher than mine?";
+    return l.ROLE_POSTION;
   }
 
   const custom = parseEmoji(reaction);
-  if (custom.id && !guild.emojis.cache.has(custom.id)) return "This emoji does not belong to this server";
+  if (custom.id && !guild.emojis.cache.has(custom.id)) return l.EMOJI_OUTSERVER;
   const emoji = custom.id ? custom.id : custom.name;
 
   try {
     await targetMessage.react(emoji);
   } catch (ex) {
-    return `Oops! Failed to react. Is this a valid emoji: ${reaction} ?`;
+    return `${l.FAIL_REACT}: ${reaction} ?`;
   }
 
   let reply = "";
   const previousRoles = getReactionRoles(guild.id, channel.id, targetMessage.id);
   if (previousRoles.length > 0) {
     const found = previousRoles.find((rr) => rr.emote === emoji);
-    if (found) reply = "A role is already configured for this emoji. Overwriting data,\n";
+    if (found) reply = l.ROLE_CONFIGED ;
   }
 
   await addReactionRole(guild.id, channel.id, targetMessage.id, emoji, role.id);
-  return (reply += "Done! Configuration saved");
+  return (reply += l.DONE);
 }

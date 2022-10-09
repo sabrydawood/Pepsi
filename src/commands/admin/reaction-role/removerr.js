@@ -57,23 +57,24 @@ module.exports = {
 };
 
 async function removeRR(guild, channel, messageId, lang) {
+	let l = lang.COMMANDS.ADMIN.REACTION_ROLL.REMOVE
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
-    return `You need the following permissions in ${channel.toString()}\n${parsePermissions(channelPerms)}`;
+    return `${l.NEED_PERMS} ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }
 
   let targetMessage;
   try {
     targetMessage = await channel.messages.fetch({ message: messageId });
   } catch (ex) {
-    return "Could not fetch message. Did you provide a valid messageId?";
+    return l.ERR_ID ;
   }
 
   try {
     await removeReactionRole(guild.id, channel.id, targetMessage.id);
     await targetMessage.reactions?.removeAll();
   } catch (ex) {
-    return "Oops! An unexpected error occurred. Try again later";
+    return l.ERR;
   }
 
-  return "Done! Configuration updated";
+  return l.DONE ;
 }

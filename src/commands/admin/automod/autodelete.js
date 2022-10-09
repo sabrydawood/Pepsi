@@ -133,7 +133,7 @@ module.exports = {
     //
     else if (sub === "invites") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply(lang.INVALID_STATUS);
+      if (!["on", "off"].includes(status)) return message.safeReply(data.lang.INVALID_STATUS);
       response = await antiInvites(settings, status, data.lang);
     }
 
@@ -154,7 +154,7 @@ module.exports = {
     }
 
     //
-    else response = data.lang.INVALID_USAGE ;
+    else response = data.lang.INVALID_USAGE
     await message.safeReply(response);
   },
 
@@ -168,7 +168,7 @@ module.exports = {
     } else if (sub === "invites") response = await antiInvites(settings, interaction.options.getString("status"), data.lang);
     else if (sub == "links") response = await antilinks(settings, interaction.options.getString("status"), data.lang);
     else if (sub === "maxlines") response = await maxLines(settings, interaction.options.getInteger("amount"), data.lang);
-    else response = data.lang.INVALID_USAGE ;
+    else response = data.lang.INVALID_USAGE
 
     await interaction.followUp(response);
   },
@@ -178,23 +178,23 @@ async function antiAttachments(settings, input,lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
   settings.automod.anti_attachments = status;
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.AUTO_DELETE.MESSAGE +
-    status ? + lang.COMMANDS.AUTO_MOD.AUTO_DELETE.ATTACH_DONE : lang.COMMANDS.AUTO_MOD.AUTO_DELETE.ATTACH_DONE2;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.MESSAGE +
+    status ? lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.ATTACH_DONE : lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.ATTACH_DONE2
 }
 
 async function antiInvites(settings, input, lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
   settings.automod.anti_invites = status;
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.AUTO_DELETE.MESSAGE +
-    status ? lang.COMMANDS.AUTO_MOD.AUTO_DELETE.INVITES_DONE : lang.COMMANDS.AUTO_MOD.AUTO_DELETE.INVITES_DONE2;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.MESSAGE +
+    status ? lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.INVITES_DONE : lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.INVITES_DONE2
 }
 
 async function antilinks(settings, input,lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
   settings.automod.anti_links = status;
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.AUTO_DELETE.MESSAGE + status ? lang.COMMANDS.AUTO_MOD.AUTO_DELETE.LINKS_DONE : lang.COMMANDS.AUTO_MOD.AUTO_DELETE.LINKS_DONE2 ;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.MESSAGE + status ? lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.LINKS_DONE : lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.LINKS_DONE2 ;
 }
 
 async function maxLines(settings, input, lang) {
@@ -205,7 +205,6 @@ async function maxLines(settings, input, lang) {
   await settings.save();
   return 
     input === 0
-      ? lang.COMMANDS.AUTO_MOD.AUTO_DELETE.MAX_LINES_DONE
-      : lang.COMMANDS.AUTO_MOD.AUTO_DELETE.MAX_LINES_DONE2.replace("{input}", input),
-  ;
+      ? lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.MAX_LINES_DONE
+      : lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_DELETE.MAX_LINES_DONE2.replace("{input}", input);
 }

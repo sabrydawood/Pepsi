@@ -168,7 +168,7 @@ module.exports = {
     } else if (input === "action") {
       const action = args[1].toUpperCase();
       if (!action || !["TIMEOUT", "KICK", "BAN"].includes(action))
-        return message.safeReply(data.lang.COMMANDS.AUTO_MOD.INVALID_ACTION);
+        return message.safeReply(data.lang.COMMANDS.ADMIN.AUTO_MOD.INVALID_ACTION);
       response = await setAction(settings, message.guild, action, data.lang);
     } else if (input === "debug") {
       const status = args[1].toLowerCase();
@@ -231,41 +231,41 @@ async function getStatus(settings, guild, lang) {
 
   const logChannel = settings.modlog_channel
     ? guild.channels.cache.get(settings.modlog_channel).toString()
-    : lang.COMMANDS.AUTO_MOD.NO_CONFIG ;
+    : lang.COMMANDS.ADMIN.AUTO_MOD.NO_CONFIG ;
 
   // String Builder
   let desc = stripIndent`
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC1}: ${automod.max_lines || "NA"}
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC2}: ${automod.anti_massmention > 0 ? "✓" : "✕"}
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC3}: ${automod.anti_attachment ? "✓" : "✕"}
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC4}: ${automod.anti_links ? "✓" : "✕"}
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC5}: ${automod.anti_invites ? "✓" : "✕"}
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC6}: ${automod.anti_spam ? "✓" : "✕"}
-    ❯ ${lang.COMMANDS.AUTO_MOD.DESC7}: ${automod.anti_ghostping ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC1}: ${automod.max_lines || "NA"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC2}: ${automod.anti_massmention > 0 ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC3}: ${automod.anti_attachment ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC4}: ${automod.anti_links ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC5}: ${automod.anti_invites ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC6}: ${automod.anti_spam ? "✓" : "✕"}
+    ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.DESC7}: ${automod.anti_ghostping ? "✓" : "✕"}
   `;
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: lang.COMMANDS.AUTO_MOD.EMBED_AUTHOR , icon_url: guild.iconURL() })
+    .setAuthor({ name: lang.COMMANDS.ADMIN.AUTO_MOD.EMBED_AUTHOR , icon_url: guild.iconURL() })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {
-        name: lang.COMMANDS.AUTO_MOD.EMBED_F1,
+        name: lang.COMMANDS.ADMIN.AUTO_MOD.EMBED_F1,
         value: logChannel,
         inline: true,
       },
       {
-        name: lang.COMMANDS.AUTO_MOD.EMBED_F3,
+        name: lang.COMMANDS.ADMIN.AUTO_MOD.EMBED_F3,
         value: automod.strikes.toString(),
         inline: true,
       },
       {
-        name: lang.COMMANDS.AUTO_MOD.EMBED_F3,
+        name: lang.COMMANDS.ADMIN.AUTO_MOD.EMBED_F3,
         value: automod.action,
         inline: true,
       },
       {
-        name: lang.COMMANDS.AUTO_MOD.EMBED_F4,
+        name: lang.COMMANDS.ADMIN.AUTO_MOD.EMBED_F4,
         value: automod.debug ? "✓" : "✕",
         inline: true,
       }
@@ -277,7 +277,7 @@ async function getStatus(settings, guild, lang) {
 async function setStrikes(settings, strikes, lang) {
   settings.automod.strikes = strikes;
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.STRIKE_DONE.replace("{strike}", strikes);
+  return lang.COMMANDS.ADMIN.AUTO_MOD.STRIKE_DONE.replace("{strike}", strikes);
 }
 
 async function setAction(settings, guild, action, lang) {
@@ -301,19 +301,19 @@ async function setAction(settings, guild, action, lang) {
 
   settings.automod.action = action;
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.ACTION_DONE.replace("{action}", action);
+  return lang.COMMANDS.ADMIN.AUTO_MOD.ACTION_DONE.replace("{action}", action);
 }
 
 async function setDebug(settings, input, lang) {
   const status = input.toLowerCase() === "on" ? true : false;
   settings.automod.debug = status;
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.DEBUG_DONE + `${status ? lang.ENABELD: lang.DIASBELD}`;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.DEBUG_DONE + `${status ? lang.ENABELD: lang.DIASBELD}`;
 }
 
 function getWhitelist(guild, settings, lang) {
   const whitelist = settings.automod.wh_channels;
-  if (!whitelist || !whitelist.length) return lang.COMMANDS.AUTO_MOD.NO_WHITELISTED ;
+  if (!whitelist || !whitelist.length) return lang.COMMANDS.ADMIN.AUTO_MOD.NO_WHITELISTED ;
 
   const channels = [];
   for (const channelId of whitelist) {
@@ -322,19 +322,19 @@ function getWhitelist(guild, settings, lang) {
     if (channel) channels.push(channel.toString());
   }
 
-  return lang.COMMANDS.AUTO_MOD.WHITELISTED_CH + `${channels.join(", ")}`;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.WHITELISTED_CH + `${channels.join(", ")}`;
 }
 
 async function whiteListAdd(settings, channelId, lang) {
-  if (settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.AUTO_MOD.ALR_WHITELIATED;
+  if (settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.ADMIN.AUTO_MOD.ALR_WHITELIATED;
   settings.automod.wh_channels.push(channelId);
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.WHITELISTED ;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.WHITELISTED ;
 }
 
 async function whiteListRemove(settings, channelId, lang) {
-  if (!settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.AUTO_MOD.NOT_WHITELISTED ;
+  if (!settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.ADMIN.AUTO_MOD.NOT_WHITELISTED ;
   settings.automod.wh_channels.splice(settings.automod.wh_channels.indexOf(channelId), 1);
   await settings.save();
-  return lang.COMMANDS.AUTO_MOD.REMOVED_WHITELISTED;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.REMOVED_WHITELISTED;
 }

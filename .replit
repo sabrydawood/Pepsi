@@ -1,6 +1,6 @@
 
 hidden = [".config"]
-run = "npm run start"
+run = "npm run dev"
 
 [[hints]]
 regex = "Error \\[ERR_REQUIRE_ESM\\]"
@@ -17,11 +17,11 @@ npm_config_prefix = "/home/runner/$REPL_SLUG/.config/npm/node_global"
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix", ".config"]
 
-#[packager]
-#language = "nodejs"
+[packager]
+language = "nodejs"
 
-  #[packager.features]
-  #packageSearch = true
+  [packager.features]
+  packageSearch = true
   #guessImports = true
  # enabledForHosting = false
 

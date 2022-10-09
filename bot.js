@@ -1,6 +1,6 @@
 require('module-alias/register');
 require("dotenv").config();
-
+//require("./Manger.js")
 // register extenders
 require("@helpers/extenders/Message");
 require("@helpers/extenders/Guild");
@@ -32,8 +32,15 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
  // await checkForUpdates();
 
 
-  // start the client
+  // start the client	
   await client.login(process.env.BOT_TOKEN);
+	
+//	client.on('debug', info => client.logger.log(info));
+	/*let res = await client.shard.broadcastEval((c) => c.guilds.cache.map((guild) => 
+    guild.members.cache.size));*/
+
+
+
   
   // start the dashboard
   if (client.config.DASHBOARD.enabled) {
@@ -44,4 +51,6 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
       client.logger.error("Failed to launch dashboard", ex);
     }
       }
+	//console.log(client.emojie.APROVED);
+	
 })();
