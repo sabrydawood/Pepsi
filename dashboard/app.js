@@ -1,7 +1,7 @@
 const config = require("@root/config"),
   utils = require("./utils"),
   CheckAuth = require("./auth/CheckAuth");
-
+const flash = require('connect-flash');
 module.exports.launch = async (client) => {
   /* Init express app */
 
@@ -23,15 +23,18 @@ module.exports.launch = async (client) => {
   app
     .use(express.json()) // For post methods
     .use(express.urlencoded({ extended: true }))
+		.use(flash())
     .engine("html", require("ejs").renderFile) // Set the engine to html (for ejs template)
     .set("view engine", "ejs")
     .use(express.static(path.join(__dirname, "/public"))) // Set the css and js folder to ./public
     .set("views", path.join(__dirname, "/views")) // Set the ejs templates to ./views
-    .set("port", config.DASHBOARD.port) // Set the dashboard port
+    .set("port", config.DASHBOARD.port)// Set the dashboard port
     .use(session({ secret: process.env.SESSION_PASSWORD, resave: false, saveUninitialized: false })) // Set the express session password and configuration
     .use(async function (req, res, next) {
       req.user = req.session.user;
       req.client = client;
+			res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
       if (req.user && req.url !== "/") req.userInfos = await utils.fetchUser(req.user, req.client);
       next();
     })
@@ -39,7 +42,7 @@ module.exports.launch = async (client) => {
     .use("/logout", logoutRouter)
     .use("/manage", guildManagerRouter)
     .use("/", mainRouter)
-    .use(CheckAuth, function (req, res) {
+.use(CheckAuth, function (req, res) {
       res.status(404).render("404", {
         user: req.userInfos,
         currentURL: `${req.protocol}://${req.get("host")}${req.originalUrl}`,

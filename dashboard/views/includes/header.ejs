@@ -37,4 +37,26 @@
       </ul>
     </div>
   </nav>
+	<% if(success != ''){ %>
+  <div class="fixed-top alert alert-success">
+   <button type="button" class="close" data-dismiss="alert">×</button>
+    <div class="alert-icon">
+    <span class="oi oi-flag"></span>
+                        </div>
+ <p class="mb-0"> <strong> Success! </strong>
+		<%=success%> </p>
+		<div id='progressbar'></div>
+                      </div>
+                  <% } %> 
+     <% if(error != ''){ %>
+   <div class="fixed-top alert alert-danger">
+   <button type="button" class="close" data-dismiss="alert">×</button>
+    <div class="alert-icon">
+    <span class="oi oi-flag"></span>
+                        </div>
+  <p class="mb-0"><strong> Failed </strong> <%=error%> </p>
+		
+		<div id='progressbar'></div>
+                      </div>
+                <% } %> 
 </header>

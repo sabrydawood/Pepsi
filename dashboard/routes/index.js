@@ -3,7 +3,6 @@ const express = require("express"),
   router = express.Router();
 
 router.get("/", (req, res ) => {
-  console.log(CheckAuth)
        res.render("login",{
   user : req.client.user.username,
   avatar :req.client.user.avatarURL(),
@@ -12,6 +11,7 @@ router.get("/", (req, res ) => {
 });
 
 router.get("/", CheckAuth, async (req, res) => {
+	await req.flash('success', 'SETTINGS UPDATED');
   res.redirect("/selector");
 });
 

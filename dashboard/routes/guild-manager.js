@@ -93,6 +93,7 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
     data.flag_translation = data.flag_translation === "on" ? true : false;
     if (data.flag_translation !== (settings.flag_translation.enabled || false)) {
       settings.flag_translation.enabled = data.flag_translation;
+			
     }
 
     data.invite_tracking = data.invite_tracking === "on" ? true : false;
@@ -195,11 +196,18 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
       settings.automod.wh_channels = data.channels.map((ch) => guild.channels.cache.find((c) => "#" + c.name === ch)?.id)
         .filter((c) => c);
     }
+		
+
   }
 
   await settings.save();
-  req.flash('success', 'SETTINGS UPDATED');
-       
+   await req.flash('success', 'SETTINGS UPDATED');
+		/* res.json({
+    success: true,
+		status: 303,
+		data : settings
+});*/
+	
   res.redirect(303, `/manage/${guild.id}/basic`);
 });
 
@@ -309,6 +317,12 @@ router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
   }
 
   await settings.save();
+	await req.flash('success', 'SETTINGS UPDATED');
+	/*res.json({
+    success: true,
+		status: 303,
+		data : settings
+});*/
   res.redirect(303, `/manage/${guild.id}/greeting`);
 });
 

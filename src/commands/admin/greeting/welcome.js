@@ -286,8 +286,8 @@ module.exports = {
 };
 
 async function sendPreview(settings, member, lang) {
-		let l = lang.COMMANDS
-  if (!settings.welcome?.enabled) return NOT_ENABLED;
+		let l = lang.COMMANDS.ADMIN.GREETINGS.WELCOME
+  if (!settings.welcome?.enabled) return lang.NOT_ENABLED;
 
   const targetChannel = member.guild.channels.cache.get(settings.welcome.channel);
   if (!targetChannel) return l.NO_CONFIG;
@@ -295,7 +295,7 @@ async function sendPreview(settings, member, lang) {
   const response = await buildGreeting(member, "WELCOME", settings.welcome);
   await targetChannel.safeSend(response);
 
-  return `${PREV_CHANNEL} ${targetChannel.toString()}`;
+  return `${l.PREV_CHANNEL} ${targetChannel.toString()}`;
 }
 
 async function setStatus(settings, status, lang) {
