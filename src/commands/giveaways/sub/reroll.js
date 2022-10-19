@@ -3,11 +3,13 @@
  * @param {string} messageId
  */
 module.exports = async (member, messageId,lang) => {
-  if (!messageId) return "You must provide a valid message id.";
+
+ let l = lang.COMMANDS.GIVEAWAYS.SUB.REROLL
+  if (!messageId) return l.ERR;
 
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
-    return "You need to have the manage messages permissions to start giveaways.";
+    return l.PERMS;
   }
 
   // Search with messageId
@@ -16,16 +18,16 @@ module.exports = async (member, messageId,lang) => {
   );
 
   // If no giveaway was found
-  if (!giveaway) return `Unable to find a giveaway for messageId: ${messageId}`;
+  if (!giveaway) return l.ERR2`: ${messageId}`;
 
   // Check if the giveaway is ended
-  if (!giveaway.ended) return "The giveaway is not ended yet.";
+  if (!giveaway.ended) return l.ERR3;
 
   try {
     await giveaway.reroll();
-    return "Giveaway rerolled!";
+    return l.DONE;
   } catch (error) {
     member.client.logger.error("Giveaway Reroll", error);
-    return `An error occurred while rerolling the giveaway: ${error.message}`;
+    return l.ERR4 `: ${error.message}`;
   }
 };

@@ -44,24 +44,27 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+      
+   let l = data.lang.COMMANDS.IMAGE.FILTER
     const image = await getImageFromMessage(message, args);
 
     // use invoke as an endpoint
     const url = getFilter(data.invoke.toLowerCase(), image, data.lang);
     const response = await getBuffer(url);
 
-    if (!response.success) return message.safeReply("Failed to generate image");
+    if (!response.success) return message.safeReply(l.ERR);
 
     const attachment = new AttachmentBuilder(response.buffer, { name: "attachment.png" });
     const embed = new EmbedBuilder()
       .setColor(EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
-      .setFooter({ text: `Requested by: ${message.author.tag}` });
+      .setFooter({ text: message.author.tag});
 
     await message.safeReply({ embeds: [embed], files: [attachment] });
   },
 
   async interactionRun(interaction, data) {
+   let l = data.lang.COMMANDS.IMAGE.FILTER
     const author = interaction.user;
     const user = interaction.options.getUser("user");
     const imageLink = interaction.options.getString("link");
@@ -75,13 +78,13 @@ module.exports = {
     const url = getFilter(filter, image);
     const response = await getBuffer(url);
 
-    if (!response.success) return interaction.followUp("Failed to generate image");
+    if (!response.success) return interaction.followUp(l.ERR);
 
     const attachment = new AttachmentBuilder(response.buffer, { name: "attachment.png" });
     const embed = new EmbedBuilder()
       .setColor(EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
-      .setFooter({ text: `Requested by: ${author.tag}` });
+      .setFooter({ text: author.tag });
 
     await interaction.followUp({ embeds: [embed], files: [attachment] });
   },

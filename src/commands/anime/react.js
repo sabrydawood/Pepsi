@@ -36,7 +36,7 @@ module.exports = {
   async messageRun(message, args, data) {
     const category = args[0].toLowerCase();
     if (!choices.includes(category)) {
-      return message.safeReply(`Invalid choice: \`${category}\`.\nAvailable reactions: ${choices.join(", ")}`);
+      return message.safeReply(`${data.lang.COMMANDS.ANIME.REACT.ERR2} \`${category}\`.\n${data.lang.COMMANDS.ANIME.REACT.ERR3} ${choices.join(", ")}`);
     }
 
     const embed = await genReaction(category, message.author, data.lang);
@@ -69,11 +69,11 @@ const genReaction = async (category, user, lang) => {
     return new EmbedBuilder()
       .setImage(imageUrl)
       .setColor("Random")
-      .setFooter({ text: `Requested By ${user.tag}` });
+      .setFooter({ text: lang.REQ_BY.replace("author", user.tag) });
   } catch (ex) {
     return new EmbedBuilder()
       .setColor(EMBED_COLORS.ERROR)
-      .setDescription("Failed to fetch meme. Try again!")
-      .setFooter({ text: `Requested By ${user.tag}` });
+      .setDescription(lang.COMMANDS.ANIME.REACT.ERR)
+      .setFooter({ text: lang.REQ_BY.replace("author", user.tag) });
   }
 };

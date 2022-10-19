@@ -9,6 +9,7 @@ const {
   EmbedBuilder,
   ButtonStyle,
   TextInputStyle,
+   parseEmoji
 } = require("discord.js");
 const { stripIndents } = require("common-tags");
 

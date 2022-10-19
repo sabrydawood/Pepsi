@@ -99,6 +99,8 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+  
+  const l = data.lang.COMMANDS.ECONOMY.BANK
     const sub = args[0];
     let response;
 
@@ -110,30 +112,30 @@ module.exports = {
     //
     else if (sub === "deposit") {
       const coins = args.length && parseInt(args[1]);
-      if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to deposit");
+      if (isNaN(coins)) return message.safeReply(l.ERR);
       response = await deposit(message.author, coins, data.lang);
     }
 
     //
     else if (sub === "withdraw") {
       const coins = args.length && parseInt(args[1]);
-      if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to withdraw");
+      if (isNaN(coins)) return message.safeReply(l.ERR2);
       response = await withdraw(message.author, coins, data.lang);
     }
 
     //
     else if (sub === "transfer") {
-      if (args.length < 3) return message.safeReply("Provide a valid user and coins to transfer");
+      if (args.length < 3) return message.safeReply(l.ERR3);
       const target = await message.guild.resolveMember(args[1], true);
-      if (!target) return message.safeReply("Provide a valid user to transfer coins to");
+      if (!target) return message.safeReply(l.ERR4);
       const coins = parseInt(args[2]);
-      if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to transfer");
+      if (isNaN(coins)) return message.safeReply(l.ERR5);
       response = await transfer(message.author, target.user, coins, data.lang);
     }
 
     //
     else {
-      return message.safeReply("Invalid command usage");
+      return message.safeReply(data.lang.INVALID_USAGE);
     }
 
     await message.safeReply(response);
@@ -152,7 +154,7 @@ module.exports = {
     // deposit
     else if (sub === "deposit") {
       const coins = interaction.options.getInteger("coins");
-      response = await deposit(interaction.user, coins);
+      response = await deposit(interaction.user, coins, data.lang);
     }
 
     // withdraw

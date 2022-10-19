@@ -39,17 +39,19 @@ module.exports = {
 };
 
 async function getInviteCodes({ guild }, user, lang) {
+    
+      let l = lang.COMMANDS.INVITES.CODES
   const invites = await guild.invites.fetch({ cache: false });
   const reqInvites = invites.filter((inv) => inv.inviter.id === user.id);
-  if (reqInvites.size === 0) return `\`${user.tag}\` has no invites in this server`;
+  if (reqInvites.size === 0) return `\`${user.tag}\` ${l.ERR}`;
 
   let str = "";
   reqInvites.forEach((inv) => {
-    str += `❯ [${inv.code}](${inv.url}) : ${inv.uses} uses\n`;
+    str += `❯ [${inv.code}](${inv.url}) : ${inv.uses} ${l.USES} \n`;
   });
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: `Invite code for ${user.username}` })
+    .setAuthor({ name: l.AUTHIR + ` ${user.username}` })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(str);
 

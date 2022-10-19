@@ -15,7 +15,7 @@ module.exports = {
   },
   slashCommand: {
     enabled: true,
-    ephemeral: true,
+    ephemeral: false,
     options: [
       {
         name: "newprefix",
@@ -39,9 +39,9 @@ module.exports = {
 };
 
 async function setNewPrefix(newPrefix, settings, lang) {
-  if (newPrefix.length > 2) return "Prefix length cannot exceed `2` characters";
+  if (newPrefix.length > 2) return lang.COMMANDS.ADMIN.SET_PREFIX.ERR;
   settings.prefix = newPrefix;
   await settings.save();
 
-  return `New prefix is set to \`${newPrefix}\``;
+  return `${lang.COMMANDS.ADMIN.SET_PREFIX.DONE} \`${newPrefix}\``;
 }

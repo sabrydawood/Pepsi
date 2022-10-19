@@ -95,7 +95,7 @@ module.exports = {
 
     // invalid subcommand
     else {
-      response = "Invalid subcommand.";
+      response = data.lang.INVALID_SUB;
     }
 
     await message.safeReply(response);
@@ -124,30 +124,33 @@ module.exports = {
     }
 
     //
-    else response = "Invalid subcommand";
+    else response = data.lang.INVALID_SUB;
     await interaction.followUp(response);
   },
 };
 
 function listCategories(data) {
+ 
+  const l = data.lang.COMMANDS.TICKET.TICKET_CAT
   const categories = data.settings.ticket.categories;
-  if (categories?.length === 0) return "No ticket categories found.";
+  if (categories?.length === 0) return l.NO_CAT;
 
   const fields = [];
   for (const category of categories) {
     const roleNames = category.staff_roles.map((r) => `<@&${r}>`).join(", ");
-    fields.push({ name: category.name, value: `**Staff:** ${roleNames || "None"}` });
+    fields.push({ name: category.name, value: `**${l.F1}:** ${roleNames || l.F2 }` });
   }
-  const embed = new EmbedBuilder().setAuthor({ name: "Ticket Categories" }).addFields(fields);
+  const embed = new EmbedBuilder().setAuthor({ name: l.AUTHOR }).addFields(fields);
   return { embeds: [embed] };
 }
 
 async function addCategory(guild, data, category, staff_roles) {
-  if (!category) return "Invalid usage! Missing category name.";
+  const l = data.lang.COMMANDS.TICKET.TICKET_CAT
+  if (!category) return l.ERR;
 
   // check if category already exists
   if (data.settings.ticket.categories.find((c) => c.name === category)) {
-    return `Category \`${category}\` already exists.`;
+    return l.CAT + ` \`${category}\` ` + l.ALREADY;
   }
 
   const staffRoles = (staff_roles?.split(",")?.map((r) => r.trim()) || []).filter((r) => guild.roles.cache.has(r));
@@ -155,18 +158,19 @@ async function addCategory(guild, data, category, staff_roles) {
   data.settings.ticket.categories.push({ name: category, staff_roles: staffRoles });
   await data.settings.save();
 
-  return `Category \`${category}\` added.`;
+  return l.CAT + ` \`${category}\` ` + l.ADDED;
 }
 
 async function removeCategory(data, category) {
+ const l = data.lang.COMMANDS.TICKET.TICKET_CAT
   const categories = data.settings.ticket.categories;
   // check if category exists
   if (!categories.find((c) => c.name === category)) {
-    return `Category \`${category}\` does not exist.`;
+    return l.CAT + ` \`${category}\` ` + l.NOT_EX;
   }
 
   data.settings.ticket.categories = categories.filter((c) => c.name !== category);
   await data.settings.save();
 
-  return `Category \`${category}\` removed.`;
+  return l.CAT + ` \`${category}\` ` + l.REMOVED;
 }

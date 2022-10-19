@@ -1,24 +1,25 @@
 const { moveTarget } = require("@helpers/ModUtils");
 
 module.exports = async ({ member }, target, reason, channel,lang) => {
+    let l = lang.COMMANDS.MODERATION.SHARED.MOVE
   const response = await moveTarget(member, target, reason, channel);
   if (typeof response === "boolean") {
-    return `${target.user.tag} is deafened in this server`;
+    return `${target.user.tag} ` + l.ERR;
   }
   if (response === "MEMBER_PERM") {
-    return `You do not have permission to disconnect ${target.user.tag}`;
+    return l.PERMS + ` ${target.user.tag}`;
   }
   if (response === "BOT_PERM") {
-    return `I do not have permission to disconnect ${target.user.tag}`;
+    return l.PERMS2 + ` ${target.user.tag}`;
   }
   if (response === "NO_VOICE") {
-    return `${target.user.tag} is not in any voice channel`;
+    return `${target.user.tag} ` + l.ERR3;
   }
   if (response === "TARGET_PERM") {
-    return `${target.user.tag} doesn't have permission to join ${channel}`;
+    return `${target.user.tag} ${l.ERR4} ${channel}`;
   }
   if (response === "ALREADY_IN_CHANNEL") {
-    return `${target.user.tag} is already connected to ${channel}`;
+    return `${target.user.tag} ${l.ERR5} ${channel}`;
   }
-  return `Failed to move ${target.user.tag} to ${channel}`;
+  return l.ERR3 ` ${target.user.tag} => ${channel}`;
 };

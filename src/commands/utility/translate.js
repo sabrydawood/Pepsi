@@ -42,7 +42,7 @@ module.exports = {
     ],
   },
 
-  async messageRun(message, args) {
+  async messageRun(message, args, data) {
     let embed = new EmbedBuilder();
     const outputCode = args.shift();
 
@@ -50,29 +50,30 @@ module.exports = {
       embed
         .setColor(EMBED_COLORS.WARNING)
         .setDescription(
-          "Invalid translation code. Visit [here](https://cloud.google.com/translate/docs/languages) to see list of supported translation codes"
+          l.ERR + "[here](https://cloud.google.com/translate/docs/languages) " + l.ERR2
         );
       return message.safeReply({ embeds: [embed] });
     }
 
     const input = args.join(" ");
-    if (!input) message.safeReply("Provide some valid translation text");
+    if (!input) message.safeReply(l.ERR3);
 
-    const response = await getTranslation(message.author, input, outputCode);
+    const response = await getTranslation(message.author, input, outputCode, data.lang);
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction) {
+  async interactionRun(interaction, data) {
     const outputCode = interaction.options.getString("language");
     const input = interaction.options.getString("text");
-    const response = await getTranslation(interaction.user, input, outputCode);
+    const response = await getTranslation(interaction.user, input, outputCode, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function getTranslation(author, input, outputCode) {
+async function getTranslation(author, input, outputCode, lang) {
+ const l = lang.COMMANDS.UTILS.TRANSLATE
   const data = await translate(input, outputCode);
-  if (!data) return "Failed to translate your text";
+  if (!data) return l.FAIL;
 
   const embed = new EmbedBuilder()
     .setAuthor({

@@ -1,6 +1,5 @@
 const { inviteHandler, greetingHandler } = require("@src/handlers");
 const { getSettings } = require("@schemas/Guild");
-
 /**
  * @param {import('@src/structures').BotClient} client
  * @param {import('discord.js').GuildMember} member

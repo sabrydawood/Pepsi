@@ -24,18 +24,50 @@
         </form>
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
+        
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">SERVERS MANAGEMENT</li>
             <li class="treeview menu-open">
                 <li><a href="/selector"><i class="fa fa-home"></i> <span>Guilds</span></a></li>
             </li>
         </ul>
+        
+        
+        
+
+       <ul class="sidebar-menu" data-widget="tree">
+
+            <li class="header">Guild Information</li>
+
+            <li class="treeview menu-open">
+
+                <li><a href="/info"><i class="fa fa-drivers-license-o"></i> <span>Information</span></a></li>
+
+        </ul> 
+        
+        
         <% if (locals.guild){ %>
-        <ul class="sidebar-menu" data-widget="tree">
+        
+       <ul class="sidebar-menu" data-widget="tree">
+
+            <li class="header">Guild Information</li>
+
+            <li class="treeview menu-open">
+
+                <li><a href="/manage/info"><i class="fa fa-drivers-license-o"></i> <span>Information</span></a></li>
+
+        </ul> 
+        
+        
+        
+<ul class="sidebar-menu" data-widget="tree">
             <li class="header">CONFIGURATION</li>
             <li class="treeview menu-open">
                 <li><a href="/manage/<%= guild.id %>/basic"><i class="fa fa-gear"></i> <span>Basic</span></a></li>
                 <li><a href="/manage/<%= guild.id %>/greeting"><i class="fa fa-bullhorn"></i> <span>Greeting</span></a></li>
+            </li>
+            <li><a href="/manage/<%= guild.id %>/embedBuilder"><i class="fa fa-newspaper-o"></i><span>EmbedBuilder</span></a></li>
+
             </li>
         </ul>
         <% } %>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <%- include('includes/head') %>
+
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+      <!-- The header is the topbar -->
+      <%- include('includes/header') %>
+
+      <!-- The sidebar includes the menu -->
+      <%- include('includes/sidebar') %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>INFORMATION'S <small> <%= user.username %></small></h1>
+          <ol class="breadcrumb">
+            <li class="active">
+              <a href="/info"><i class="fa fa-home"></i>INFORMATION</a>
+            </li>
+          </ol>
+        </section>
+
+        <section class="content">
+          <div class="row">
+id : <%= user.id %> <br>
+is bot : <%= user.bot %><br>
+is system :<%= user.system %><br>
+user name :<%= user.username %><br>
+discriminator : <%= user.discriminator %><br>
+avatar : <%= user.displayAvatar %><br>
+banner : <%= user.banner ? user.banner : 'no banner' %><br>
+flags : <%= user.flags %><br>
+coins : <%= user._doc.coins %><br>
+Coins bank : <%= user._doc.bank %><br>
+email : <%= user.email %><br>
+botlang : <%= user._doc.lang %><br>
+2fa : <%= user.mfa_enabled %><br>
+varifaid: <%= user.verified %><br>
+discord lang : <%= user.locale %>
+
+
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer includes credits and version -->
+      <%- include('includes/footer') %>
+    </div>
+    <!-- ./wrapper -->
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<%- include('../includes/head') %>
+	
+	<body class="hold-transition skin-blue sidebar-mini">
+
+		<div class="wrapper">
+
+			<!-- The header is the topbar -->
+			<%- include('../includes/header') %>
+
+			<!-- The sidebar includes the menu -->
+			<%- include('../includes/sidebar') %>
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+<h3> Embed Builder </h3>
+					<ol class="breadcrumb">
+                        <li><a href="/selector"><i class="fa fa-home"></i>Guilds</a></li>
+                        <li><a href="<%=`/manage/${guild.id}/`%>"><%=guild.name%></a></li>
+                        <li class="active">Embed Builder</li>
+					</ol>
+				</section>
+<section class="content">
+ <div class="row">
+<div class="col-md-6">
+
+<a id="createBuilderBtn" class="btn btn-success btn-block mb-4" style="margin-bottom: 1rem; " onClick="embedBuilder()">Create Embed</a>
+
+
+
+<div class=" hidden box box-success" id="embedBuilder">
+
+                                <div class="box-header with-border">
+
+                                    <h3 class="box-title">Embed Builder</h3>
+
+                                </div>
+
+
+   <!-- .....form start ...... -->
+   
+<form role="form" action="/manage/<%= guild.id %>/embed" method="POST">
+<div class="box-body">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="header">Embed Header</label>
+      <input type="text" class="form-control rounded bg-info" id="header" name="header" placeholder="Header">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="description">Description</label>
+      <textarea rows="5" name="description" id="description" class="form-control" style="background-color : #ed7280; 
+      <textarea rows="5" name="description" id="description" class="form-control" placeholder="description"></textarea>
+    </div>
+  </div>
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="footer">Footer</label>
+
+      <input type="text" class="form-control rounded bg-info" id="footer" name="footer" placeholder="Header">
+    </div>
+    
+    <div class="form-group col-md-4">
+      <label for="channel">Channel</label>
+      <select name="channel" id="channel" class="form-control rounded bg-info">
+                                    <% if(bot.channels.cache.has(guild.welcome.channel)){ %>
+                                                    <option selected="selected">#<%= bot.channels.cache.get(guild.welcome.channel).name %></option>
+                                                    <% guild.channels.cache.filter((ch) => ch.id !== guild.welcome.channel && ch.type === 0).forEach((ch) => { %>
+                                                        <option>#<%= ch.name %></option>
+                                                    <% }); } else { %>
+                                                    <option disabled selected value> -- select an option -- </option>
+                                                    <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === 0).forEach((ch) => { %>
+                                                        <option>#<%= ch.name %></option>
+                                                    <% }); %>
+                                                <% } %>
+      </select>
+    </div>
+  </div>
+</div>
+ <div class="box-footer">
+                                        <% if(guild.welcome.enabled){ %>
+                                            <button type="submit" name="embedDelete" class="btn btn-danger">DELETE</button>
+                                            <button type="submit" name="embedUpdate" class="btn btn-primary pull-right">Update</button>
+                                        <% } else { %>
+                                    <button type="submit" name="embedUpdate" class="btn btn-primary pull-right">Send</button>
+                                        <% } %>
+                                    </div>
+                                    
+</form>
+  <!-- ....... form end ...... -->
+   
+   </div>
+ </div>
+ 
+ 
+     </div>
+</section>
+
+
+
+
+
+
+
+</div>
+ <!-- /.content-wrapper -->
+<%- include('../includes/footer') %>
+		</div>
+		<!-- ./wrapper -->
+	</body>
+</html>

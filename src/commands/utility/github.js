@@ -46,8 +46,9 @@ module.exports = {
 const websiteProvided = (text) => (text.startsWith("http://") ? true : text.startsWith("https://"));
 
 async function getGithubUser(target, author, lang) {
+const l = lang.COMMANDS.UTILS.GITHUB
   const response = await getJson(`https://api.github.com/users/${target}`);
-  if (response.status === 404) return "```No user found with that name```";
+  if (response.status === 404) return l.NO_USER ;
   if (!response.success) return MESSAGES.API_ERROR;
 
   const json = response.data;
@@ -64,35 +65,35 @@ async function getGithubUser(target, author, lang) {
     blog,
   } = json;
 
-  let website = websiteProvided(blog) ? `[Click me](${blog})` : "Not Provided";
-  if (website == null) website = "Not Provided";
+  let website = websiteProvided(blog) ? `[${l.CLICK}](${blog})` : l.NOT_PROV;
+  if (website == null) website = l.NOT_PROV;
 
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: `GitHub User: ${username}`,
+      name: l.AUTHOR + `: ${username}`,
       url: userPageLink,
       iconURL: avatarUrl,
     })
     .addFields(
       {
-        name: "User Info",
+        name: l.F1,
         value: stripIndent`
-        **Real Name**: *${name || "Not Provided"}*
-        **Location**: *${location}*
-        **GitHub ID**: *${githubId}*
-        **Website**: *${website}*\n`,
+        **${l.F1_NAME}**: *${name || l.NOT_PROV}*
+        **${l.F1_LOCATION}**: *${location}*
+        **${l.F1_GIT_ID}**: *${githubId}*
+        **${l.F1_WEBSITE}**: *${website}*\n`,
         inline: true,
       },
       {
-        name: "Social Stats",
-        value: `**Followers**: *${followers}*\n**Following**: *${following}*`,
+        name: l.F2,
+        value: `**${l.F2_FOLLOWERS}**: *${followers}*\n**${l.F2_FOLLOWING}**: *${following}*`,
         inline: true,
       }
     )
-    .setDescription(`**Bio**:\n${bio || "Not Provided"}`)
+    .setDescription(`**${l.F2_BIO}**:\n${bio || l.NOT_PROV}`)
     .setImage(avatarUrl)
     .setColor(0x6e5494)
-    .setFooter({ text: `Requested by ${author.tag}` });
+    .setFooter({ text: author.tag });
 
   return { embeds: [embed] };
 }

@@ -31,11 +31,14 @@ module.exports = class BotClient extends Client {
       ],
       partials: [Partials.User, Partials.Message, Partials.Reaction],
       allowedMentions: {
-        repliedUser: false,
-      },
+        repliedUser: true,
+        parse: ['users', 'roles'] 
+                           } ,
+      ws : { properties : { $browser : "Discord Android"}} ,
       restRequestTimeout: 20000,
-			//shards: "auto",
-   // shardCount: 2,
+    /*    
+	shards: "auto",
+   // shardCount: 2,*/
     });
 
     this.wait = require("util").promisify(setTimeout); // await client.wait(1000) - Wait 1 second

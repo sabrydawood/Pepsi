@@ -62,20 +62,20 @@ module.exports = {
 
     if (sub === "list") {
       const target = (await message.guild.resolveMember(args[1], true)) || message.member;
-      if (!target) return message.safeReply(`No user found matching ${args[1]}`);
+      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1] ));
       response = await listWarnings(target, message, data.lang);
     }
 
     //
     else if (sub === "clear") {
       const target = await message.guild.resolveMember(args[1], true);
-      if (!target) return message.safeReply(`No user found matching ${args[1]}`);
+      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1] ));
       response = await clearWarnings(target, message, data.lang);
     }
 
     // else
     else {
-      response = `Invalid subcommand ${sub}`;
+      response = data.lang.INVALID_SUB + ` ${sub}`;
     }
 
     await message.safeReply(response);
@@ -100,7 +100,7 @@ module.exports = {
 
     // else
     else {
-      response = `Invalid subcommand ${sub}`;
+      response = data.lang.INVALID_SUB + ` ${sub}`;
     }
 
     await interaction.followUp(response);
@@ -108,15 +108,17 @@ module.exports = {
 };
 
 async function listWarnings(target, { guildId }, lang) {
-  if (!target) return "No user provided";
-  if (target.user.bot) return "Bots don't have warnings";
+  
+   let l = lang.COMMANDS.MODERATION.WARNINGS
+  if (!target) return l.NO_USER ;
+  if (target.user.bot) return l.BOTS_X;
 
   const warnings = await getWarningLogs(guildId, target.id);
-  if (!warnings.length) return `${target.user.tag} has no warnings`;
+  if (!warnings.length) return `${target.user.tag} ` + l.HAS;
 
   const acc = warnings.map((warning, i) => `${i + 1}. ${warning.reason} [By ${warning.admin.tag}]`).join("\n");
   const embed = new EmbedBuilder({
-    author: { name: `${target.user.tag}'s warnings` },
+    author: { name: `${target.user.tag} ` + l.WARNINGS  },
     description: acc,
   });
 
@@ -124,13 +126,15 @@ async function listWarnings(target, { guildId }, lang) {
 }
 
 async function clearWarnings(target, { guildId }, lang) {
-  if (!target) return "No user provided";
-  if (target.user.bot) return "Bots don't have warnings";
+  
+   let l = lang.COMMANDS.MODERATION.WARNINGS
+  if (!target) return l.NO_USER;
+  if (target.user.bot) return l.BOTS_X;
 
   const memberDb = await getMember(guildId, target.id);
   memberDb.warnings = 0;
   await memberDb.save();
 
   await clearWarningLogs(guildId, target.id);
-  return `${target.user.tag}'s warnings have been cleared`;
+  return `${target.user.tag} ` + l.SUCCESS ;
 }

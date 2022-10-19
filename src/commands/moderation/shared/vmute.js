@@ -1,21 +1,22 @@
 const { vMuteTarget } = require("@helpers/ModUtils");
 
 module.exports = async ({ member }, target, reason) => {
+  let l = lang.COMMANDS.MODERATION.SHARED.VMUTE
   const response = await vMuteTarget(member, target, reason,lang);
   if (typeof response === "boolean") {
-    return `${target.user.tag}'s voice is muted in this server`;
+    return `${target.user.tag} ` + l.ERR;
   }
   if (response === "MEMBER_PERM") {
-    return `You do not have permission to voice mute ${target.user.tag}`;
+    return l.PERMS + ` ${target.user.tag}`;
   }
   if (response === "BOT_PERM") {
-    return `I do not have permission to voice mute ${target.user.tag}`;
+    return l.PERMS2 + ` ${target.user.tag}`;
   }
   if (response === "NO_VOICE") {
-    return `${target.user.tag} is not in any voice channel`;
+    return `${target.user.tag} ` + l.ERR2 ;
   }
   if (response === "ALREADY_MUTED") {
-    return `${target.user.tag} is already muted`;
+    return `${target.user.tag} ` + l.ERR4;
   }
-  return `Failed to voice mute ${target.user.tag}`;
+  return l.ERR3 + ` ${target.user.tag}`;
 };

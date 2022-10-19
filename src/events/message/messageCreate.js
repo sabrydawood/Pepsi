@@ -16,6 +16,7 @@ module.exports = async (client, message) => {
 
   
   if (!message.guild || message.author.bot) return;
+    
   const settings = await getSettings(message.guild),
     prefix = settings.prefix
 

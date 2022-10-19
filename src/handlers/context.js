@@ -1,5 +1,9 @@
 const { parsePermissions } = require("@helpers/Utils");
 const { timeformat } = require("@helpers/Utils");
+const { getSettings } = require("@schemas/Guild");
+
+const { getUser } = require("@schemas/User");
+
 
 const cooldownCache = new Map();
 
@@ -9,6 +13,25 @@ module.exports = {
    * @param {import("@structures/BaseContext")} context
    */
   handleContext: async function (interaction, context) {
+      
+const settings = await getSettings(interaction.guild);
+
+    const userDb = await getUser(interaction.user);
+
+  let language = userDb.lang;
+
+  if (!language) language = "en";
+
+  const lang = require(`@root/lang/bot/${language}`);
+      
+      
+
+    const data = {};
+    data.settings = settings;
+    data.userDb = userDb;
+    data.lang = lang
+      
+      
     // check cooldown
     if (context.cooldown) {
       const remaining = getRemainingCooldown(interaction.user.id, context);
@@ -32,7 +55,7 @@ module.exports = {
 
     try {
       await interaction.deferReply({ ephemeral: context.ephemeral });
-      await context.run(interaction);
+      await context.run(interaction, data);
     } catch (ex) {
       interaction.followUp("Oops! An error occurred while running the command");
       interaction.client.logger.error("contextRun", ex);

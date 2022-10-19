@@ -66,13 +66,14 @@ module.exports = {
 };
 
 async function getTogetherInvite(member, choice, lang) {
+    let l = lang.COMMANDS.FUN.TOGETHER
   choice = choice.toLowerCase();
 
   const vc = member.voice.channel?.id;
-  if (!vc) return "You must be in a voice channel to use this command.";
+  if (!vc) return l.ERR;
 
   if (!discordTogether.includes(choice)) {
-    return `Invalid game.\nValid games: ${discordTogether.join(", ")}`;
+    return l.ERR2 + ":" + discordTogether.join(", ");
   }
 
   const invite = await member.client.discordTogether.createTogetherCode(vc, choice);

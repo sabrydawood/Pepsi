@@ -3,11 +3,13 @@
  * @param {string} messageId
  */
 module.exports = async (member, messageId, lang) => {
-  if (!messageId) return "You must provide a valid message id.";
+ 
+ let l = lang.COMMANDS.GIVEAWAYS.SUB.PAUSE
+  if (!messageId) return l.ERR;
 
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
-    return "You need to have the manage messages permissions to manage giveaways.";
+    return l.PERMS;
   }
 
   // Search with messageId
@@ -16,16 +18,16 @@ module.exports = async (member, messageId, lang) => {
   );
 
   // If no giveaway was found
-  if (!giveaway) return `Unable to find a giveaway for messageId: ${messageId}`;
+  if (!giveaway) return l.ERR2 + `: ${messageId}`;
 
   // Check if the giveaway is paused
-  if (giveaway.pauseOptions.isPaused) return "This giveaway is already paused.";
+  if (giveaway.pauseOptions.isPaused) return l.ERR3;
 
   try {
     await giveaway.pause();
-    return "Success! Giveaway paused!";
+    return l.DONE ;
   } catch (error) {
     member.client.logger.error("Giveaway Pause", error);
-    return `An error occurred while pausing the giveaway: ${error.message}`;
+    return l.ERR4 + `: ${error.message}`;
   }
 };

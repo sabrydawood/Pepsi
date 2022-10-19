@@ -5,6 +5,7 @@ const { EMBED_COLORS } = require("@root/config");
  * @param {import('discord.js').GuildMember} member
  */
 module.exports = (member, lang) => {
+       let l = lang.COMMANDS.INFORMATION.SHARED.USERINFO
   let color = member.displayHexColor;
   if (color === "#000000") color = EMBED_COLORS.BOT_EMBED;
 
@@ -13,40 +14,40 @@ module.exports = (member, lang) => {
 
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: `User information for ${member.displayName}`,
+      name: l.AUTHOR + ` ${member.displayName}`,
       iconURL: member.user.displayAvatarURL(),
     })
     .setThumbnail(member.user.displayAvatarURL())
     .setColor(color)
     .addFields(
       {
-        name: "User Tag",
+        name: l.F1 ,
         value: member.user.tag,
         inline: true,
       },
       {
-        name: "ID",
+        name: l.F2,
         value: member.id,
         inline: true,
       },
       {
-        name: "Guild Joined",
+        name: l.F3,
         value: member.joinedAt.toUTCString(),
       },
       {
-        name: "Discord Registered",
+        name: l.F4,
         value: member.user.createdAt.toUTCString(),
       },
       {
-        name: `Roles [${member.roles.cache.size}]`,
+        name: l.F5 + ` [${member.roles.cache.size}]`,
         value: rolesString,
       },
       {
-        name: "Avatar-URL",
+        name: l.F6,
         value: member.user.displayAvatarURL({ extension: "png" }),
       }
     )
-    .setFooter({ text: `Requested by ${member.user.tag}` })
+    .setFooter({ text: member.user.tag })
     .setTimestamp(Date.now());
 
   return { embeds: [embed] };

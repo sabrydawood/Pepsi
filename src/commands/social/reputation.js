@@ -59,6 +59,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+      let l = data.lang.COMMANDS.SOCIAL.REP
     const sub = args[0];
     let response;
 
@@ -75,13 +76,13 @@ module.exports = {
     // give
     else if (sub === "give") {
       const target = await message.guild.resolveMember(args[1]);
-      if (!target) return message.safeReply("Please provide a valid user to give reputation to");
+      if (!target) return message.safeReply(l.NO_USRR);
       response = await giveReputation(message.author, target.user, data.lang);
     }
 
     //
     else {
-      response = "Incorrect command usage";
+      response = data.lang.INVALID_USAGE;
     }
 
     await message.safeReply(response);
@@ -108,21 +109,22 @@ module.exports = {
 };
 
 async function viewReputation(target, lang) {
+   let l = lang.COMMANDS.SOCIAL.REP
   const userData = await getUser(target);
-  if (!userData) return `${target.tag} has no reputation yet`;
+  if (!userData) return `${target.tag} ` + l.NO_REP ;
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: `Reputation for ${target.username}` })
+    .setAuthor({ name: l.AUTHOR + ` ${target.username}` })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setThumbnail(target.displayAvatarURL())
     .addFields(
       {
-        name: "Given",
+        name: l.F1,
         value: userData.reputation?.given.toString(),
         inline: true,
       },
       {
-        name: "Received",
+        name: l.F2,
         value: userData.reputation?.received.toString(),
         inline: true,
       }
@@ -132,8 +134,9 @@ async function viewReputation(target, lang) {
 }
 
 async function giveReputation(user, target, lang) {
-  if (target.bot) return "You cannot give reputation to bots";
-  if (target.id === user.id) return "You cannot give reputation to yourself";
+    let l = lang.COMMANDS.SOCIAL.REP
+  if (target.bot) return l.BOTS_X ;
+  if (target.id === user.id) return l.YOU_X ;
 
   const userData = await getUser(user);
   if (userData && userData.reputation.timestamp) {
@@ -141,7 +144,7 @@ async function giveReputation(user, target, lang) {
     const diff = diffHours(new Date(), lastRep);
     if (diff < 24) {
       const nextUsage = lastRep.setHours(lastRep.getHours() + 24);
-      return `You can again run this command in \`${getRemainingTime(nextUsage)}\``;
+      return l.TIMEOUT + ` \`${getRemainingTime(nextUsage)}\``;
     }
   }
 
@@ -157,7 +160,7 @@ async function giveReputation(user, target, lang) {
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(`${target.toString()} +1 Rep!`)
-    .setFooter({ text: `By ${user.tag}` })
+    .setFooter({ text: `${user.tag}` })
     .setTimestamp(Date.now());
 
   return { embeds: [embed] };

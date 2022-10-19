@@ -16,7 +16,7 @@ module.exports = {
   },
   slashCommand: {
     enabled: true,
-    ephemeral: true,
+    ephemeral: false,
     options: [
       {
         name: "status",
@@ -39,7 +39,7 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const status = args[0].toLowerCase();
-    if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+    if (!["on", "off"].includes(status)) return message.safeReply(data.lang.INVALID_STATUS);
 
     const response = await setFlagTranslation(status, data.settings, data.lang);
     await message.safeReply(response);
@@ -57,5 +57,5 @@ async function setFlagTranslation(input, settings, lang) {
   settings.flag_translation.enabled = status;
   await settings.save();
 
-  return `Configuration saved! Flag translation is now ${status ? "enabled" : "disabled"}`;
+  return `${lang.COMMANDS.ADMIN.FALG_TRANS} ${status ? lang.ENABLED : lang.DISABLED}`;
 }

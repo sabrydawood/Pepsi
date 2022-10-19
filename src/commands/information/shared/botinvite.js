@@ -2,23 +2,24 @@ const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("
 const { EMBED_COLORS, SUPPORT_SERVER, DASHBOARD } = require("@root/config");
 
 module.exports = (client, lang) => {
+       let l = lang.COMMANDS.INFORMATION.SHARED.BOTINVITE
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Invite" })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setThumbnail(client.user.displayAvatarURL())
-    .setDescription("Hey there! Thanks for considering to invite me\nUse the button below to navigate where you want");
+    .setDescription(l.DESC);
 
   // Buttons
   let components = [];
-  components.push(new ButtonBuilder().setLabel("Invite Link").setURL(client.getInvite()).setStyle(ButtonStyle.Link));
+  components.push(new ButtonBuilder().setLabel(l.INVITE).setURL(client.getInvite()).setStyle(ButtonStyle.Link));
 
   if (SUPPORT_SERVER) {
-    components.push(new ButtonBuilder().setLabel("Support Server").setURL(SUPPORT_SERVER).setStyle(ButtonStyle.Link));
+    components.push(new ButtonBuilder().setLabel(l.SUPPORT).setURL(SUPPORT_SERVER).setStyle(ButtonStyle.Link));
   }
 
   if (DASHBOARD.enabled) {
     components.push(
-      new ButtonBuilder().setLabel("Dashboard Link").setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
+      new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
     );
   }
 

@@ -9,6 +9,11 @@ module.exports.launch = async (client) => {
     session = require("express-session"),
     path = require("path"),
     app = express();
+let server = require('http').createServer(app);
+const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+ const oneDay = 1000 * 60 * 60 * 24;
+var customSession;
 
   /* Routers */
   const mainRouter = require("./routes/index"),
@@ -19,17 +24,30 @@ module.exports.launch = async (client) => {
   client.states = {};
   client.config = config;
 
+    
   /* App configuration */
   app
     .use(express.json()) // For post methods
     .use(express.urlencoded({ extended: true }))
+    .use(cookieParser())
+ .disable('x-powered-by')
+ .use(helmet({
+    contentSecurityPolicy: false,
+  }))
 		.use(flash())
     .engine("html", require("ejs").renderFile) // Set the engine to html (for ejs template)
-    .set("view engine", "ejs")
-    .use(express.static(path.join(__dirname, "/public"))) // Set the css and js folder to ./public
+ .set("view engine", "ejs")
+     .use(express.static(path.join(__dirname, "/public"))) // Set the css and js folder to ./public
     .set("views", path.join(__dirname, "/views")) // Set the ejs templates to ./views
     .set("port", config.DASHBOARD.port)// Set the dashboard port
-    .use(session({ secret: process.env.SESSION_PASSWORD, resave: false, saveUninitialized: false })) // Set the express session password and configuration
+
+//session middleware
+.use(session({
+  secret: process.env.SESSION_PASSWORD,
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+})) 
     .use(async function (req, res, next) {
       req.user = req.session.user;
       req.client = client;
@@ -45,10 +63,12 @@ module.exports.launch = async (client) => {
 .use(CheckAuth, function (req, res) {
       res.status(404).render("404", {
         user: req.userInfos,
+      bot: req.client,
         currentURL: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
       });
     })
     .use(CheckAuth, function (err, req, res) {
+   //  res.set("Content-Security-Policy", "default-src 'self'");
       console.error(err.stack);
       if (!req.user) return res.redirect("/");
       res.status(500).render("500", {
@@ -58,8 +78,10 @@ module.exports.launch = async (client) => {
     });
 
   /* Start */
-  app.listen(app.get("port"), () => {
-    client.logger.success("Dashboard is listening on port " + app.get("port"));
+  
+server.listen(app.get("port"), () => {
+
+client.logger.success("Dashboard is listening on" + app.get("port"));
   });
 
   function print (path, layer) {

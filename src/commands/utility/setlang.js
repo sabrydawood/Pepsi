@@ -40,26 +40,26 @@ module.exports = {
     const newLang = args[0];
  
 
-    const response = await setNewLang(newLang, data.userDb);
+    const response = await setNewLang(newLang, data.userDb, data.lang);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
-    const response = await setNewLang(interaction.options.getString("lang"), data.userDb);
+    const response = await setNewLang(interaction.options.getString("lang"), data.userDb, data.lang);
     await interaction.followUp(response);
   },
 };
 
-async function setNewLang(newLang, userDb) {
-  
-  if (newLang.length > 2) return "language length cannot exceed `2` characters";
+async function setNewLang(newLang, userDb, lang) {
+  const l = lang.COMMANDS.UTILS.SETLANG
+  if (newLang.length > 2) return l.ERR ;
 if(fileNames.includes(newLang)){
 
   userDb.lang = newLang;
   await userDb.save();
-  return `New User language is set to \`${newLang}\``;
+  return l.DONE + ` \`${newLang}\``;
 }else {
-  return `SORRY BUT I DIDN'T SUPPORT THIS LANGUAGE \n SUPPORTED LANGUAGES IS : \`${fileNames}\``;
+  return l.NOT_SUP + ` : \`${fileNames}\``;
 }
 
 

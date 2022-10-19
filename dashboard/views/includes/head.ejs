@@ -20,57 +20,5 @@
   <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="/bower_components/fastclick/lib/fastclick.js"></script>
   <script src="/dist/js/adminlte.min.js"></script>
-	<script >
-		
-	window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-    });
-}, 4000);
-function createProgressbar(id, duration, callback) {
-  var progressbar = document.getElementById(id);
-  progressbar.className = 'progressbar';
-  var progressbarinner = document.createElement('div');
-  progressbarinner.className = 'inner';
-  progressbarinner.style.animationDuration = duration;
-  if (typeof(callback) === 'function') {
-    progressbarinner.addEventListener('animationend', callback);
-  }
-
-  progressbar.appendChild(progressbarinner);
-  progressbarinner.style.animationPlayState = 'running';
-}
-
-addEventListener('load', function() {
-  createProgressbar('progressbar', '4s');
-});
-	</script>
-	<style>
-		.progressbar {
-  width: 100%;
-  margin: 2px auto;
-  border: solid 1px #000;
-  border-radius: 50px;
-}
-.progressbar .inner {
-  height: 15px;
-	border-radius: 50px;
-  animation: progressbar-countdown;
-  animation-duration: 40s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-play-state: paused;
-  animation-timing-function: linear;
-}
-@keyframes progressbar-countdown {
-  0% {
-    width: 100%;
-    background: #0F0;
-  }
-  100% {
-    width: 0%;
-    background: #F00;
-  }
-		}
-	</style>
+  <script src="/dist/js/custom.js"></script>
 </head>

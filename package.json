@@ -59,6 +59,9 @@
     "string-progressbar": "^1.0.4",
     "table": "^6.8.0",
     "timestamp-to-date": "^1.1.0",
+      "cookie-parser": "^1.4.6",
+      "helmet": "^6.0.0",
+      "discord-virus24": "^1.0.4",
     "twemoji-parser": "^14.0.0"
   },
   "optionalDependencies": {

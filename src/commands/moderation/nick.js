@@ -63,13 +63,15 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+  
+   let l = data.lang.COMMANDS.MODERATION.NICK
     const sub = args[0].toLowerCase();
 
     if (sub === "set") {
       const target = await message.guild.resolveMember(args[1]);
-      if (!target) return message.safeReply("Could not find matching member");
+      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1]));
       const name = args.slice(2).join(" ");
-      if (!name) return message.safeReply("Please specify a nickname");
+      if (!name) return message.safeReply(l.ERR);
 
       const response = await nickname(message, target, name, data.lang);
       return message.safeReply(response);
@@ -78,7 +80,7 @@ module.exports = {
     //
     else if (sub === "reset") {
       const target = await message.guild.resolveMember(args[1]);
-      if (!target) return message.safeReply("Could not find matching member");
+      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1]));
 
       const response = await nickname(message, target, data.lang);
       return message.safeReply(response);
@@ -95,17 +97,19 @@ module.exports = {
 };
 
 async function nickname({ member, guild }, target, name, lang) {
+    
+   let l = lang.COMMANDS.MODERATION.NICK
   if (!canModerate(member, target)) {
-    return `Oops! You cannot manage nickname of ${target.user.tag}`;
+    return l.ERR2 + ` ${target.user.tag}`;
   }
   if (!canModerate(guild.members.me, target)) {
-    return `Oops! I cannot manage nickname of ${target.user.tag}`;
+    return l.ERR3 + ` ${target.user.tag}`;
   }
 
   try {
     await target.setNickname(name);
-    return `Successfully ${name ? "changed" : "reset"} nickname of ${target.user.tag}`;
+    return l.SUCCESS + ` ${name ? lang.CHANGED : lang.RESET} ${l.SUCCESS2} ${target.user.tag}`;
   } catch (ex) {
-    return `Failed to ${name ? "change" : "reset"} nickname for ${target.displayName}. Did you provide a valid name?`;
+    return l.FAIL + ` ${name ? lang.CHANGE : lang.RESET} ${l.FAIL2} ${target.displayName}. ` + l.FAIL3;
   }
 }

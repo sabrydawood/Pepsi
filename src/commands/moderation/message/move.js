@@ -17,14 +17,16 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+     
+      let l = data.lang.COMMANDS.MODERATION.MESSAGE.MOVE
     const target = await message.guild.resolveMember(args[0], true);
-    if (!target) return message.safeReply(`No user found matching ${args[0]}`);
+    if (!target) return message.safeReply(l.ERR + ` ${args[0]}`);
 
     const channels = message.guild.findMatchingChannels(args[1]);
-    if (!channels.length) return message.safeReply("No matching channels found");
+    if (!channels.length) return message.safeReply(l.ERR2);
     const targetChannel = channels.pop();
     if (!targetChannel.type === ChannelType.GuildVoice && !targetChannel.type === ChannelType.GuildStageVoice) {
-      return message.safeReply("Target channel is not a voice channel");
+      return message.safeReply(l.ERR3);
     }
 
     const reason = args.slice(2).join(" ");

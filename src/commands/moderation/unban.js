@@ -43,7 +43,7 @@ module.exports = {
     if (typeof response !== "string") await waitForBan(message.member, reason, sent, data.lang);
   },
 
-  async interactionRun(interaction, lang) {
+  async interactionRun(interaction, data) {
     const match = interaction.options.getString("name");
     const reason = interaction.options.getString("reason");
 
@@ -58,6 +58,8 @@ module.exports = {
  * @param {string} match
  */
 async function getMatchingBans(guild, match, lang) {
+  
+   let l = lang.COMMANDS.MODERATION.UNBAN
   const bans = await guild.bans.fetch({ cache: false });
 
   const matched = [];
@@ -76,7 +78,7 @@ async function getMatchingBans(guild, match, lang) {
     }
   }
 
-  if (matched.length === 0) return `No user found matching ${match}`;
+  if (matched.length === 0) return l.NO_USER + ` ${match}`;
 
   const options = [];
   for (const user of matched) {
@@ -84,10 +86,10 @@ async function getMatchingBans(guild, match, lang) {
   }
 
   const menuRow = new ActionRowBuilder().addComponents(
-    new SelectMenuBuilder().setCustomId("unban-menu").setPlaceholder("Choose a user to unban").addOptions(options)
+    new SelectMenuBuilder().setCustomId("unban-menu").setPlaceholder(l.PLACEHOLDER).addOptions(options)
   );
 
-  return { content: "Please select a user you wish to unban", components: [menuRow] };
+  return { content: l.CTX, components: [menuRow] };
 }
 
 /**
@@ -96,6 +98,8 @@ async function getMatchingBans(guild, match, lang) {
  * @param {import('discord.js').Message} sent
  */
 async function waitForBan(issuer, reason, sent, lang) {
+    
+   let l = lang.COMMANDS.MODERATION.UNBAN
   const collector = sent.channel.createMessageComponentCollector({
     filter: (m) => m.member.id === issuer.id && m.customId === "unban-menu" && sent.id === m.message.id,
     time: 20000,
@@ -109,12 +113,14 @@ async function waitForBan(issuer, reason, sent, lang) {
     const user = await issuer.client.users.fetch(userId, { cache: true });
 
     const status = await unBanTarget(issuer, user, reason);
-    if (typeof status === "boolean") return sent.edit({ content: `${user.tag} is un-banned!`, components: [] });
-    else return sent.edit({ content: `Failed to unban ${user.tag}`, components: [] });
+    if (typeof status === "boolean") return sent.edit({ content: `${user.tag} ` + l.ERR , components: [] });
+    else return sent.edit({ content: l.FAIL + ` ${user.tag}`, components: [] });
   });
 
   // collect user and unban
   collector.on("end", async (collected) => {
-    if (collected.size === 0) return sent.edit("Oops! Timed out. Try again later.");
+    if (collected.size === 0) return sent.edit(l.FINISHED
+
+);
   });
 }

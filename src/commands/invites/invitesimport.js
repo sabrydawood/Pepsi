@@ -40,7 +40,9 @@ module.exports = {
 };
 
 async function importInvites({ guild }, user, lang) {
-  if (user && user.bot) return "Oops! You cannot import invites for bots";
+    
+      let l = lang.COMMANDS.INVITES.IMPORT
+  if (user && user.bot) return l.ERR ;
 
   const invites = await guild.invites.fetch({ cache: false });
 
@@ -63,5 +65,5 @@ async function importInvites({ guild }, user, lang) {
     await memberDb.save();
   }
 
-  return `Done! Previous invites added to ${user ? user.tag : "all members"}`;
+  return l.DONE + ` ${user ? user.tag : "all members"}`;
 }

@@ -151,6 +151,7 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
+let l = data.lang.COMMANDS.MODERATION.SLASH.PURGE
     const { options, member } = interaction;
 
     const sub = options.getSubcommand();
@@ -188,12 +189,12 @@ module.exports = {
       }
 
       default:
-        return interaction.followUp("Oops! Not a valid command selection");
+        return interaction.followUp(l.ERR);
     }
 
     // Success
     if (typeof response === "number") {
-      const message = `Successfully cleaned ${response} messages in ${channel}`;
+      const message = l.DONE + ` ${response} ${l.DONE2} ${channel}`;
       if (channel.id !== interaction.channelId) await interaction.followUp(message);
       else await channel.safeSend(message, 5);
       return;
@@ -202,23 +203,23 @@ module.exports = {
     // Member missing permissions
     else if (response === "MEMBER_PERM") {
       return interaction.followUp(
-        `You do not have permissions to Read Message History & Manage Messages in ${channel}`
+        l.PERMS + ` ${channel}`
       );
     }
 
     // Bot missing permissions
     else if (response === "BOT_PERM") {
-      return interaction.followUp(`I do not have permissions to Read Message History & Manage Messages in ${channel}`);
+      return interaction.followUp(l.PERMS2 + ` ${channel}`);
     }
 
     // No messages
     else if (response === "NO_MESSAGES") {
-      return interaction.followUp("Found no messages that can be cleaned");
+      return interaction.followUp(l.NO_MESSAGES);
     }
 
     // Remaining
     else {
-      return interaction.followUp("Failed to clean messages");
+      return interaction.followUp(l.FAIL);
     }
   },
 };

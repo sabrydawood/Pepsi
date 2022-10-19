@@ -35,7 +35,7 @@ module.exports = {
   async messageRun(message, args, data) {
     const choice = args[0];
     if (!animals.includes(choice)) {
-      return message.safeReply(`Invalid animal selected. Available animals:\n${animals.join(", ")}`);
+      return message.safeReply(data.pang.COMMANDS.FUN.ANIMAL.ERR + `:\n${animals.join(", ")}`);
     }
     const response = await getAnimal(message.author, choice, data.lang);
     return message.safeReply(response);
@@ -56,7 +56,7 @@ async function getAnimal(user, choice, lang) {
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.TRANSPARENT)
     .setImage(imageUrl)
-    .setFooter({ text: `Requested by ${user.tag}` });
+    .setFooter({ text: user.tag });
 
   return { embeds: [embed] };
 }

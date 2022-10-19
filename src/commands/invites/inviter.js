@@ -42,23 +42,25 @@ module.exports = {
 };
 
 async function getInviter({ guild }, user, settings, lang) {
-  if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
+    
+      let l = lang.COMMANDS.INVITES.INVITER
+  if (!settings.invite.tracking) return l.ERR;
 
   const inviteData = (await getMember(guild.id, user.id)).invite_data;
-  if (!inviteData || !inviteData.inviter) return `Cannot track how \`${user.tag}\` joined`;
+  if (!inviteData || !inviteData.inviter) return l.ERR2 + ` \`${user.tag}\`` + l.ERR3;
 
   const inviter = await guild.client.users.fetch(inviteData.inviter, false, true);
   const inviterData = (await getMember(guild.id, inviteData.inviter)).invite_data;
 
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.BOT_EMBED)
-    .setAuthor({ name: `Invite data for ${user.username}` })
+    .setAuthor({ name: l.AUTHOR + ` ${user.username}` })
     .setDescription(
       stripIndent`
-      Inviter: \`${inviter?.tag || "Deleted User"}\`
-      Inviter ID: \`${inviteData.inviter}\`
-      Invite Code: \`${inviteData.code}\`
-      Inviter Invites: \`${getEffectiveInvites(inviterData)}\`
+     ${l.F1} : \`${inviter?.tag || "Deleted User"}\`
+     ${l.F2} : \`${inviteData.inviter}\`
+     ${l.F3}: \`${inviteData.code}\`
+     ${l.F4} : \`${getEffectiveInvites(inviterData)}\`
       `
     );
 

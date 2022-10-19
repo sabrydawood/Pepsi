@@ -35,21 +35,16 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                   <div class="text-center">
-                    <img
-                      src="<%= guild.iconURL %>"
-                      style="border-radius: 100%"
-                      width="100"
-                      height="100"
-                      class="img-fluid"
-                    />
+<img src="<%= guild.iconURL %>"      style="border-radius: 100%"
+  width="100" height="100" class="img-fluid"/>
                   </div>
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer">
+                <div class="box-footer text-center">
                   <% if(guild.settingsUrl.includes('discordapp.com')) { %>
-<a href="https://discord.com/api/oauth2/authorize?client_id=<%= bot.config.CLIENT_ID%>&permissions=8&redirect_uri=<%= bot.config.DASHBOARD.baseURL%>/api/callback&response_type=code&scope=applications.commands%20bot"><button class="btn btn-block btn-primary">Invite</button></a>
+<a href="https://discord.com/api/oauth2/authorize?client_id=<%= bot.config.CLIENT_ID%>&permissions=8&redirect_uri=<%= bot.config.DASHBOARD.baseURL%>/api/callback&response_type=code&scope=applications.commands%20bot"><button class="w-95 bg-brown">Invite</button></a>
                   <% } else { %>
-                  <a href="<%= guild.settingsUrl %>"><button class="btn btn-block btn-success">Manage</button></a>
+                  <a href="<%= guild.settingsUrl %>"><button class="w-95 bg-aqua"">Manage</button></a>
                   <% } %>
                 </div>
                 <!-- /.box-footer -->

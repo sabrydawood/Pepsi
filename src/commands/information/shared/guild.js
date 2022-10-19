@@ -6,6 +6,7 @@ const moment = require("moment");
  * @param {import('discord.js').Guild} guild
  */
 module.exports = async (guild, lang) => {
+       let l = lang.COMMANDS.INFORMATION.SHARED.GUILDINFO
   const { name, id, preferredLocale, channels, roles, ownerId } = guild;
 
   const owner = await guild.members.fetch(ownerId);
@@ -56,50 +57,50 @@ module.exports = async (guild, lang) => {
   }
 
   let desc = "";
-  desc = `${desc + "❯"} **Id:** ${id}\n`;
-  desc = `${desc + "❯"} **Name:** ${name}\n`;
-  desc = `${desc + "❯"} **Owner:** ${owner.user.tag}\n`;
-  desc = `${desc + "❯"} **Region:** ${preferredLocale}\n`;
+  desc = `${desc + "❯"} **${l.ID}:** ${id}\n`;
+  desc = `${desc + "❯"} **${l.NAME}:** ${name}\n`;
+  desc = `${desc + "❯"} **${l.OWNER}:** ${owner.user.tag}\n`;
+  desc = `${desc + "❯"} **${l.REGION}:** ${preferredLocale}\n`;
   desc += "\n";
 
   const embed = new EmbedBuilder()
-    .setTitle("GUILD INFORMATION")
+    .setTitle(l.TITLE)
     .setThumbnail(guild.iconURL())
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {
-        name: `Server Members [${all}]`,
-        value: `\`\`\`Members: ${users}\nBots: ${bots}\`\`\``,
+        name: l.ALL + `[${all}]`,
+        value: `\`\`\`${l.MEMB}: ${users}\n${l.BOTS}: ${bots}\`\`\``,
         inline: true,
       },
       {
-        name: `Online Stats [${onlineAll}]`,
-        value: `\`\`\`Members: ${onlineUsers}\nBots: ${onlineBots}\`\`\``,
+        name: l.ONLINE + `[${onlineAll}]`,
+        value: `\`\`\`${l.MEMB}: ${onlineUsers}\n${l.BOTS}: ${onlineBots}\`\`\``,
         inline: true,
       },
       {
-        name: `Categories and channels [${totalChannels}]`,
-        value: `\`\`\`Categories: ${categories} | Text: ${textChannels} | Voice: ${voiceChannels} | Thread: ${threadChannels}\`\`\``,
+        name: l.CATS + ` [${totalChannels}]`,
+        value: `\`\`\`${l.CAT}: ${categories} | ${l.TEXT}: ${textChannels} | ${l.VOICE}: ${voiceChannels} | ${l.THREAD}: ${threadChannels}\`\`\``,
         inline: false,
       },
       {
-        name: `Roles [${rolesCount}]`,
+        name: l.ROLES + ` [${rolesCount}]`,
         value: `\`\`\`${rolesString}\`\`\``,
         inline: false,
       },
       {
-        name: "Verification",
+        name: l.F1,
         value: `\`\`\`${verificationLevel}\`\`\``,
         inline: true,
       },
       {
-        name: "Boost Count",
+        name: l.F2,
         value: `\`\`\`${guild.premiumSubscriptionCount}\`\`\``,
         inline: true,
       },
       {
-        name: `Server Created [${createdAt.fromNow()}]`,
+        name: l.F3 + ` [${createdAt.fromNow()}]`,
         value: `\`\`\`${createdAt.format("dddd, Do MMMM YYYY")}\`\`\``,
         inline: false,
       }

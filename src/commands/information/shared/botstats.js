@@ -8,6 +8,7 @@ const { stripIndent } = require("common-tags");
  * @param {import('@structures/BotClient')} client
  */
 module.exports = (client, lang) => {
+       let l = lang.COMMANDS.INFORMATION.SHARED.BOTSTATS
   // STATS
   const guilds = client.guilds.cache.size;
   const channels = client.channels.cache.size;
@@ -29,20 +30,20 @@ module.exports = (client, lang) => {
   const overallUsage = `${Math.floor(((os.totalmem() - os.freemem()) / os.totalmem()) * 100)}%`;
 
   let desc = "";
-  desc += `❒ Total guilds: ${guilds}\n`;
-  desc += `❒ Total users: ${users}\n`;
-  desc += `❒ Total channels: ${channels}\n`;
-  desc += `❒ Websocket Ping: ${client.ws.ping} ms\n`;
+  desc += `❒ ${l.GUILDS}: ${guilds}\n`;
+  desc += `❒ ${l.USERS}: ${users}\n`;
+  desc += `❒ ${l.CHANNELS}: ${channels}\n`;
+  desc += `❒ ${l.WEBSOC}: ${client.ws.ping} ms\n`;
   desc += "\n";
 
   const embed = new EmbedBuilder()
-    .setTitle("Bot Information")
+    .setTitle(l.TITLE)
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setThumbnail(client.user.displayAvatarURL())
     .setDescription(desc)
     .addFields(
       {
-        name: "CPU",
+        name: l.F1,
         value: stripIndent`
         ❯ **OS:** ${platform} [${architecture}]
         ❯ **Cores:** ${cores}
@@ -51,7 +52,7 @@ module.exports = (client, lang) => {
         inline: true,
       },
       {
-        name: "Bot's RAM",
+        name: l.F2,
         value: stripIndent`
         ❯ **Used:** ${botUsed}
         ❯ **Available:** ${botAvailable}
@@ -60,7 +61,7 @@ module.exports = (client, lang) => {
         inline: true,
       },
       {
-        name: "Overall RAM",
+        name: l.F3,
         value: stripIndent`
         ❯ **Used:** ${overallUsed}
         ❯ **Available:** ${overallAvailable}
@@ -69,12 +70,12 @@ module.exports = (client, lang) => {
         inline: true,
       },
       {
-        name: "Node Js version",
+        name: l.F4,
         value: process.versions.node,
         inline: false,
       },
       {
-        name: "Uptime",
+        name: l.F5,
         value: "```" + timeformat(process.uptime()) + "```",
         inline: false,
       }
@@ -82,15 +83,15 @@ module.exports = (client, lang) => {
 
   // Buttons
   let components = [];
-  components.push(new ButtonBuilder().setLabel("Invite Link").setURL(client.getInvite()).setStyle(ButtonStyle.Link));
+  components.push(new ButtonBuilder().setLabel(l.LINK).setURL(client.getInvite()).setStyle(ButtonStyle.Link));
 
   if (SUPPORT_SERVER) {
-    components.push(new ButtonBuilder().setLabel("Support Server").setURL(SUPPORT_SERVER).setStyle(ButtonStyle.Link));
+    components.push(new ButtonBuilder().setLabel(l.SUPPORT).setURL(SUPPORT_SERVER).setStyle(ButtonStyle.Link));
   }
 
   if (DASHBOARD.enabled) {
     components.push(
-      new ButtonBuilder().setLabel("Dashboard Link").setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
+      new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
     );
   }
 

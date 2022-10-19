@@ -15,7 +15,7 @@ module.exports = {
   },
   slashCommand: {
     enabled: true,
-    ephemeral: true,
+    ephemeral: false,
     options: [
       {
         name: "channel",
@@ -33,7 +33,7 @@ module.exports = {
 
     if (input === "none" || input === "off" || input === "disable") targetChannel = null;
     else {
-      if (message.mentions.channels.size === 0) return message.safeReply("Incorrect command usage");
+      if (message.mentions.channels.size === 0) return message.safeReply(data.lang.INVALID_USAGE);
       targetChannel = message.mentions.channels.first();
     }
 
@@ -49,10 +49,10 @@ module.exports = {
 
 async function setChannel(targetChannel, settings,lang) {
   if (targetChannel && !targetChannel.canSendEmbeds()) {
-    return "Ugh! I cannot send logs to that channel? I need the `Write Messages` and `Embed Links` permissions in that channel";
+    return lang.COMMANDS.ADMIN.MOD_LOG.ERR;
   }
 
   settings.modlog_channel = targetChannel?.id;
   await settings.save();
-  return `Configuration saved! Modlog channel ${targetChannel ? "updated" : "removed"}`;
+  return `Configuration saved! Modlog channel ${targetChannel ? lang.UPDATED : lang.REMOVED}`;
 }

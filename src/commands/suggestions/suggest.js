@@ -37,14 +37,14 @@ module.exports = {
   async messageRun(message, args, data) {
     const suggestion = args.join(" ");
     const response = await suggest(message.member, suggestion, data.settings, data.lang);
-    if (typeof response === "boolean") return message.channel.safeSend("Your suggestion has been submitted!", 5);
+    if (typeof response === "boolean") return message.channel.safeSend(data.lang.COMMANDS.SUGGESTIONS.SUGGEST.DONE, 5);
     else await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
     const suggestion = interaction.options.getString("suggestion");
     const response = await suggest(interaction.member, suggestion, data.settings, data.lang);
-    if (typeof response === "boolean") interaction.followUp("Your suggestion has been submitted!");
+    if (typeof response === "boolean") interaction.followUp(data.lang.COMMANDS.SUGGESTIONS.SUGGEST.DONE);
     else await interaction.followUp(response);
   },
 };
@@ -55,29 +55,30 @@ module.exports = {
  * @param {object} settings
  */
 async function suggest(member, suggestion, settings, lang) {
-  if (!settings.suggestions.enabled) return "Suggestion system is disabled.";
-  if (!settings.suggestions.channel_id) return "Suggestion channel not configured!";
+const l = lang.COMMANDS.SUGGESTIONS.SUGGEST
+  if (!settings.suggestions.enabled) return l.DISABLED ;
+  if (!settings.suggestions.channel_id) return l.CH_NOT_CONFIG;
   const channel = member.guild.channels.cache.get(settings.suggestions.channel_id);
-  if (!channel) return "Suggestion channel not found!";
+  if (!channel) return l.CH_NOT_FOUND;
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "New Suggestion" })
+    .setAuthor({ name: l.TITLE })
     .setThumbnail(member.user.avatarURL())
     .setColor(SUGGESTIONS.DEFAULT_EMBED)
     .setDescription(
       stripIndent`
         ${suggestion}
 
-        **Submitter** 
+        **${l.DESC}** 
         ${member.user.tag} [${member.id}]
       `
     )
     .setTimestamp();
 
   let buttonsRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId("SUGGEST_APPROVE").setLabel("Approve").setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setCustomId("SUGGEST_REJECT").setLabel("Reject").setStyle(ButtonStyle.Danger),
-    new ButtonBuilder().setCustomId("SUGGEST_DELETE").setLabel("Delete").setStyle(ButtonStyle.Secondary)
+    new ButtonBuilder().setCustomId("SUGGEST_APPROVE").setLabel(l.BTN).setStyle(ButtonStyle.Success),
+    new ButtonBuilder().setCustomId("SUGGEST_REJECT").setLabel(l.BTN1).setStyle(ButtonStyle.Danger),
+    new ButtonBuilder().setCustomId("SUGGEST_DELETE").setLabel(l.BTN2).setStyle(ButtonStyle.Secondary)
   );
 
   try {
@@ -94,6 +95,6 @@ async function suggest(member, suggestion, settings, lang) {
     return true;
   } catch (ex) {
     member.client.logger.error("suggest", ex);
-    return "Failed to send message to suggestions channel!";
+    return l.FAIL;
   }
 }

@@ -17,7 +17,7 @@ module.exports = async (client, interaction) => {
 
   if (!interaction.guild) {
     return interaction
-      .reply({ content: lang.EVENTS.MESSAGE_EVENT.MAINTACE_MESSAGE, ephemeral: true })
+      .reply({ content: lang.EVENTS.MESSAGE_EVENT.DM_REPLY, ephemeral: true })
       .catch(() => {});
   }
 //const user = interaction.options.getUser('target');

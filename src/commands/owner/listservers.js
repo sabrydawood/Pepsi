@@ -34,10 +34,18 @@ module.exports = {
       // match by name
       client.guilds.cache
         .filter((g) => g.name.toLowerCase().includes(match.toLowerCase()))
-        .forEach((g) => matched.push(g));
+        .forEach((g) =>
+         matched.push(g)
+          );
+          
     }
 
     const servers = match ? matched : Array.from(client.guilds.cache.values());
+    
+
+      
+      
+      
     const total = servers.length;
     const maxPerPage = MAX_PER_PAGE;
     const totalPages = Math.ceil(total / maxPerPage);
@@ -69,10 +77,13 @@ module.exports = {
 
       const fields = [];
       for (let i = start; i < end; i++) {
+          
         const server = servers[i];
+          
+  //  const chinv = invite(client,server);
         fields.push({
           name: server.name,
-          value: server.id,
+          value: server.id /*+ `[join](${chinv})`*/,
           inline: true,
         });
       }
@@ -127,3 +138,19 @@ module.exports = {
     });
   },
 };
+async function invite(client,server){
+ const guild = client.guilds.cache.get(server.id)
+ let invite ;
+    if(guild.systemChannel){
+        invite = guild.systemChannel.createInvite({
+    maxAge: 10 * 60 * 1000,
+    maxUses: 1
+  })
+        }else {
+   invite = await guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT' && channel.permissionsFor(guild.me).has('SEND_MESSAGES')).createInvite({
+    maxAge: 10 * 60 * 1000,
+    maxUses: 1
+  })
+        }
+   return invite;
+}

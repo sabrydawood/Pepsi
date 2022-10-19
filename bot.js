@@ -6,7 +6,7 @@ require("@helpers/extenders/Message");
 require("@helpers/extenders/Guild");
 require("@helpers/extenders/GuildChannel");
 
-//const { checkForUpdates } = require("@helpers/BotUtils");
+const { checkForUpdates } = require("@helpers/BotUtils");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { BotClient } = require("@src/structures");
 const { launch } = require("@root/dashboard/app");
@@ -29,13 +29,13 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
   await initializeMongoose();
 
   // check for updates
- // await checkForUpdates();
+ await checkForUpdates();
 
 
   // start the client	
   await client.login(process.env.BOT_TOKEN);
 	
-//	client.on('debug', info => client.logger.log(info));
+	client.on('debug', info => client.logger.debug(info));
 	/*let res = await client.shard.broadcastEval((c) => c.guilds.cache.map((guild) => 
     guild.members.cache.size));*/
 

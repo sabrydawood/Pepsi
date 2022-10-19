@@ -6,11 +6,12 @@
  * @param {number} newWinnerCount
  */
 module.exports = async (member, messageId, addDuration, newPrize, newWinnerCount, lang) => {
-  if (!messageId) return "You must provide a valid message id.";
+ let l = lang.COMMANDS.GIVEAWAYS.SUB.EDIT
+  if (!messageId) return l.ERR;
 
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
-    return "You need to have the manage messages permissions to start giveaways.";
+    return l.PERMS;
   }
 
   // Search with messageId
@@ -19,7 +20,7 @@ module.exports = async (member, messageId, addDuration, newPrize, newWinnerCount
   );
 
   // If no giveaway was found
-  if (!giveaway) return `Unable to find a giveaway for messageId: ${messageId}`;
+  if (!giveaway) return l.ERR2 + `: ${messageId}`;
 
   try {
     await member.client.giveawaysManager.edit(messageId, {
@@ -28,9 +29,9 @@ module.exports = async (member, messageId, addDuration, newPrize, newWinnerCount
       newWinnerCount: newWinnerCount || giveaway.winnerCount,
     });
 
-    return `Successfully updated the giveaway!`;
+    return l.DONE;
   } catch (error) {
     member.client.logger.error("Giveaway Edit", error);
-    return `An error occurred while updating the giveaway: ${error.message}`;
+    return l.ERR3 + `: ${error.message}`;
   }
 };

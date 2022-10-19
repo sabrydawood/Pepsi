@@ -201,6 +201,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+  const l = data.lang.COMMANDS.SUGGESTIONS.SUGGESTION
     const sub = args[0];
     let response;
 
@@ -208,7 +209,7 @@ module.exports = {
     if (sub == "status") {
       const status = args[1]?.toUpperCase();
       if (!status || !["ON", "OFF"].includes(status))
-        return message.safeReply("Invalid status. Value must be `on/off`");
+        return message.safeReply(data.lang.INVALID_STATUS);
       response = await setStatus(data.settings, status, data.lang);
     }
 
@@ -216,8 +217,8 @@ module.exports = {
     else if (sub == "channel") {
       const input = args[1];
       let matched = message.guild.findMatchingChannels(input);
-      if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      if (matched.length == 0) response = l.ERR + ` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else response = await setChannel(data.settings, matched[0], data.lang);
     }
 
@@ -225,8 +226,8 @@ module.exports = {
     else if (sub == "appch") {
       const input = args[1];
       let matched = message.guild.findMatchingChannels(input);
-      if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      if (matched.length == 0) response = l.ERR` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else response = await setApprovedChannel(data.settings, matched[0], data.lang);
     }
 
@@ -234,8 +235,8 @@ module.exports = {
     else if (sub == "rejch") {
       const input = args[1];
       let matched = message.guild.findMatchingChannels(input);
-      if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      if (matched.length == 0) response = l.ERR + ` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input} ` + l.ERR2;
       else response = await setRejectedChannel(data.settings, matched[0], data.lang);
     }
 
@@ -243,8 +244,8 @@ module.exports = {
     else if (sub == "approve") {
       const input = args[1];
       let matched = message.guild.findMatchingChannels(input);
-      if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      if (matched.length == 0) response = l.ERR + ` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else {
         const messageId = args[2];
         const reason = args.slice(3).join(" ");
@@ -255,9 +256,9 @@ module.exports = {
     // reject
     else if (sub == "reject") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);
-      if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      let matched = message.guild.findMatchingChannels(input);    
+        if (matched.length == 0) response = l.ERR + ` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else {
         const messageId = args[2];
         const reason = args.slice(3).join(" ");
@@ -269,8 +270,8 @@ module.exports = {
     else if (sub == "staffadd") {
       const input = args[1];
       let matched = message.guild.findMatchingRoles(input);
-      if (matched.length == 0) response = `No matching roles found for ${input}`;
-      else if (matched.length > 1) response = `Multiple roles found for ${input}. Please be more specific.`;
+         if (matched.length == 0) response = l.ERR + ` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else response = await addStaffRole(data.settings, matched[0], data.lang);
     }
 
@@ -278,13 +279,13 @@ module.exports = {
     else if (sub == "staffremove") {
       const input = args[1];
       let matched = message.guild.findMatchingRoles(input);
-      if (matched.length == 0) response = `No matching roles found for ${input}`;
-      else if (matched.length > 1) response = `Multiple roles found for ${input}. Please be more specific.`;
+         if (matched.length == 0) response = l.ERR + ` ${input}`;
+      else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else response = await removeStaffRole(data.settings, matched[0], data.lang);
     }
 
     // else
-    else response = "Not a valid subcommand";
+    else response = data.lang.INVALID_SUB;
     await message.safeReply(response);
   },
 
@@ -295,7 +296,7 @@ module.exports = {
     // status
     if (sub == "status") {
       const status = interaction.options.getString("status");
-      response = await setStatus(data.settings, status);
+      response = await setStatus(data.settings, status, data.lang);
     }
 
     // channel
@@ -343,80 +344,88 @@ module.exports = {
     }
 
     // else
-    else response = "Not a valid subcommand";
+    else response = data.lang.INVALID_SUB;
     await interaction.followUp(response);
   },
 };
 
 async function setStatus(settings, status, lang) {
+const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
   const enabled = status.toUpperCase() === "ON" ? true : false;
   settings.suggestions.enabled = enabled;
   await settings.save();
-  return `Suggestion system is now ${enabled ? "enabled" : "disabled"}`;
+  return l.STATS_DONE + `${enabled ? lang.ENABLED : lang.DISABLED}`;
 }
 
 async function setChannel(settings, channel, lang) {
+ 
+
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
   if (!channel) {
     settings.suggestions.channel_id = null;
     await settings.save();
-    return "Suggestion system is now disabled";
+    return l.DISABLED;
   }
 
   if (!channel.permissionsFor(channel.guild.members.me).has(CHANNEL_PERMS)) {
-    return `I need the following permissions in ${channel}\n${parsePermissions(CHANNEL_PERMS)}`;
+    return l.PERMS + `${channel}\n${parsePermissions(CHANNEL_PERMS)}`;
   }
 
   settings.suggestions.channel_id = channel.id;
   await settings.save();
-  return `Suggestions will now be sent to ${channel}`;
+  return l.WL_SENT + channel;
 }
 
 async function setApprovedChannel(settings, channel, lang) {
+ const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
   if (!channel) {
     settings.suggestions.approved_channel = null;
     await settings.save();
-    return "Suggestion approved channel is now disabled";
+    return l.CH_APPROVED ;
   }
 
   if (!channel.permissionsFor(channel.guild.members.me).has(CHANNEL_PERMS)) {
-    return `I need the following permissions in ${channel}\n${parsePermissions(CHANNEL_PERMS)}`;
+    return l.PERMS + ` ${channel}\n${parsePermissions(CHANNEL_PERMS)}`;
   }
 
   settings.suggestions.approved_channel = channel.id;
   await settings.save();
-  return `Approved suggestions will now be sent to ${channel}`;
+  return l.WL_APP_SENT + channel;
 }
 
 async function setRejectedChannel(settings, channel, lang) {
+    const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
   if (!channel) {
     settings.suggestions.rejected_channel = null;
     await settings.save();
-    return "Suggestion rejected channel is now disabled";
+    return l.CH_REJECT ;
   }
 
   if (!channel.permissionsFor(channel.guild.members.me).has(CHANNEL_PERMS)) {
-    return `I need the following permissions in ${channel}\n${parsePermissions(CHANNEL_PERMS)}`;
+    return l.PERMS + `${channel}\n${parsePermissions(CHANNEL_PERMS)}`;
   }
 
   settings.suggestions.rejected_channel = channel.id;
   await settings.save();
-  return `Rejected suggestions will now be sent to ${channel}`;
+  return l.WL_REJ_SENT + channel;
 }
 
 async function addStaffRole(settings, role, lang) {
+    const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
   if (settings.suggestions.staff_roles.includes(role.id)) {
-    return `\`${role.name}\` is already a staff role`;
+    return `\`${role.name}\`` + l.ROLE;
   }
   settings.suggestions.staff_roles.push(role.id);
   await settings.save();
-  return `\`${role.name}\` is now a staff role`;
+  return `\`${role.name}\` ` + l.ROLE1;
 }
 
 async function removeStaffRole(settings, role, lang) {
+    const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
   if (!settings.suggestions.staff_roles.includes(role.id)) {
-    return `${role} is not a staff role`;
+    return `${role} ` + l.ROLE2;
   }
   settings.suggestions.staff_roles.splice(settings.suggestions.staff_roles.indexOf(role.id), 1);
   await settings.save();
-  return `\`${role.name}\` is no longer a staff role`;
+  return `\`${role.name}\` ` + l.ROLE3;
 }

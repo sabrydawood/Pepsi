@@ -74,14 +74,14 @@ module.exports = {
       if (input === "off") channel = "off";
       else {
         const match = message.guild.findMatchingChannels(input);
-        if (match.length === 0) return message.safeReply("Invalid channel. Please provide a valid channel");
+        if (match.length === 0) return message.safeReply(data.lang.COMMANDS.STATS.XP.ERR);
         channel = match[0];
       }
       response = await setChannel(channel, data.settings, data.lang);
     }
 
     // invalid
-    else response = "Invalid subcommand";
+    else response = data.lang.INVALID_SUB;
     await message.safeReply(response);
   },
 
@@ -91,25 +91,29 @@ module.exports = {
 
     if (sub === "message") response = await setMessage(interaction.options.getString("message"), data.settings);
     else if (sub === "channel") response = await setChannel(interaction.options.getChannel("channel"), data.settings, data.lang);
-    else response = "Invalid subcommand";
+    else response = data.lang.INVALID_SUB;
 
     await interaction.followUp(response);
   },
 };
 
 async function setMessage(message, settings, lang) {
-  if (!message) return "Invalid message. Please provide a message";
+ 
+    const l = lang.COMMANDS.STATS.XP
+  if (!message) return l.ERR1;
   settings.stats.xp.message = message;
   await settings.save();
-  return `Configuration saved. Level up message updated!`;
+  return l.MESSAGE_DONE;
 }
 
 async function setChannel(channel, settings,lang) {
-  if (!channel) return "Invalid channel. Please provide a channel";
+ 
+    const l = lang.COMMANDS.STATS.XP
+  if (!channel) return l.ERR;
 
   if (channel === "off") settings.stats.xp.channel = null;
   else settings.stats.xp.channel = channel.id;
 
   await settings.save();
-  return `Configuration saved. Level up channel updated!`;
+  return l.CH_DONE;
 }

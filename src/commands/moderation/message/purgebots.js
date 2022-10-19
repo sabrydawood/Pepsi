@@ -16,24 +16,25 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+     let l = data.lang.COMMANDS.MODERATION.MESSAGE.PURGE
     const amount = args[0] || 99;
 
     if (amount) {
-      if (isNaN(amount)) return message.safeReply("Numbers are only allowed");
-      if (parseInt(amount) > 99) return message.safeReply("The max amount of messages that I can delete is 99");
+      if (isNaN(amount)) return message.safeReply(l.ERR);
+      if (parseInt(amount) > 99) return message.safeReply(l.ERR2);
     }
     const response = await purgeMessages(message.member, message.channel, "BOT", amount);
 
     if (typeof response === "number") {
-      return message.channel.safeSend(`Successfully deleted ${response} messages`, 5);
+      return message.channel.safeSend(l.DONE + ` ${response} `, 5);
     } else if (response === "BOT_PERM") {
-      return message.safeReply("I don't have `Read Message History` & `Manage Messages` to delete messages");
+      return message.safeReply(l.ERR3);
     } else if (response === "MEMBER_PERM") {
-      return message.safeReply("You don't have `Read Message History` & `Manage Messages` to delete messages");
+      return message.safeReply(l.ERR4);
     } else if (response === "NO_MESSAGES") {
-      return message.safeReply("No messages found that can be cleaned");
+      return message.safeReply(l.ERR5);
     } else {
-      return message.safeReply(`Error occurred! Failed to delete messages`);
+      return message.safeReply(l.ERR6);
     }
   },
 };

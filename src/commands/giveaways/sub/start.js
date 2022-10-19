@@ -10,14 +10,16 @@ const { ChannelType } = require("discord.js");
  * @param {string[]} [allowedRoles]
  */
 module.exports = async (member, giveawayChannel, duration, prize, winners, host, allowedRoles = [], lang) => {
+  
+ let l = lang.COMMANDS.GIVEAWAYS.SUB.START
   try {
     if (!host) host = member.user;
     if (!member.permissions.has("ManageMessages")) {
-      return "You need to have the manage messages permissions to start giveaways.";
+      return l.PERMS;
     }
 
     if (!giveawayChannel.type === ChannelType.GuildText) {
-      return "You can only start giveaways in text channels.";
+      return l.ERR;
     }
 
     /**
@@ -30,11 +32,11 @@ module.exports = async (member, giveawayChannel, duration, prize, winners, host,
       hostedBy: host,
       thumbnail: "https://i.imgur.com/DJuTuxs.png",
       messages: {
-        giveaway: "🎉 **GIVEAWAY** 🎉",
-        giveawayEnded: "🎉 **GIVEAWAY ENDED** 🎉",
-        inviteToParticipate: "React with 🎁 to enter",
-        dropMessage: "Be the first to react with 🎁 to win!",
-        hostedBy: `\nHosted by: ${host.tag}`,
+        giveaway: l.F1,
+        giveawayEnded: l.F2,
+        inviteToParticipate: l.F3,
+        dropMessage: l.F4,
+        hostedBy: `\n${l.F5}: ${host.tag}`,
       },
     };
 
@@ -43,9 +45,9 @@ module.exports = async (member, giveawayChannel, duration, prize, winners, host,
     }
 
     await member.client.giveawaysManager.start(giveawayChannel, options);
-    return `Giveaway started in ${giveawayChannel}`;
+    return l.DONE + ` ${giveawayChannel}`;
   } catch (error) {
     member.client.logger.error("Giveaway Start", error);
-    return `An error occurred while starting the giveaway: ${error.message}`;
+    return l.ERR2 + `: ${error.message}`;
   }
 };

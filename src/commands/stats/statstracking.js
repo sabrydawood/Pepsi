@@ -39,7 +39,7 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const input = args[0].toLowerCase();
-    if (!["on", "off"].includes(input)) return message.safeReply("Invalid status. Value must be `on/off`");
+    if (!["on", "off"].includes(input)) return message.safeReply(data.lang.INVALID_STATUS);
     const response = await setStatus(input, data.settings, data.lang);
     return message.safeReply(response);
   },
@@ -51,10 +51,13 @@ module.exports = {
 };
 
 async function setStatus(input, settings, lang) {
+ 
+
+    const l = lang.COMMANDS.STATS.STATS_TRACKING
   const status = input.toLowerCase() === "on" ? true : false;
 
   settings.stats.enabled = status;
   await settings.save();
 
-  return `Configuration saved! Stats Tracking is now ${status ? "enabled" : "disabled"}`;
+  return l.DONE + `${status ? lang.ENABLED : lang.DISABLED}`;
 }

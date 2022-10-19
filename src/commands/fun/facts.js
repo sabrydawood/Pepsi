@@ -36,7 +36,7 @@ module.exports = {
   async messageRun(message, args, data) {
     const choice = args[0];
     if (!animals.includes(choice)) {
-      return message.safeReply(`Invalid animal selected. Available animals:\n${animals.join(", ")}`);
+      return message.safeReply(data.lang.COMMANDS.FUN.ANIMAL.ERR`:\n${animals.join(", ")}`);
     }
     const response = await getFact(message.author, choice, data.lang);
     return message.safeReply(response);
@@ -59,7 +59,7 @@ async function getFact(user, choice, lang) {
     .setColor(EMBED_COLORS.TRANSPARENT)
     .setThumbnail(imageUrl)
     .setDescription(fact)
-    .setFooter({ text: `Requested by ${user.tag}` });
+    .setFooter({ text: user.tag });
 
   return { embeds: [embed] };
 }

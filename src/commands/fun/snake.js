@@ -17,22 +17,22 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-    await message.safeReply("**Starting Snake Game**");
+    await message.safeReply(data.lang.COMMANDS.FUN.SNAKE.START);
     await startSnakeGame(message, data.lang);
   },
 
   async interactionRun(interaction, data) {
-    await interaction.followUp("**Starting Snake Game**");
+    await interaction.followUp(data.lang.COMMANDS.FUN.SNAKE.START);
     await startSnakeGame(interaction, data.lang);
   },
 };
 
 async function startSnakeGame(data, lang) {
   const snakeGame = new SnakeGame({
-    title: "Snake Game",
+    title: lang.COMMANDS.FUN.SNAKE.TITLE,
     color: "BLUE",
     timestamp: true,
-    gameOverTitle: "Game Over",
+    gameOverTitle: lang.COMMANDS.FUN.SNAKE.OVER,
   });
 
   await snakeGame.newGame(data);

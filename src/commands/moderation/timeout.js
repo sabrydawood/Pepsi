@@ -42,12 +42,14 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+      
+   let l = data.lang.COMMANDS.MODERATION.TIMEOUT
     const target = await message.guild.resolveMember(args[0], true);
-    if (!target) return message.safeReply(`No user found matching ${args[0]}`);
+    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0] ));
 
     // parse time
     const ms = ems(args[1]);
-    if (!ms) return message.safeReply("Please provide a valid duration. Example: 1d/1h/1m/1s");
+    if (!ms) return message.safeReply(l.ERR);
 
     const reason = args.slice(2).join(" ").trim();
     const response = await timeout(message.member, target, ms, reason, data.lang);
@@ -55,12 +57,14 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
+   
+   let l = data.lang.COMMANDS.MODERATION.TIMEOUT
     const user = interaction.options.getUser("user");
 
     // parse time
     const duration = interaction.options.getString("duration");
     const ms = ems(duration);
-    if (!ms) return interaction.followUp("Please provide a valid duration. Example: 1d/1h/1m/1s");
+    if (!ms) return interaction.followUp(l.ERR);
 
     const reason = interaction.options.getString("reason");
     const target = await interaction.guild.members.fetch(user.id);
@@ -71,11 +75,13 @@ module.exports = {
 };
 
 async function timeout(issuer, target, ms, reason, lang) {
-  if (!NaN(Number(ms))) return "Please provide a valid duration. Example: 1d/1h/1m/1s";
+ 
+   let l = lang.COMMANDS.MODERATION.TIMEOUT
+  if (!NaN(Number(ms))) return l.ERR;
   const response = await timeoutTarget(issuer, target, ms, reason);
-  if (typeof response === "boolean") return `${target.user.tag} is timed out!`;
-  if (response === "BOT_PERM") return `I do not have permission to timeout ${target.user.tag}`;
-  else if (response === "MEMBER_PERM") return `You do not have permission to timeout ${target.user.tag}`;
-  else if (response === "ALREADY_TIMEOUT") return `${target.user.tag} is already timed out!`;
-  else return `Failed to timeout ${target.user.tag}`;
+  if (typeof response === "boolean") return `${target.user.tag} ` + l.ERR;
+  if (response === "BOT_PERM") return l.PERMS + ` ${target.user.tag}`;
+  else if (response === "MEMBER_PERM") return l.PERMS2 ` ${target.user.tag}`;
+  else if (response === "ALREADY_TIMEOUT") return `${target.user.tag} ` + l.FAIL ;
+  else return l.FAIL2 + ` ${target.user.tag}`;
 }

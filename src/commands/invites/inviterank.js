@@ -63,15 +63,17 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+      
+      let l = data.lang.COMMANDS.INVITES.RANK
     const sub = args[0].toLowerCase();
 
     if (sub === "add") {
       const query = args[1];
       const invites = args[2];
 
-      if (isNaN(invites)) return message.safeReply(`\`${invites}\` is not a valid number of invites?`);
+      if (isNaN(invites)) return message.safeReply(`\`${invites}\` ` + l.ERR);
       const role = message.guild.findMatchingRoles(query)[0];
-      if (!role) return message.safeReply(`No roles found matching \`${query}\``);
+      if (!role) return message.safeReply(l.ERR2 + ` \`${query}\``);
 
       const response = await addInviteRank(message, role, invites, data.settings, data.lang);
       await message.safeReply(response);
@@ -81,14 +83,14 @@ module.exports = {
     else if (sub === "remove") {
       const query = args[1];
       const role = message.guild.findMatchingRoles(query)[0];
-      if (!role) return message.safeReply(`No roles found matching \`${query}\``);
+      if (!role) return message.safeReply(l.ERR2 + ` \`${query}\``);
       const response = await removeInviteRank(message, role, data.settings, data.lang);
       await message.safeReply(response);
     }
 
     //
     else {
-      await message.safeReply("Incorrect command usage!");
+      await message.safeReply(data.lang.INVALID_USAGE);
     }
   },
 
@@ -113,18 +115,20 @@ module.exports = {
 };
 
 async function addInviteRank({ guild }, role, invites, settings, lang) {
-  if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
+    
+      let l = lang.COMMANDS.INVITES.RANK
+  if (!settings.invite.tracking) return l.ERR3 ;
 
   if (role.managed) {
-    return "You cannot assign a bot role";
+    return l.ERR4 ;
   }
 
   if (guild.roles.everyone.id === role.id) {
-    return "I cannot assign the everyone role.";
+    return l.ERR5 ;
   }
 
   if (!role.editable) {
-    return "I am missing permissions to move members to that role. Is that role below my highest role?";
+    return l.ERR6;
   }
 
   const exists = settings.invite.ranks.find((obj) => obj._id === role.id);
@@ -132,36 +136,38 @@ async function addInviteRank({ guild }, role, invites, settings, lang) {
   let msg = "";
   if (exists) {
     exists.invites = invites;
-    msg += "Previous configuration found for this role. Overwriting data\n";
+    msg += l.ERR7 ;
   }
 
   settings.invite.ranks.push({ _id: role.id, invites });
   await settings.save();
-  return `${msg}Success! Configuration saved.`;
+  return msg + l.SUCCESS;
 }
 
 async function removeInviteRank({ guild }, role, settings, lang) {
-  if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
+    
+      let l = lang.COMMANDS.INVITES.RANK
+  if (!settings.invite.tracking) return l.ERR3 ;
 
   if (role.managed) {
-    return "You cannot assign a bot role";
+    return l.ERR4;
   }
 
   if (guild.roles.everyone.id === role.id) {
-    return "You cannot assign the everyone role.";
+    return l.ERR5 ;
   }
 
   if (!role.editable) {
-    return "I am missing permissions to move members from that role. Is that role below my highest role?";
+    return l.ERR6 ;
   }
 
   const exists = settings.invite.ranks.find((obj) => obj._id === role.id);
-  if (!exists) return "No previous invite rank is configured found for this role";
+  if (!exists) return l.ERR8;
 
   // delete element from array
   const i = settings.invite.ranks.findIndex((obj) => obj._id === role.id);
   if (i > -1) settings.invite.ranks.splice(i, 1);
 
   await settings.save();
-  return "Success! Configuration saved.";
+  return l.SUCCESS ;
 }

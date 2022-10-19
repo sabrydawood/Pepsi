@@ -43,65 +43,66 @@ module.exports = {
 };
 
 async function getCovid(country, lang) {
+ const l = lang.COMMANDS.UTILS.COVID
   const response = await getJson(`https://disease.sh/v2/countries/${country}`);
 
-  if (response.status === 404) return "```css\nCountry with the provided name is not found```";
+  if (response.status === 404) return "```css\n"+ l.ERR +"```";
   if (!response.success) return MESSAGES.API_ERROR;
   const { data } = response;
 
   const mg = timestampToDate(data?.updated, "dd.MM.yyyy at HH:mm");
   const embed = new EmbedBuilder()
-    .setTitle(`Covid - ${data?.country}`)
+    .setTitle(l.TITLE + ` - ${data?.country}`)
     .setThumbnail(data?.countryInfo.flag)
     .setColor(EMBED_COLORS.BOT_EMBED)
     .addFields(
       {
-        name: "Cases Total",
+        name: l.F1 ,
         value: data?.cases.toString(),
         inline: true,
       },
       {
-        name: "Cases Today",
+        name: l.F2,
         value: data?.todayCases.toString(),
         inline: true,
       },
       {
-        name: "Deaths Total",
+        name: l.F3,
         value: data?.deaths.toString(),
         inline: true,
       },
       {
-        name: "Deaths Today",
+        name: l.F4,
         value: data?.todayDeaths.toString(),
         inline: true,
       },
       {
-        name: "Recovered",
+        name: l.F5 ,
         value: data?.recovered.toString(),
         inline: true,
       },
       {
-        name: "Active",
+        name: l.F6,
         value: data?.active.toString(),
         inline: true,
       },
       {
-        name: "Critical",
+        name: l.F7,
         value: data?.critical.toString(),
         inline: true,
       },
       {
-        name: "Cases per 1 million",
+        name: l.F8,
         value: data?.casesPerOneMillion.toString(),
         inline: true,
       },
       {
-        name: "Deaths per 1 million",
+        name: l.F9,
         value: data?.deathsPerOneMillion.toString(),
         inline: true,
       }
     )
-    .setFooter({ text: `Last updated on ${mg}` });
+    .setFooter(l.FOOTER + mg );
 
   return { embeds: [embed] };
 }

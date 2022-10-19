@@ -47,6 +47,7 @@ router.get("/:serverID/greeting", CheckAuth, async (req, res) => {
   ) {
     return res.render("404", {
       user: req.userInfos,
+      bot: req.client,
       currentURL: `${req.client.config.DASHBOARD.baseURL}/${req.originalUrl}`,
     });
   }
@@ -154,54 +155,58 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
     }
 
     if (data.automod_action !== settings.automod.action) {
+        
       settings.automod.action = data.automod_action;
     }
 
     if (data.max_lines && data.max_lines !== settings.automod.max_lines) {
+        
       settings.automod.max_lines = data.max_lines;
     }
 
     data.anti_attachments = data.anti_attachments === "on" ? true : false;
     if (data.anti_attachments !== (settings.automod.anti_attachments || false)) {
-      settings.automod.anti_attachments = data.anti_attachments;
+     settings.automod.anti_attachments = data.anti_attachments;
     }
 
     data.anti_invites = data.anti_invites === "on" ? true : false;
     if (data.anti_invites !== (settings.automod.anti_invites || false)) {
-      settings.automod.anti_invites = data.anti_invites;
+     settings.automod.anti_invites = data.anti_invites;
     }
 
     data.anti_links = data.anti_links === "on" ? true : false;
     if (data.anti_links !== (settings.automod.anti_links || false)) {
+        
       settings.automod.anti_links = data.anti_links;
     }
 
     data.anti_spam = data.anti_spam === "on" ? true : false;
     if (data.anti_spam !== (settings.automod.anti_spam || false)) {
+        
       settings.automod.anti_spam = data.anti_spam;
     }
 
     data.anti_ghostping = data.anti_ghostping === "on" ? true : false;
     if (data.anti_ghostping !== (settings.automod.anti_ghostping || false)) {
-      settings.automod.anti_ghostping = data.anti_ghostping;
+     settings.automod.anti_ghostping = data.anti_ghostping;
     }
 
     data.anti_massmention = data.anti_massmention === "on" ? true : false;
     if (data.anti_massmention !== (settings.automod.anti_massmention || false)) {
-      settings.automod.anti_massmention = data.anti_massmention;
+     settings.automod.anti_massmention = data.anti_massmention;
     }
 
     if (data.channels?.length) {
       console.log(data.channel)
+   
       settings.automod.wh_channels = data.channels.map((ch) => guild.channels.cache.find((c) => "#" + c.name === ch)?.id)
         .filter((c) => c);
     }
 		
 
   }
-
+	await req.flash('success', 'SETTINGS UPDATED');
   await settings.save();
-   await req.flash('success', 'SETTINGS UPDATED');
 		/* res.json({
     success: true,
 		status: 303,
@@ -215,14 +220,19 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
 
 router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
   // Check if the user has the permissions to edit this guild
-  const guild = req.client.guilds.cache.get(req.params.serverID);
+const isHex = (val) => /^#([0-9A-F]{3}){1,2}$/i.test(val)
+
+    const guild = req.client.guilds.cache.get(req.params.serverID);
   if (
     !guild ||
     !req.userInfos.displayedGuilds ||
     !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID)
   ) {
+  
+	await req.flash('error', 'PAGE NOT FOUND : 404');
     return res.render("404", {
       user: req.userInfos,
+      bot: req.client,
       currentURL: `${req.client.config.DASHBOARD.baseURL}/${req.originalUrl}`,
     });
   }
@@ -240,34 +250,51 @@ router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
   ) {
     data.content = data.content.replace(/\r?\n/g, "\\n");
     if (data.content && data.content !== settings.welcome.content) {
+        
+	await req.flash('success', 'SETTINGS UPDATED');
       settings.welcome.content = data.content;
     }
 
     data.description = data.description?.replaceAll(/\r\n/g, "\\n");
     if (data.description && data.description !== settings.welcome.embed?.description) {
-      settings.welcome.embed.description = data.description;
+     
+	await req.flash('success', 'SETTINGS UPDATED'); settings.welcome.embed.description = data.description;
     }
 
     if (data.footer && data.footer !== settings.welcome.embed?.footer) {
-      settings.welcome.embed.footer = data.footer;
+     
+	await req.flash('success', 'SETTINGS UPDATED'); settings.welcome.embed.footer = data.footer;
     }
 
     if (data.hexcolor && data.hexcolor !== settings.welcome.embed?.color) {
+      //  if (isHex(data.hexcolor) = false){
+     // req.flash("error", "Your color must be hex only not supported string")
+           // } else{
+                
+
+	await req.flash('success', 'SETTINGS UPDATED');
       settings.welcome.embed.color = data.hexcolor;
+        //    }
     }
 
     if (data.image && data.image !== settings.welcome.embed?.image) {
       settings.welcome.embed.image = data.image;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     data.thumbnail = data.thumbnail === "on" ? true : false;
     if (data.thumbnail !== (settings.welcome.embed?.thumbnail || false)) {
       settings.welcome.embed.thumbnail = data.thumbnail;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     data.channel = guild.channels.cache.find((ch) => "#" + ch.name === data.channel)?.id;
     if (data.channel !== settings.welcome.channel_id) {
       settings.welcome.channel_id = data.channel;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     if (!settings.welcome.enabled) settings.welcome.enabled = true;
@@ -284,40 +311,60 @@ router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
     data.content = data.content.replace(/\r?\n/g, "\\n");
     if (data.content && data.content !== settings.farewell.content) {
       settings.farewell.content = data.content;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     data.description = data.description?.replaceAll(/\r\n/g, "\\n");
     if (data.description && data.description !== settings.farewell.embed?.description) {
       settings.farewell.embed.description = data.description;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     if (data.footer && data.footer !== settings.farewell.embed?.footer) {
       settings.farewell.embed.footer = data.footer;
+   
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     if (data.hexcolor && data.hexcolor !== settings.farewell.embed?.color) {
-      settings.farewell.embed.color = data.hexcolor;
+           //  if (isHex(data.hexcolor) == false){
+
+   //   req.flash("error", "Your color must be hex only not supported string")
+
+          //  } else{ 
+        settings.farewell.embed.color = data.hexcolor;
+   
+	await req.flash('success', 'SETTINGS UPDATED');
+               //   }
     }
 
     if (data.image && data.image !== settings.farewell.embed?.image) {
       settings.farewell.embed.image = data.image;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     data.thumbnail = data.thumbnail === "on" ? true : false;
     if (data.thumbnail !== (settings.farewell.embed?.thumbnail || false)) {
       settings.farewell.embed.thumbnail = data.thumbnail;
+        
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     data.channel = guild.channels.cache.find((ch) => "#" + ch.name === data.channel)?.id;
     if (data.channel !== settings.farewell.channel_id) {
       settings.farewell.channel_id = data.channel;
+    
+
+	await req.flash('success', 'SETTINGS UPDATED');
     }
 
     if (!settings.farewell.enabled) settings.farewell.enabled = true;
   }
 
   await settings.save();
-	await req.flash('success', 'SETTINGS UPDATED');
 	/*res.json({
     success: true,
 		status: 303,
@@ -326,6 +373,50 @@ router.post("/:serverID/greeting", CheckAuth, async (req, res) => {
   res.redirect(303, `/manage/${guild.id}/greeting`);
 });
 
+
+
+
+
+
+router.get("/:serverID/embedBuilder", CheckAuth, async (req, res) => {
+
+  // Check if the user has the permissions to edit this guild
+
+  const guild = req.client.guilds.cache.get(req.params.serverID);
+
+  if (
+
+    !guild ||
+
+    !req.userInfos.displayedGuilds ||
+
+    !req.userInfos.displayedGuilds.find((g) => g.id === req.params.serverID)
+
+  ) {
+
+    return res.render("404", {
+
+      user: req.userInfos,
+      bot: req.client,
+      currentURL: `${req.client.config.DASHBOARD.baseURL}/${req.originalUrl}`,
+
+    });
+
+  }
+
+  // Fetch guild informations
+
+  const guildInfos = await utils.fetchGuild(guild.id, req.client, req.user.guilds);
+
+  res.render("manager/embed", {
+    guild: guildInfos,
+    user: req.userInfos,
+    bot: req.client,
+    currentURL: `${req.client.config.DASHBOARD.baseURL}/${req.originalUrl}`,
+
+  });
+
+});
 
 
 

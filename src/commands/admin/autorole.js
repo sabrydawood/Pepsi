@@ -15,7 +15,7 @@ module.exports = {
   },
   slashCommand: {
     enabled: true,
-    ephemeral: true,
+    ephemeral: false,
     options: [
       {
         name: "add",
@@ -47,12 +47,12 @@ module.exports = {
   async messageRun(message, args, data) {
     const input = args.join(" ");
     let response;
-
+let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE
     if (input.toLowerCase() === "off") {
       response = await setAutoRole(message, null, data.settings, data.lang);
     } else {
       const roles = message.guild.findMatchingRoles(input);
-      if (roles.length === 0) response = "No matching roles found matching your query";
+      if (roles.length === 0) response = l.NOT_MATCH ;
       else response = await setAutoRole(message, roles[0], data.settings, data.lang);
     }
 
@@ -62,16 +62,17 @@ module.exports = {
   async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     let response;
+let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE
 
     // add
     if (sub === "add") {
       let role = interaction.options.getRole("role");
       if (!role) {
         const role_id = interaction.options.getString("role_id");
-        if (!role_id) return interaction.followUp("Please provide a role or role id");
+        if (!role_id) return interaction.followUp(l.NO_ID);
 
         const roles = interaction.guild.findMatchingRoles(role_id);
-        if (roles.length === 0) return interaction.followUp("No matching roles found matching your query");
+        if (roles.length === 0) return interaction.followUp(l.NOT_MATCH);
         role = roles[0];
       }
 
@@ -84,24 +85,25 @@ module.exports = {
     }
 
     // default
-    else response = "Invalid subcommand";
+    else response = data.lang.INVALID_SUB;
 
     await interaction.followUp(response);
   },
 };
 
 async function setAutoRole({ guild }, role, settings, lang) {
+   let l = lang.COMMANDS.ADMIN.AUTO_ROLE
   if (role) {
 let l = lang.COMMANDS.ADMIN.AUTO_ROLE
-    if (!guild.members.me.permissions.has("ManageRoles")) return "I don't have the `ManageRoles` permission";
+    if (!guild.members.me.permissions.has("ManageRoles")) return l.NO_PERMS;
     if (guild.members.me.roles.highest.position < role.position)
-      return "I don't have the permissions to assign this role";
-    if (role.managed) return "Oops! This role is managed by an integration";
+      return l.NO_PERMS2;
+    if (role.managed) return l.ERR;
   }
 
   if (!role) settings.autorole = null;
   else settings.autorole = role.id;
 
   await settings.save();
-  return `Configuration saved! Autorole is ${!role ? "disabled" : "setup"}`;
+  return `Configuration saved! Autorole is ${!role ? lang.ENABLED : lang.DISABLED}`;
 }

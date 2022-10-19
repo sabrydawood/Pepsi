@@ -1,9 +1,9 @@
 module.exports = {
   BOT_NAME : "NEW STEP",
   OWNER_IDS: ["799984138111287337"],// Bot owner ID's
-  PREFIX: "!", // Default prefix for the bot
+  PREFIX: ".", // Default prefix for the bot
   SUPPORT_SERVER: "https://discord.gg/WsJp96BK22", // Your bot support server
-  CLIENT_ID: "800706043452981248",
+  CLIENT_ID: "800008189679763466",
   INTERACTIONS: {
     SLASH: true, // Should the interactions be enabled
     CONTEXT: true, // Should contexts be enabled
@@ -36,11 +36,11 @@ module.exports = {
 
   DASHBOARD: {
     enabled: true, // enable or disable dashboard
-    baseURL: "http://Pepsi.virgel1995.repl.co", // base url
-    failureURL: "http://Pepsi.virgel1995.repl.co", // failure redirect url
-    port: "8080", // port to run the bot on
+    baseURL: "http://152.70.156.177:25606", // base url
+    failureURL: "http://152.70.156.177:25606", // failure redirect url
+    port: "25606", // port to run the bot on
   },
-
+//152.70.156.177:25606
   ECONOMY: {
     ENABLED: true,
     CURRENCY: "₪",
@@ -82,7 +82,7 @@ module.exports = {
     ENABLED: true,
   },
   Maintenance:{
-    ENABLED: true,
+    ENABLED: false,
   },
   MODERATION: {
     ENABLED: true,
@@ -104,14 +104,20 @@ module.exports = {
 
   PRESENCE: {
     ENABLED: true, // Whether or not the bot should update its status
-    STATUS: "dnd", // The bot's status [online, idle, dnd, invisible]
-    TYPE: "WATCHING", // Status type for the bot [PLAYING | LISTENING | WATCHING | COMPETING]
-    MESSAGE: "{members} members in {servers} servers", // Your bot status message
+    STATUS: ["online", "idle", "dnd"], // The bot's status [online, idle, dnd, invisible]
+    TYPE: ["COMPETING", "WATCHING", "LISTENING", "STREAMING"], // Status type for the bot [PLAYING | LISTENING | WATCHING | COMPETING]
+    MESSAGE: [
+"{members} members",
+"{servers} servers",
+"Time to Go space",
+"Ping For Prefix",
+"Slach/text: Cmds"
+    ], // Your bot status message
   },
 
   STATS: {
     ENABLED: true,
-    XP_COOLDOWN: 0, // Cooldown in seconds between messages
+    XP_COOLDOWN: 3, // Cooldown in seconds between messages
     DEFAULT_LVL_UP_MSG: "{member:tag}, You just advanced to **Level {level}**",
   },
 

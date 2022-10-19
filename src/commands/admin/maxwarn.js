@@ -24,7 +24,7 @@ module.exports = {
   },
   slashCommand: {
     enabled: true,
-    ephemeral: true,
+    ephemeral: false,
     options: [
       {
         name: "limit",
@@ -70,20 +70,22 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+      
+    let l = data.lang.COMMANDS.ADMIN.MAX_WARN
     const input = args[0].toLowerCase();
-    if (!["limit", "action"].includes(input)) return message.safeReply("Invalid command usage");
+    if (!["limit", "action"].includes(input)) return message.safeReply(data.lang.INVALID_USAGE);
 
     let response;
     if (input === "limit") {
       const max = parseInt(args[1]);
-      if (isNaN(max) || max < 1) return message.safeReply("Max Warnings must be a valid number greater than 0");
+      if (isNaN(max) || max < 1) return message.safeReply(l.ERR);
       response = await setLimit(max, data.settings, data.lang);
     }
 
     if (input === "action") {
       const action = args[1]?.toUpperCase();
       if (!action || !["TIMEOUT", "KICK", "BAN"].includes(action))
-        return message.safeReply("Not a valid action. Action can be `Timeout`/`Kick`/`Ban`");
+        return message.safeReply(l.ERR2);
       response = await setAction(message.guild, action, data.settings, data.lang);
     }
 
@@ -107,31 +109,35 @@ module.exports = {
 };
 
 async function setLimit(limit, settings, lang) {
+    
+
+    let l = lang.COMMANDS.ADMIN.MAX_WARN
   settings.max_warn.limit = limit;
   await settings.save();
-  return `Configuration saved! Maximum warnings is set to ${limit}`;
+  return `${l.DONE} ${limit}`;
 }
 
 async function setAction(guild, action, settings, lang) {
+    let l = lang.COMMANDS.ADMIN.MAX_WARN
   if (action === "TIMEOUT") {
     if (!guild.members.me.permissions.has("ModerateMembers")) {
-      return "I do not permission to timeout members";
+      return l.ERR3;
     }
   }
 
   if (action === "KICK") {
     if (!guild.members.me.permissions.has("KickMembers")) {
-      return "I do not have permission to kick members";
+      return l.ERR3;
     }
   }
 
   if (action === "BAN") {
     if (!guild.members.me.permissions.has("BanMembers")) {
-      return "I do not have permission to ban members";
+      return l.ERR3;
     }
   }
 
   settings.max_warn.action = action;
   await settings.save();
-  return `Configuration saved! Automod action is set to ${action}`;
+  return l.DONE + action;
 }

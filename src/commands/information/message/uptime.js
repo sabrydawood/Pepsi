@@ -13,6 +13,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-    await message.safeReply(`My Uptime: \`${timeformat(process.uptime())}\``);
+         let l = data.lang.COMMANDS.INFORMATION.MESSAGE.UPTIME
+    await message.safeReply(l.RES + `: \`${timeformat(process.uptime())}\``);
   },
 };

@@ -71,14 +71,14 @@ module.exports = {
 
     //
     else if (sub === "text") {
-      if (args.length < 2) return message.channel.send("Please enter a text");
+      if (args.length < 2) return message.channel.send(lang.COMMANDS.FUN.FLIP.ERR);
       const input = args.join(" ");
       const response = await flipText(input);
       await message.safeReply(response);
     }
 
     // else
-    else await message.safeReply("Incorrect command usage");
+    else await message.safeReply(data.lang.INVALID_USAGE);
   },
 
   async interactionRun(interaction, data) {
@@ -107,13 +107,14 @@ module.exports = {
 };
 
 const firstEmbed = (user, lang) =>
-  new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, started a coin toss`);
+  new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, ${lang.COMMANDS.FUN.FLIP.FIRST}`);
 
-const secondEmbed = (lang) => new EmbedBuilder().setDescription("The coin is in the air");
+
+const secondEmbed = (lang) => new EmbedBuilder().setDescription(lang.COMMANDS.FUN.FLIP.SND);
 
 const resultEmbed = (toss, lang) =>
   new EmbedBuilder()
-    .setDescription(`>> **${toss} Wins** <<`)
+    .setDescription(`>> **${toss} ${lang.COMMANDS.FUN.FLIP.WINS}** <<`)
     .setImage(toss === "HEAD" ? "https://i.imgur.com/HavOS7J.png" : "https://i.imgur.com/u1pmQMV.png");
 
 async function flipText(text, lang) {

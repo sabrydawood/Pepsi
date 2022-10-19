@@ -41,28 +41,30 @@ module.exports = {
 };
 
 async function getInvites({ guild }, user, settings, lang) {
-  if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
+    
+      let l = lang.COMMANDS.INVITES.INVITES
+  if (!settings.invite.tracking) return l.ERR ;
 
   const inviteData = (await getMember(guild.id, user.id)).invite_data;
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: `Invites for ${user.username}` })
+    .setAuthor({ name: l.AUTHOR + ` ${user.username}` })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setThumbnail(user.displayAvatarURL())
-    .setDescription(`${user.toString()} has ${getEffectiveInvites(inviteData)} invites`)
+    .setDescription(`${user.toString()}  => ${getEffectiveInvites(inviteData)} ${l.INV}`)
     .addFields(
       {
-        name: "Total Invites",
+        name: l.F1 ,
         value: `**${inviteData?.tracked + inviteData?.added || 0}**`,
         inline: true,
       },
       {
-        name: "Fake Invites",
+        name: l.F2 ,
         value: `**${inviteData?.fake || 0}**`,
         inline: true,
       },
       {
-        name: "Left Invites",
+        name: l.F3,
         value: `**${inviteData?.left || 0}**`,
         inline: true,
       }

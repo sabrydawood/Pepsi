@@ -5,6 +5,25 @@
  *      This is a demo file used only for the main dashboard (index.html)
  **/
 
+function embedBuilder(){
+
+let btn = document.getElementById("createBuilderBtn")
+
+if (btn.innerHTML === "Create Embed") {
+
+    btn.innerHTML = "Cancel";
+
+  } else {
+
+    btn.innerHTML = "Create Embed";
+
+  }
+
+let builder = document.getElementById('embedBuilder'); 
+
+builder.classList.toggle("hidden");
+
+}
 $(function () {
 
   'use strict';

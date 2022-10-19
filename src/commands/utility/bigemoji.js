@@ -42,19 +42,19 @@ module.exports = {
 };
 
 function getEmoji(user, emoji, lang) {
+  const l = lang.COMMANDS.UTILS.BIGEMOJIE
   const custom = parseEmoji(emoji);
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "❯ Big Emoji ❮" })
+    .setAuthor({ name: l.AUTHOR })
     .setColor(EMBED_COLORS.BOT_EMBED)
-    .setFooter({ text: `Requested by ${user.tag}` });
-
+    .setFooter({ text: user.tag });
   if (custom.id) {
     embed.setImage(`https://cdn.discordapp.com/emojis/${custom.id}.${custom.animated ? "gif" : "png"}`);
     return { embeds: [embed] };
   }
   const parsed = parse(emoji, { assetType: "png" });
-  if (!parsed[0]) return "Not a valid emoji";
+  if (!parsed[0]) return l.ERR ;
 
   embed.setImage(parsed[0].url);
   return { embeds: [embed] };

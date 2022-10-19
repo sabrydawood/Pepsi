@@ -45,7 +45,8 @@ module.exports = {
  * @param {object} settings
  */
 async function stats(member, settings, lang) {
-  if (!settings.stats.enabled) return "Stats Tracking is disabled on this server";
+    const l = lang.COMMANDS.STATS.STATS
+  if (!settings.stats.enabled) return l.DISABLED;
   const memberStats = await getMemberStats(member.guild.id, member.id);
 
   const embed = new EmbedBuilder()
@@ -53,40 +54,40 @@ async function stats(member, settings, lang) {
     .setColor(EMBED_COLORS.BOT_EMBED)
     .addFields(
       {
-        name: "User Tag",
+        name: l.F1,
         value: member.user.tag,
         inline: true,
       },
       {
-        name: "ID",
+        name: l.F2,
         value: member.id,
         inline: true,
       },
       {
-        name: "⌚ Member since",
+        name: l.F3,
         value: member.joinedAt.toLocaleString(),
         inline: false,
       },
       {
-        name: "💬 Messages sent",
+        name: l.F4 ,
         value: stripIndents`
-      ❯ Messages Sent: ${memberStats.messages}
-      ❯ Prefix Commands: ${memberStats.commands.prefix}
-      ❯ Slash Commands: ${memberStats.commands.slash}
-      ❯ XP Earned: ${memberStats.xp}
-      ❯ Current Level: ${memberStats.level}
+      ❯ ${l.Desc} : ${memberStats.messages}
+      ❯ ${l.Desc1}: ${memberStats.commands.prefix}
+      ❯ ${l.Desc2}: ${memberStats.commands.slash}
+      ❯ ${l.Desc3} : ${memberStats.xp}
+      ❯ ${l.Desc4} : ${memberStats.level}
     `,
         inline: false,
       },
       {
-        name: "🎙️ Voice Stats",
+        name: l.F5,
         value: stripIndents`
-      ❯ Total Connections: ${memberStats.voice.connections}
-      ❯ Time Spent: ${Math.floor(memberStats.voice.time / 60)} min
+      ❯ ${l.Desc5}: ${memberStats.voice.connections}
+      ❯ ${l.Desc6}: ${Math.floor(memberStats.voice.time / 60)} min
     `,
       }
     )
-    .setFooter({ text: "Stats Generated" })
+    .setFooter({ text: l.FOOTER })
     .setTimestamp();
 
   return { embeds: [embed] };

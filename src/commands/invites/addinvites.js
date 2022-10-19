@@ -36,17 +36,21 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+      let l = data.lang.COMMANDS.INVITES.ADD
     const target = await message.guild.resolveMember(args[0], true);
     const amount = parseInt(args[1]);
 
-    if (!target) return message.safeReply("Incorrect syntax. You must mention a target");
-    if (isNaN(amount)) return message.safeReply("Invite amount must be a number");
+    if (!target) return message.safeReply(l.NOMENTION);
+    if (isNaN(amount)) return message.safeReply(l.NUMBER);
 
     const response = await addInvites(message, target.user, parseInt(amount), data.lang);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
+      
+
+      let l = data.lang.COMMANDS.INVITES.ADD
     const user = interaction.options.getUser("user");
     const amount = interaction.options.getInteger("invites");
     const response = await addInvites(interaction, user, amount, data.lang);
@@ -55,17 +59,19 @@ module.exports = {
 };
 
 async function addInvites({ guild }, user, amount, lang) {
-  if (user.bot) return "Oops! You cannot add invites to bots";
+    
+      let l = lang.COMMANDS.INVITES.ADD
+  if (user.bot) return l.ERR;
 
   const memberDb = await getMember(guild.id, user.id);
   memberDb.invite_data.added += amount;
   await memberDb.save();
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: `Added invites to ${user.username}` })
+    .setAuthor({ name: l.AUTHER + ` ${user.username}` })
     .setThumbnail(user.displayAvatarURL())
     .setColor(EMBED_COLORS.BOT_EMBED)
-    .setDescription(`${user.tag} now has ${getEffectiveInvites(memberDb.invite_data)} invites`);
+    .setDescription(`${user.tag} ${l.DESC} ${getEffectiveInvites(memberDb.invite_data)} ${l.DESC2}`);
 
   checkInviteRewards(guild, memberDb, true);
   return { embeds: [embed] };

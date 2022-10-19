@@ -30,8 +30,10 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+    
+      let l = data.lang.COMMANDS.INVITES.REST
     const target = await message.guild.resolveMember(args[0], true);
-    if (!target) return message.safeReply("Incorrect syntax. You must mention a target");
+    if (!target) return message.safeReply(l.ERR );
     const response = await clearInvites(message, target.user, data.lang);
     await message.safeReply(response);
   },
@@ -44,9 +46,11 @@ module.exports = {
 };
 
 async function clearInvites({ guild }, user, lang) {
+ 
+      let l = lang.COMMANDS.INVITES.REST
   const memberDb = await getMember(guild.id, user.id);
   memberDb.invite_data.added = 0;
   await memberDb.save();
   checkInviteRewards(guild, memberDb, false);
-  return `Done! Invites cleared for \`${user.tag}\``;
+  return l.DONE + ` \`${user.tag}\``;
 }

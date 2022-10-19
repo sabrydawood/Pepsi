@@ -14,12 +14,13 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+let l = data.lang.COMMANDS.INFORMATION.MESSAGE.BOTINVITE
     const response = botinvite(message.client, data.lang);
     try {
       await message.author.send(response);
-      return message.safeReply("Check your DM for my information! :envelope_with_arrow:");
+      return message.safeReply(l.DM);
     } catch (ex) {
-      return message.safeReply("I cannot send you my information! Is your DM open?");
+      return message.safeReply(l.ERR);
     }
   },
 };

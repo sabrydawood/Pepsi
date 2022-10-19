@@ -30,6 +30,9 @@ module.exports = {
 };
 
 async function daily(user, lang) {
+    
+
+  const l = lang.COMMANDS.ECONOMY.DAILY
   const userDb = await getUser(user);
   let streak = 0;
 
@@ -38,7 +41,7 @@ async function daily(user, lang) {
     const difference = diffHours(new Date(), lastUpdated);
     if (difference < 24) {
       const nextUsage = lastUpdated.setHours(lastUpdated.getHours() + 24);
-      return `You can again run this command in \`${getRemainingTime(nextUsage)}\``;
+      return `${l.ERR}\`${getRemainingTime(nextUsage)}\``;
     }
     streak = userDb.daily.streak || streak;
     if (difference < 48) streak += 1;
@@ -54,8 +57,8 @@ async function daily(user, lang) {
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
     .setDescription(
-      `You got ${ECONOMY.DAILY_COINS}${ECONOMY.CURRENCY} as your daily reward\n` +
-        `**Updated Balance:** ${userDb.coins}${ECONOMY.CURRENCY}`
+      `${l.DONE} => ${ECONOMY.DAILY_COINS}${ECONOMY.CURRENCY} <=\n` +
+        `** ${l.DONE2}:** ${userDb.coins}${ECONOMY.CURRENCY}`
     );
 
   return { embeds: [embed] };

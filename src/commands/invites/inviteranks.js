@@ -28,18 +28,20 @@ module.exports = {
 };
 
 async function getInviteRanks({ guild }, settings, lang) {
-  if (settings.invite.ranks.length === 0) return "No invite ranks configured in this server";
+    
+      let l = lang.COMMANDS.INVITES.RANKS
+  if (settings.invite.ranks.length === 0) return l.ERR ;
   let str = "";
 
   settings.invite.ranks.forEach((data) => {
     const roleName = guild.roles.cache.get(data._id)?.toString();
     if (roleName) {
-      str += `❯ ${roleName}: ${data.invites} invites\n`;
+      str += `❯ ${roleName}: ${data.invites} ${l.INV}\n`;
     }
   });
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "Invite Ranks" })
+    .setAuthor({ name: l.AUTHOR })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(str);
   return { embeds: [embed] };

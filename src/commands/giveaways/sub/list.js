@@ -4,9 +4,11 @@ const { EMBED_COLORS } = require("@root/config");
  * @param {import('discord.js').GuildMember} member
  */
 module.exports = async (member, lang) => {
+ 
+ let l = lang.COMMANDS.GIVEAWAYS.SUB.LIST
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
-    return "You need to have the manage messages permissions to manage giveaways.";
+    return l.PERMS;
   }
 
   // Search with all giveaways
@@ -16,15 +18,15 @@ module.exports = async (member, lang) => {
 
   // No giveaways
   if (giveaways.length === 0) {
-    return "There are no giveaways running in this server.";
+    return l.NO_GIVE;
   }
 
-  const description = giveaways.map((g, i) => `${i + 1}. ${g.prize} in <#${g.channelId}>`).join("\n");
+  const description = giveaways.map((g, i) => `${i + 1}. ${g.prize} ${l.IN} <#${g.channelId}>`).join("\n");
 
   try {
     return { embeds: [{ description, color: EMBED_COLORS.GIVEAWAYS }] };
   } catch (error) {
     member.client.logger.error("Giveaway List", error);
-    return `An error occurred while listing the giveaways: ${error.message}`;
+    return l.ERR + `: ${error.message}`;
   }
 };

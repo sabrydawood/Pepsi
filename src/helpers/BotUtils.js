@@ -5,10 +5,10 @@ module.exports = class BotUtils {
   /**
    * Check if the bot is up to date
    */
-  /*
+  
   static async checkForUpdates() {
     const response = await getJson("https://api.github.com/repos/virgel1995/Pepsi/releases/latest");
-   // if (!response.success) return error("VersionCheck: Failed to check for bot updates");
+    if (!response.success) return error("VersionCheck: Failed to check for bot updates");
     if (response.data) {
       if (
         require("@root/package.json").version.replace(/[^0-9]/g, "") >= response.data.tag_name.replace(/[^0-9]/g, "")
@@ -19,7 +19,7 @@ module.exports = class BotUtils {
         warn("download: https://github.com/virgel1995/Pepsi/releases/latest");
       }
     }
-  }*/
+  }
 
   /**
    * Get the image url from the message
