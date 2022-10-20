@@ -3,7 +3,7 @@ module.exports = {
   OWNER_IDS: ["799984138111287337"],// Bot owner ID's
   PREFIX: ".", // Default prefix for the bot
   SUPPORT_SERVER: "https://discord.gg/WsJp96BK22", // Your bot support server
-  CLIENT_ID: "800008189679763466",
+  CLIENT_ID: "825035795650969600",
   INTERACTIONS: {
     SLASH: true, // Should the interactions be enabled
     CONTEXT: true, // Should contexts be enabled
@@ -36,8 +36,8 @@ module.exports = {
 
   DASHBOARD: {
     enabled: true, // enable or disable dashboard
-    baseURL: "http://152.70.156.177:25606", // base url
-    failureURL: "http://152.70.156.177:25606", // failure redirect url
+    baseURL: "http://Pepsi.virgel1995.repl.co", // base url
+    failureURL: "http://Pepsi.virgel1995.repl.co", // failure redirect url
     port: "25606", // port to run the bot on
   },
 //152.70.156.177:25606
