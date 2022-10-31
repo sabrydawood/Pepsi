@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ <meta name="description" content="new step is an another discord bot can moderate , help, make fun , economy and much more 
+ you can rech premium planes too for more features make sure you are ready for amazing time with it">
+
+  <meta name="keywords" content="discord, discord.js, bot , diwcordBot, discordapp, discordinia, topgg, top.gg">
+
+  <meta name="author" content="Virus24#9118">
+  <title> <%= bot.user.username %> </title>
+  <link rel="icon" type="image/ico" href="<%= bot.user.avatarURL() %>" />
+  
+
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  
+  <link rel="stylesheet" href="/dist/css/pages/user.css" />
+
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css" />
+
+  <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css" />
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script src="/bower_components/fastclick/lib/fastclick.js"></script>
+
+  <script src="/dist/js/adminlte.min.js"></script>
+
+  <script src="/dist/js/custom.js"></script>
+
+
+  
+  </head>
+  <body class="hold-transition  skin-purple sidebar-mini">
+    <div class="wrapper">
+      <!-- The header is the topbar -->
+      <%- include('../includes/header') %>
+
+      <!-- The sidebar includes the menu -->
+      <%- include('../includes/sidebar') %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>Guilds <small> </small></h1>
+          <ol class="breadcrumb">
+            <li class="active">
+              <a href="/selector"><i class="fa fa-home"></i>Guilds</a>
+            </li>
+          </ol>
+        </section>
+
+        <section class="content">
+
+    <!-- Header -->
+    <div class=" d-flex align-items-center
+
+" style=" background: 
+<% if(user.banner) { %>
+url("https://cdn.discordapp.com/banners/<%= user.id %>/<%=user.banner %>.png"); 
+<% } else { %>
+<%= user.banner_color %>; 
+<% } %>
+background-size: cover; 
+border-radius : 25px;
+min-height: 250px;
+">
+      <!-- Mask -->
+      <span class="mask  opacity-4" style = "border-radius : 25px;"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+          <div class="col-lg-7 col-md-10">
+
+       
+ 
+                 <h1 class="display-2 text-white">      
+  <marquee> 
+ 
+          <%= user.username + "#" + user.discriminator %>  </marquee>
+
+            </h1>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a href="#">
+                    <img src="<%= user.displayAvatar %>" class="rounded-circle">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+              <div class="d-flex justify-content-between">
+                <a href="#" class="btn btn-sm btn-info mr-4">VERIFIED: <%= user.verified ? "ON":"OFF" %></a>
+                <a href="#" class="btn btn-sm btn-default float-right">2FA : <%= user.mfa_enabled ? "ON" : "OFF" %></a>
+              </div>
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading"><%= user.guilds.length %></span>
+                      <span class="description">Total Guilds</span>
+                    </div>
+                    <div>
+                      <span class="heading"><%= user._doc.bank + user._doc.coins %></span>
+                      <span class="description">Coins</span>
+                    </div>
+                    <div>
+                      <span class="heading"><%= user._doc.lang %></span>
+                      <span class="description"> Bot Language </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3>
+                  <%= user.username %><span class="font-weight-light">, <%= "#" + user.discriminator %></span>
+                </h3>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>Discord LANGUAGE : <%= user.locale %>
+                </div>
+                <div class="h5 mt-4">
+                  <i class="ni business_briefcase-24 mr-2"></i><%= user.email %>
+                </div>
+                <div>
+                <hr class="my-4">
+                <p> You can help us to make bot is easy and good chance for other people give us feedback</p>
+                <a href="<%= bot.config.SUPPORT_SERVER %>"> Support SERVER </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of profile image and data -->
+        
+   <!-- start of forms -->
+   
+  <div class="col-xl-8 order-xl-1 my-2">
+        
+        <!-- languages card -->
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">My account Settings</h3>
+                </div>
+                <div class="col-4 text-right">
+ <button type="button" class="btn btn-sm btn-primary" onclick="userLangSettingsToggle()">Settings</button>
+                </div>
+              </div>
+            </div>
+            
+ <div id="userLangToggle" class="card-body bg-purple text-white d-none">
+ 
+ 
+ <!------------------++++ -->
+ 
+ <form role="form" action="/user/<%= user.id %>/info/" method="POST">
+  <h6 class="heading-small text-light mb-4">User information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused text-light">
+                        <label class="form-control-label text-light" for="input-lang">Language</label>
+                        
+ <select class="form-control form-control-alternative" name="lang" id="input-lang">
+      <option disabled selected value>-- Select Language -- </option>
+      <% 
+ for (let lang of bot.config.LANGS) {
+      %>
+
+      <option> <%= lang %></option>
+      
+<%  } %>
+    </select>
+                      </div>
+                    </div>
+  <!------     ---------->
+   
+                </div>
+    <div class="card-footer">
+
+ 
+  <button type="submit" class="btn btn-primary mb-2" name="updateUser">Update Language</button>
+  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+        </section>
+      </div>
+
+      <!-- Footer includes credits and version -->
+      <%- include('../includes/footer') %>
+    </div>
+    <!-- ./wrapper -->
+  </body>
+</html>

@@ -22,6 +22,12 @@ let builder = document.getElementById('embedBuilder');
 builder.classList.toggle("hidden");
 }
 
+function userLangSettingsToggle(){
+    document.getElementById("userLangToggle").classList.toggle("d-none")
+    
+    }
+
+
 	window.setTimeout(function() {
 
     $(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -61,3 +67,7 @@ addEventListener('load', function() {
   createProgressbar('progressbar', '4s');
 
 });
+
+
+let pageTitle = document.title
+pageTitle += window.location.pathname; 

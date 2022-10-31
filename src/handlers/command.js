@@ -4,7 +4,7 @@ const { parsePermissions } = require("@helpers/Utils");
 const { timeformat } = require("@helpers/Utils");
 const { getSettings } = require("@schemas/Guild");
 const { getUser } = require("@schemas/User");
-
+const { getPremium } = require("@schemas/Premium");
 const cooldownCache = new Map();
 
 module.exports = {
@@ -89,6 +89,15 @@ module.exports = {
    * @param {import('discord.js').ChatInputCommandInteraction} interaction
    */
   handleSlashCommand: async function (interaction) {
+            const settings = await getSettings(interaction.guild);
+
+    const userDb = await getUser(interaction.user);
+const premiumDb = await getPremium(interaction.guild)
+  let language = userDb.lang;
+
+  if (!language) language = "en";
+
+  const lang = require(`@root/lang/bot/${language}`);
     const cmd = interaction.client.slashCommands.get(interaction.commandName);
     if (!cmd) return interaction.reply({ content: "An error has occurred", ephemeral: true }).catch(() => {});
 
@@ -110,6 +119,19 @@ module.exports = {
         content: `This command is only accessible to bot owners`,
         ephemeral: true,
       });
+    }
+        // primum commands
+let premium = premiumDb.status.enabled;
+    if (cmd.isPremium && !premium) {
+
+      return interaction.reply({
+
+        content: `This command is only accessible to premium Guilds\n to get premium you can buy it from dashboard or with command \`getpremium\``,
+
+        ephemeral: true,
+
+      });
+
     }
 
     // user permissions
@@ -145,11 +167,7 @@ module.exports = {
 
     try {
       await interaction.deferReply({ ephemeral: cmd.slashCommand.ephemeral });
-      const settings = await getSettings(interaction.guild);
-    const userDb = await getUser(interaction.user);
-  let language = userDb.lang;
-  if (!language) language = "en";
-  const lang = require(`@root/lang/bot/${language}`);
+
 /************ Run intractions *****/
       await cmd.interactionRun(interaction, { 
         settings,

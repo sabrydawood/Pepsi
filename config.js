@@ -3,12 +3,13 @@ module.exports = {
   OWNER_IDS: ["799984138111287337"],// Bot owner ID's
   PREFIX: ".", // Default prefix for the bot
   SUPPORT_SERVER: "https://discord.gg/WsJp96BK22", // Your bot support server
-  CLIENT_ID: "825035795650969600",
+  CLIENT_ID: "800008189679763466",
   INTERACTIONS: {
     SLASH: true, // Should the interactions be enabled
-    CONTEXT: true, // Should contexts be enabled
+    CONTEXT: true, // Should contexts be enabled 
+      
     GLOBAL: true, // Should the interactions be registered globally
-    TEST_GUILD_ID: "xxxxxxxxxxx", // Guild ID where the interactions should be registered. [** Test you commands here first **]
+    TEST_GUILD_ID: "827294479479472149", // Guild ID where the interactions should be registered. [** Test you commands here first **]
   },
   EMBED_COLORS: {
     BOT_EMBED: "#068ADD",
@@ -19,6 +20,7 @@ module.exports = {
   },
   CACHE_SIZE: {
     GUILDS: 100,
+    PREMIUM: 100,
     USERS: 10000,
     MEMBERS: 10000,
   },
@@ -35,35 +37,18 @@ module.exports = {
   },
 
   DASHBOARD: {
-    enabled: true, // enable or disable dashboard
-    baseURL: "http://Pepsi.virgel1995.repl.co", // base url
-    failureURL: "http://Pepsi.virgel1995.repl.co", // failure redirect url
-    port: "25606", // port to run the bot on
+    enabled: false, // enable or disable dashboard
+    baseURL: "http://de4.bot-hosting.net:6319", // base url
+    failureURL: "http://de4.bot-hosting.net:6319", // failure redirect url
+    port: "6319", // port to run the bot on
   },
 //152.70.156.177:25606
   ECONOMY: {
     ENABLED: true,
-    CURRENCY: "₪",
-    DAILY_COINS: Math.floor(Math.random() * 50) , // coins to be received by daily command
+    CURRENCY: "<a:stary:800439788347588618>",
+    DAILY_COINS: Math.floor(Math.random() * 700) , // coins to be received by daily command
     MIN_BEG_AMOUNT: 100, // minimum coins to be received when beg command is used
     MAX_BEG_AMOUNT: 2500, // maximum coins to be received when beg command is used
-  },
-
-  ERELA_JS: {
-    ENABLED: false,
-    IDLE_TIME: 60, // Time in seconds before the bot disconnects from the voice channel
-    MAX_SEARCH_RESULTS: 5,
-    // Add any number of lavalink nodes here
-    // Refer to https://github.com/freyacodes/Lavalink to host your own lavalink server
-    NODES: [
-      {
-        host: "localhost",
-        port: 8080,
-        password: "youshallnotpass",
-        identifier: "Local Node",
-        secure: false,
-      },
-    ],
   },
 
   GIVEAWAYS: {
@@ -137,4 +122,27 @@ module.exports = {
     CREATE_EMBED: "#068ADD",
     CLOSE_EMBED: "#068ADD",
   },
+  PREMIUM:{
+	ENABLED: true,
+      COINS:{
+  YEAR: 6000000,
+  MONTH: 500000,
+  _15DAYS: 250000},
+      CASH:{
+          YEAR: 11,
+          MONTH: 1,
+          _15DAYS: 0.5
+      }
+  },
+	BUMP:{
+GUILDS:{
+	ENABLED: true,
+},
+		BOTS:{
+				ENABLED: true,
+		}
+	
+		
+	},
+    LANGS:["en","ar"]
 };

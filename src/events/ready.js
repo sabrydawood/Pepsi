@@ -1,18 +1,12 @@
-const { counterHandler, inviteHandler, presenceHandler } = require("@src/handlers");
+const { counterHandler, inviteHandler, presenceHandler,premium } = require("@src/handlers");
 const { cacheReactionRoles } = require("@schemas/ReactionRoles");
 const { getSettings } = require("@schemas/Guild");
-
 /**
  * @param {import('@src/structures').BotClient} client
  */
 module.exports = async (client) => {
   client.logger.success(`Logged in as ${client.user.tag}! (${client.user.id})`);
 
-  // Initialize Music Manager
-  if (client.config.ERELA_JS.ENABLED) {
-    client.erelaManager.init(client.user.id);
-    client.logger.success("Music Manager initialized");
-  }
 
   // Initialize Giveaways Manager
   if (client.config.GIVEAWAYS.ENABLED) {
@@ -33,10 +27,11 @@ module.exports = async (client) => {
 
   // Load reaction roles to cache
   await cacheReactionRoles(client);
-
+ 
+  
   for (const guild of client.guilds.cache.values()) {
+ 
     const settings = await getSettings(guild);
-
     // initialize counter
     if (settings.counters.length > 0) {
       await counterHandler.init(guild, settings);
@@ -49,4 +44,19 @@ module.exports = async (client) => {
   }
 
   setInterval(() => counterHandler.updateCounterChannels(client), 10 * 60 * 1000);
+    
+    
+  setInterval(() => premium.updatePremium(client)
+    ,5000);
+    
+    
+
+
+     
+
+	
+	
+
+    
+    
 };

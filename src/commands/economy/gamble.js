@@ -86,14 +86,14 @@ async function gamble(user, betAmount, lang) {
 
   const userDb = await getUser(user);
   if (userDb.coins < betAmount)
-    return `${l.ERR5} ${userDb.coins || 0}${ECONOMY.CURRENCY}`;
+    return `${l.ERR5} ${userDb.coins || 0} ` + ECONOMY.CURRENCY;
 
   const slot1 = getEmoji();
   const slot2 = getEmoji();
   const slot3 = getEmoji();
 
   const str = `
-    **${l.AMM}:** ${betAmount}${ECONOMY.CURRENCY}
+    **${l.AMM}:** ${betAmount} ` + ECONOMY.CURRENCY + `
     **${l.MULT}:** 2x
     ╔══════════╗
     ║ ${getEmoji()} ║ ${getEmoji()} ║ ${getEmoji()} ‎‎‎‎║
@@ -104,8 +104,8 @@ async function gamble(user, betAmount, lang) {
     ╚══════════╝
     `;
 
-  const reward = calculateReward(betAmount, slot1, slot2, slot3);
-  const result = (reward > 0 ? `${l.WON}: ${reward}` : `${l.LOSE}: ${betAmount}`) + ECONOMY.CURRENCY;
+  const reward = calculateReward(betAmount, slot1, slot2, slot3);const result = (reward > 0 ? `${l.WON}:  ${reward}` : `${l.LOSE}:  ${betAmount}`);
+ 
   const balance = reward - betAmount;
 
   userDb.coins += balance;
@@ -116,7 +116,7 @@ async function gamble(user, betAmount, lang) {
     .setColor(EMBED_COLORS.TRANSPARENT)
     .setThumbnail("https://i.pinimg.com/originals/9a/f1/4e/9af14e0ae92487516894faa9ea2c35dd.gif")
     .setDescription(str)
-    .setFooter({ text: `${result}\n${l.DONE}: ${userDb?.coins}${ECONOMY.CURRENCY}` });
+    .setFooter({ text: result+ "\n" + l.DONE + ": " + userDb?.coins });
 
   return { embeds: [embed] };
 }

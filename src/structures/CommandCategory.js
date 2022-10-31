@@ -57,12 +57,6 @@ module.exports = {
     image: "https://icons.iconarchive.com/icons/lawyerwordpress/law/128/Gavel-Law-icon.png",
     emoji: "🔨",
   },
-  ERELA_JS: {
-    name: "Music",
-    enabled: config.ERELA_JS.ENABLED,
-    image: "https://icons.iconarchive.com/icons/wwalczyszyn/iwindows/256/Music-Library-icon.png",
-    emoji: "🎵",
-  },
   OWNER: {
     name: "Owner",
     image: "https://www.pinclipart.com/picdir/middle/531-5318253_web-designing-icon-png-clipart.png",
@@ -96,4 +90,23 @@ module.exports = {
     image: "https://icons.iconarchive.com/icons/blackvariant/button-ui-system-folders-alt/128/Utilities-icon.png",
     emoji: "🛠",
   },
+  PERMIUM: {
+    name: "Premium",
+		    enabled: config.PREMIUM.ENABLED,
+    image: "https://icons.iconarchive.com/icons/pelfusion/flat-folder/128/Leaf-Folder-icon.png",
+    emoji: "💲",
+  },
+	  BUMP_GUILDS: {
+    name: "GrowingUpServers",
+		    enabled: config.BUMP.GUILDS.ENABLED,
+    image: "https://media.discordapp.net/attachments/1024477068991410283/1036771848576319609/image0.png",
+    emoji: "🔗",
+  },
+	BUMP_BOTS: {
+    name: "GrowingUpBots",
+		    enabled: config.BUMP.BOTS.ENABLED,
+    image: "https://media.discordapp.net/attachments/1024477068991410283/1036771848576319609/image0.png",
+    emoji: "🔗",
+  },
+
 };

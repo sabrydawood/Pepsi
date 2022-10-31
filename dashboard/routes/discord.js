@@ -58,6 +58,11 @@ router.get("/callback", async (req, res) => {
         method: "GET",
         headers: { Authorization: `Bearer ${tokens.access_token}` },
       });
+       
+  
+        
+        
+        
       const json = await response.json();
       if (json.retry_after) await req.client.wait(json.retry_after);
       else userData.infos = json;
@@ -75,7 +80,7 @@ router.get("/callback", async (req, res) => {
   }
   /* Change format (from "0": { data }, "1": { data }, etc... to [ { data }, { data } ]) */
   const guilds = [];
-  for (const guildPos in userData.guilds) guilds.push(userData.guilds[guildPos]);
+  for (const guildPosetion in userData.guilds) guilds.push(userData.guilds[guildPosetion]);
 
   // Update session
   req.session.user = { ...userData.infos, ...{ guilds } }; // {user-info, guilds: [{}]}

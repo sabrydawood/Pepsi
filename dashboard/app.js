@@ -1,15 +1,19 @@
 const config = require("@root/config"),
+ fs = require("fs"),
   utils = require("./utils"),
-  CheckAuth = require("./auth/CheckAuth");
-const flash = require('connect-flash');
+  CheckAuth = require("./auth/CheckAuth"),
+ flash = require('connect-flash'),
+ Topgg = require('@top-gg/sdk');
+const { voteTraker } = require("@handlers/voteManger")
+
 module.exports.launch = async (client) => {
   /* Init express app */
 
   const express = require("express"),
+  https = require('https'),
     session = require("express-session"),
     path = require("path"),
     app = express();
-let server = require('http').createServer(app);
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
  const oneDay = 1000 * 60 * 60 * 24;
@@ -19,12 +23,20 @@ var customSession;
   const mainRouter = require("./routes/index"),
     discordAPIRouter = require("./routes/discord"),
     logoutRouter = require("./routes/logout"),
-    guildManagerRouter = require("./routes/guild-manager");
+    guildManagerRouter = require("./routes/guild-manager")
+,
+    userManagerRouter = require("./routes/user");
 
   client.states = {};
   client.config = config;
+  let sslKey = fs.readFileSync(__dirname + '/ssl/key.pem', 'utf8'),
+      sslCert = fs.readFileSync(__dirname + '/ssl/cert.pem', 'utf8')
 
-    
+/*var serverHttps = https.createServer({
+    key: sslKey,
+    cert: sslCert
+}, app)*/
+let serverHttp = require('http').createServer(app);
   /* App configuration */
   app
     .use(express.json()) // For post methods
@@ -49,7 +61,9 @@ var customSession;
     resave: false
 })) 
     .use(async function (req, res, next) {
+			if (req.session.user){
       req.user = req.session.user;
+			}
       req.client = client;
 			res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
@@ -59,7 +73,8 @@ var customSession;
     .use("/api", discordAPIRouter)
     .use("/logout", logoutRouter)
     .use("/manage", guildManagerRouter)
-    .use("/", mainRouter)
+    .use("/user",userManagerRouter)
+ .use("/", mainRouter)
 .use(CheckAuth, function (req, res) {
       res.status(404).render("404", {
         user: req.userInfos,
@@ -77,13 +92,44 @@ var customSession;
       });
     });
 
-  /* Start */
-  
-server.listen(app.get("port"), () => {
 
-client.logger.success("Dashboard is listening on" + app.get("port"));
+
+const webhook = new Topgg.Webhook(process.env.DBL_SECRET) 
+const TopggApi = new Topgg.Api(process.env.DBL_TOKEN)
+
+app.post('/dbl', webhook.listener(vote => {
+  if(TopggApi.hasVoted(vote.user.id)){
+  voteTraker(vote)
+      }
+ console.log(vote.user) 
+})) 
+
+ 
+    
+ /*  //https server
+serverHttps.listen(app.get("port"), () => {
+client.logger.success("Https listening on => " + app.get("port"));
+  });*/
+    //http server
+
+
+serverHttp.listen(app.get("port"), () => {
+client.logger.log("Http server listening on => "  + app.get("port"));
   });
+    
+    //--#######$$$##############
+    
+var os = require('os');
 
+var networkInterfaces = os.networkInterfaces();
+
+    
+    client.logger.log(networkInterfaces)
+    
+    //////////////////#####$$$$##$#
+    
+    
+    // print all routes
   function print (path, layer) {
   if (layer.route) {
     layer.route.stack.forEach(print.bind(null, path.concat(split(layer.route.path))))

@@ -243,6 +243,12 @@ async function getStatus(settings, guild, lang) {
     ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.DESC6}: ${automod.anti_spam ? "✓" : "✕"}
     ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.DESC7}: ${automod.anti_ghostping ? "✓" : "✕"}
   `;
+ let autoStrike;
+    if (automod.strikes) {
+        autoStrike = automod.strikes.toString()
+    }else{
+    autoStrike = "✕"
+    }
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_AUTHOR , icon_url: guild.iconURL() })
@@ -251,17 +257,17 @@ async function getStatus(settings, guild, lang) {
     .addFields(
       {
         name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_F1,
-        value: logChannel,
+        value: logChannel ? "✓" : "✕",
+        inline: true,
+      },
+      {
+        name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_F2,
+        value: autoStrike ,
         inline: true,
       },
       {
         name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_F3,
-        value: automod.strikes.toString(),
-        inline: true,
-      },
-      {
-        name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_F3,
-        value: automod.action,
+        value: automod.action ? "✓" : "✕",
         inline: true,
       },
       {
@@ -277,7 +283,7 @@ async function getStatus(settings, guild, lang) {
 async function setStrikes(settings, strikes, lang) {
   settings.automod.strikes = strikes;
   await settings.save();
-  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.STRIKE_DONE.replace("{strike}", strikes);
+  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.STRIKE_DONE.replace("{strikes}", strikes);
 }
 
 async function setAction(settings, guild, action, lang) {

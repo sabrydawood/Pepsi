@@ -45,15 +45,6 @@ module.exports = class Validator {
     // Warnings
     if (config.OWNER_IDS.length === 0) warn("config.js: OWNER_IDS are empty");
     if (!config.SUPPORT_SERVER) warn("config.js: SUPPORT_SERVER is not provided");
-    if (!process.env.WEATHERSTACK_KEY) warn("env: WEATHERSTACK_KEY is missing. Weather command won't work");
-    if (config.ERELA_JS.ENABLED) {
-      if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
-        warn("env: SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET are missing. Spotify music won't work in ErelaJS");
-      }
-      if (config.ERELA_JS.NODES.length == 0) {
-        warn("config.js: ErelaJS must at least one node");
-      }
-    }
   }
 
   /**

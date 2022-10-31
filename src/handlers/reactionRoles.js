@@ -1,5 +1,5 @@
 const { getReactionRoles } = require("@schemas/ReactionRoles");
-
+const { EmbedBuilder } = require("discord.js")
 module.exports = {
   /**
    * @param {import('discord.js').MessageReaction} reaction
@@ -13,6 +13,13 @@ module.exports = {
     if (!member) return;
 
     await member.roles.add(role).catch(() => {});
+ const embed = new EmbedBuilder()
+      .setAuthor({name : "REACTION ROLE ADD"})
+ .setColor("#00A56A")
+    .setDescription(`We Have Been Added Role \`${role.name}\`\n From ${reaction.message.guild.name} Server`)
+.setThumbnail(user.displayAvatarURL());
+      
+user.send({embeds : [embed]})
   },
 
   /**
@@ -27,6 +34,18 @@ module.exports = {
     if (!member) return;
 
     await member.roles.remove(role).catch(() => {});
+    
+
+ const embed = new EmbedBuilder()
+
+      .setAuthor({name : "REACTION ROLE Remove"})
+ .setColor("#D61A3C")
+    .setDescription(`We Have Been Removed Role \`${role.name}\`\n From ${reaction.message.guild.name} Server`)
+.setThumbnail(user.displayAvatarURL());
+
+      
+
+user.send({embeds : [embed]})
   },
 };
 

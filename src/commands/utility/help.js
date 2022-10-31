@@ -13,7 +13,7 @@ const {
 const { getCommandUsage, getSlashUsage } = require("@handlers/command");
 
 const CMDS_PER_PAGE = 5;
-const IDLE_TIMEOUT = 30;
+const IDLE_TIMEOUT = 120;
 
 /**
  * @type {import("@structures/Command")}
@@ -69,7 +69,7 @@ module.exports = {
     if (!cmdName) {
       const response = await getHelpMenu(interaction, data.lang);
       const sentMsg = await interaction.followUp(response);
-      return waiter(sentMsg, interaction.user.id, data.lang);
+      return waiter(sentMsg, interaction.user.id, "" , data.lang);
     }
 
     // check if command help (!help cat)

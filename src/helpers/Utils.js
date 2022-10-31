@@ -49,7 +49,24 @@ module.exports = class Utils {
     diff /= 60 * 60;
     return Math.abs(Math.round(diff));
   }
+    static diffDays(dt2, dt1) {
 
+    let diff = (dt2.getTime() - dt1.getTime()) / 1000;
+
+    diff /= 60 * 60 * 24;
+
+    return Math.abs(Math.round(diff));
+
+  }
+static convertTime(data){
+  var offset = data.getTimezoneOffset() * 60 * 1000;
+
+var withOffset = data.getTime();
+
+var withoutOffset = withOffset - offset;
+  return Utils.timeformat(withoutOffset);
+
+    }
   /**
    * Returns remaining time in days, hours, minutes and seconds
    * @param {number} timeInSeconds
@@ -87,7 +104,38 @@ module.exports = class Utils {
     const time = Utils.timeformat(seconds);
     return time;
   }
+    
 
+  /**
+
+   * Returns days difference between two dates
+
+   * @param {Date} start
+
+   * @param {Date} end
+
+   */
+static deffDays(start, end) {
+
+    const date1 = new Date(start);
+
+    const date2 = new Date(end);
+
+    // One day in milliseconds
+
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+
+    const diffInTime = date2.getTime() - date1.getTime();
+
+    // Calculating the no. of days between two dates
+
+    const diffInDays = Math.round(diffInTime / oneDay);
+
+    return diffInDays;
+
+}
   /**
    * @param {import("discord.js").PermissionResolvable[]} perms
    */

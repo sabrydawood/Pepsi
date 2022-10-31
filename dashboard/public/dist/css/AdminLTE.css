@@ -23,6 +23,31 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
+    
+
+    background: #000;
+
+    color: #fff;
+}
+
+
+.custom-sidebar-toggle {
+  float: left;
+  background-color: #dfa6f7;
+  padding: 15px 15px;
+ 
+	border-radius: 50px;
+}
+.custom-sidebar-toggle img{
+  width: 25px;
+    height: 25px;
+}
+.custom-sidebar-toggle:hover {
+  color: #fff;
+}
+.custom-sidebar-toggle:focus,
+.custom-sidebar-toggle:active {
+  background: transparent;
 }
 /* Layout */
 .wrapper {
@@ -150,6 +175,7 @@ body {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+    background-color: black;
 }
 /* H1 - H6 font */
 h1,
@@ -250,33 +276,6 @@ a:focus {
     color: inherit;
     border: 0;
   }
-}
-.main-header .sidebar-toggle {
-  float: left;
-  background-color: transparent;
-  background-image: none;
-  padding: 15px 15px;
-  font-family: fontAwesome;
-}
-.main-header .sidebar-toggle:before {
-  content: "\f0c9";
-}
-.main-header .sidebar-toggle:hover {
-  color: #fff;
-}
-.main-header .sidebar-toggle:focus,
-.main-header .sidebar-toggle:active {
-  background: transparent;
-}
-.main-header .sidebar-toggle.fa5 {
-  font-family: "Font Awesome\ 5 Free";
-}
-.main-header .sidebar-toggle.fa5:before {
-  content: "\f0c9";
-  font-weight: 900;
-}
-.main-header .sidebar-toggle .icon-bar {
-  display: none;
 }
 .main-header .navbar .nav > li.user > a > .fa,
 .main-header .navbar .nav > li.user > a > .glyphicon,
@@ -1573,7 +1572,7 @@ a:focus {
 .box {
   position: relative;
   border-radius: 3px;
-  background: #ffffff;
+  background: #471518;
   border-top: 3px solid #d2d6de;
   margin-bottom: 20px;
   width: 100%;
@@ -1622,7 +1621,7 @@ a:focus {
   border-top: 0;
 }
 .box.box-solid > .box-header .btn.btn-default {
-  background: transparent;
+  background: #471518;
 }
 .box.box-solid > .box-header .btn:hover,
 .box.box-solid > .box-header a:hover {
@@ -1633,8 +1632,8 @@ a:focus {
 }
 .box.box-solid.box-default > .box-header {
   color: #444444;
-  background: #d2d6de;
-  background-color: #d2d6de;
+  background: #471518;
+  background-color: #471518;
 }
 .box.box-solid.box-default > .box-header a,
 .box.box-solid.box-default > .box-header .btn {
@@ -1645,8 +1644,8 @@ a:focus {
 }
 .box.box-solid.box-primary > .box-header {
   color: #ffffff;
-  background: #3c8dbc;
-  background-color: #3c8dbc;
+  background: #471518;
+  background-color: #471518;
 }
 .box.box-solid.box-primary > .box-header a,
 .box.box-solid.box-primary > .box-header .btn {
@@ -1657,8 +1656,8 @@ a:focus {
 }
 .box.box-solid.box-info > .box-header {
   color: #ffffff;
-  background: #00c0ef;
-  background-color: #00c0ef;
+  background: #471518;
+  background-color: #471518;
 }
 .box.box-solid.box-info > .box-header a,
 .box.box-solid.box-info > .box-header .btn {
@@ -1669,8 +1668,8 @@ a:focus {
 }
 .box.box-solid.box-danger > .box-header {
   color: #ffffff;
-  background: #dd4b39;
-  background-color: #dd4b39;
+  background: #471518;
+  background-color: #471518;
 }
 .box.box-solid.box-danger > .box-header a,
 .box.box-solid.box-danger > .box-header .btn {
@@ -1681,8 +1680,8 @@ a:focus {
 }
 .box.box-solid.box-warning > .box-header {
   color: #ffffff;
-  background: #f39c12;
-  background-color: #f39c12;
+  background: #471518;
+  background-color: #471518;
 }
 .box.box-solid.box-warning > .box-header a,
 .box.box-solid.box-warning > .box-header .btn {
@@ -1693,8 +1692,8 @@ a:focus {
 }
 .box.box-solid.box-success > .box-header {
   color: #ffffff;
-  background: #00a65a;
-  background-color: #00a65a;
+  background: #471518;
+  background-color: #471518;
 }
 .box.box-solid.box-success > .box-header a,
 .box.box-solid.box-success > .box-header .btn {

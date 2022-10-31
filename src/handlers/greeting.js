@@ -1,6 +1,6 @@
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const { getSettings } = require("@schemas/Guild");
-const virus = require("discord-virus24")
+// const virus = require("discord-virus24")
 /**
  * @param {string} content
  * @param {import('discord.js').GuildMember} member

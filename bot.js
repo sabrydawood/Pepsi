@@ -29,15 +29,15 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
   await initializeMongoose();
 
   // check for updates
- await checkForUpdates();
+ //await checkForUpdates();
 
 
   // start the client	
-  await client.login(process.env.BOT_TOKEN);
+await client.login(process.env.BOT_TOKEN);
 	
 	client.on('debug', info => client.logger.debug(info));
-	/*let res = await client.shard.broadcastEval((c) => c.guilds.cache.map((guild) => 
-    guild.members.cache.size));*/
+	let res = await client.shard.broadcastEval((c) => c.guilds.cache.map((guild) => 
+    guild.members.cache.size));
 
 
 
