@@ -4,6 +4,7 @@ const { getSettings } = require("@schemas/Guild");
 
 const { getUser } = require("@schemas/User");
 
+const { getPremium } = require("@schemas/Premium");
 
 const cooldownCache = new Map();
 
@@ -17,7 +18,7 @@ module.exports = {
 const settings = await getSettings(interaction.guild);
 
     const userDb = await getUser(interaction.user);
-
+const premiumDb = await getPremium(interaction.guild)
   let language = userDb.lang;
 
   if (!language) language = "en";
@@ -52,6 +53,20 @@ const settings = await getSettings(interaction.guild);
         });
       }
     }
+    // primum commands
+let premium = premiumDb.status.enabled;
+    if (context.primum.isPremium && !premium) {
+
+      return interaction.reply({
+
+        content: `This command is only accessible to premium Guilds\n to get premium you can buy it from dashboard or with command \`getpremium\``,
+
+        ephemeral: true,
+
+      });
+
+		}
+		
 
     try {
       await interaction.deferReply({ ephemeral: context.ephemeral });

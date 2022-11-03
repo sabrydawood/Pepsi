@@ -7,6 +7,7 @@ const { EMBED_COLORS } = require("@root/config");
 module.exports = {
   name: "avatar",
   description: "displays avatar information about the user",
+	isPremium: false,
   type: ApplicationCommandType.User,
   enabled: true,
   ephemeral: false,

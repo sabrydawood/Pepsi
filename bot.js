@@ -1,6 +1,6 @@
 require('module-alias/register');
 require("dotenv").config();
-//require("./Manger.js")
+//const {manager } = require("./Manger.js")
 // register extenders
 require("@helpers/extenders/Message");
 require("@helpers/extenders/Guild");
@@ -16,6 +16,7 @@ validateConfiguration();
 
 // initialize client
 const client = new BotClient();
+
 client.loadCommands("src/commands");
 client.loadContexts("src/contexts");
 client.loadEvents("src/events");
@@ -36,7 +37,8 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
 await client.login(process.env.BOT_TOKEN);
 	
 	client.on('debug', info => client.logger.debug(info));
-	let res = await client.shard.broadcastEval((c) => c.guilds.cache.map((guild) => 
+	//let res = 
+		await client.shard.broadcastEval((c) => c.guilds.cache.map((guild) => 
     guild.members.cache.size));
 
 

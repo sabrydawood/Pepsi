@@ -4,7 +4,7 @@ const {
 	WebhookClient
 } = require("discord.js")
 const { AutoPoster } = require('topgg-autoposter')
-
+// const { getUserBot } = require('../../../../../../../../../../../../../../../../const client = require ("@root/client")
 
 //const manger = require("@root/Manger");
 const webhookSender = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
@@ -50,9 +50,12 @@ const embed = new EmbedBuilder()
      },
     
 async statusPoster(manger){
+
   const ap = AutoPoster(process.env.DBL_TOKEN, manger);
+	
 ap.on('posted', (stats) => {
-    
+	
+   // console.log(ap)
 const embed = new EmbedBuilder()
 .setAuthor({name : "Discord Api Status Poster"})
 . setDescription("Posted stats to Top.gg")
@@ -60,7 +63,9 @@ const embed = new EmbedBuilder()
     {name : "Servers Count",
      value: `${stats.serverCount}` },
     {name : "Shards Count",
-    value: `${stats.shardCount}`}
+    value: `${stats.shardCount}`},
+   // {name : "Total Text Commands",
+    //value: `${stats.shardCount}`}
 );
   webhookSender.send({
     username: "Api Status",

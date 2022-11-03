@@ -17,8 +17,8 @@
 module.exports = {
   name: "",
   description: "",
-	  isPremium: false,
-  type: "",
+	isPremium: false,
+  type: null,
   enabled: false,
   ephemeral: false,
   options: true,

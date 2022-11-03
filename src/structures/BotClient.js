@@ -29,16 +29,14 @@ module.exports = class BotClient extends Client {
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.GuildVoiceStates,
       ],
+			
       partials: [Partials.User, Partials.Message, Partials.Reaction],
       allowedMentions: {
         repliedUser: true,
         parse: ['users', 'roles'] 
                            } ,
       ws : { properties : { $browser : "Discord Android"}} ,
-      restRequestTimeout: 20000,
-    
-	shards: "auto",
-    shardCount: 2,
+      restRequestTimeout: 30000,
     });
 
     this.wait = require("util").promisify(setTimeout); // await client.wait(1000) - Wait 1 second
@@ -212,8 +210,8 @@ module.exports = class BotClient extends Client {
       }
     }
 
-    const userContexts = this.contextMenus.filter((ctx) => ctx.type === "USER").size;
-    const messageContexts = this.contextMenus.filter((ctx) => ctx.type === "MESSAGE").size;
+    const userContexts = this.contextMenus.filter((ctx) => ctx.type === ApplicationCommandType.User).size;
+    const messageContexts = this.contextMenus.filter((ctx) => ctx.type === ApplicationCommandType.MESSAGE).size;
 
     if (userContexts > 3) throw new Error("A maximum of 3 USER contexts can be enabled");
     if (messageContexts > 3) throw new Error("A maximum of 3 MESSAGE contexts can be enabled");

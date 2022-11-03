@@ -2,6 +2,9 @@ const { readdirSync, lstatSync } = require("fs");
 const { join, extname } = require("path");
 const permissions = require("./permissions");
 
+const { EmbedBuilder, WebhookClient } = require("discord.js");
+const webhookSender = process.env.JOIN_LEAVE_LOGS ? new WebhookClient({ url: process.env.JOIN_LEAVE_LOGS }) : undefined;
+
 module.exports = class Utils {
   /**
    * Checks if a string contains a URL
@@ -168,4 +171,23 @@ static deffDays(start, end) {
     readCommands(dir);
     return filePaths;
   }
+
+	static sendWebhook(client, name, message){
+const embed = new EmbedBuilder()
+		.setColor("#00a9d9")
+		.setDescription(message)   
+
+
+
+		webhookSender.send({
+			username: name,
+			avatar_url: client.user.displayAvatarURL(),
+			embeds: [embed]
+		})
+		
+}
+
+
+
+
 };

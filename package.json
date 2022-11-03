@@ -1,12 +1,13 @@
 {
   "name": "pepsi-bot",
-  "version": "0.0.1",
-  "description": "An open-source, multipurpose discord bot built using discord-js V14",
+  "version": "0.0.2",
+  "description": "multipurpose discord bot",
   "main": "Manger.js",
   "author": "Virus24",
   "license": "ISC",
   "engines": {
-    "node": ">=16.18.0"
+    "node": ">=16.15.0",
+    "npm": ">=8.19.2"
   },
   "scripts": {
     "dev": "node .",
@@ -25,7 +26,9 @@
     "@vitalets/google-translate-api": "^8.0.0",
     "ascii-table": "0.0.9",
     "btoa": "^1.2.1",
+    "cache": "^3.0.0",
     "canvas": "^2.10.1",
+    "clean": "^4.0.2",
     "common-tags": "^1.8.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
