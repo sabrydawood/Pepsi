@@ -135,13 +135,8 @@ module.exports = {
       }
   },
 	BUMP:{
-GUILDS:{
-	ENABLED: true,
-},
-		BOTS:{
-				ENABLED: true,
-		}
-	
+	   ENABLED: true,
+		 COINS_PER_BUMP: 1000,
 		
 	},
     LANGS:["en","ar"]

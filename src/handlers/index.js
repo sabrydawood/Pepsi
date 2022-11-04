@@ -11,5 +11,6 @@ module.exports = {
   suggestionHandler: require("./suggestion"),
   ticketHandler: require("./ticket"),
   translationHandler: require("./translation"),
- premium: require("./premium")
+ premium: require("./premium"),
+ Bumper: require("./bumper")
 };

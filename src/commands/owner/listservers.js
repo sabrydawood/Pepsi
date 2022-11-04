@@ -80,10 +80,10 @@ module.exports = {
           
         const server = servers[i];
           
-  //  const chinv = invite(client,server);
+   // const chinv = withAwait(client,server);
         fields.push({
           name: server.name,
-          value: server.id + `- [join](${chinv})`,
+          value: server.id/* + `- [join](${chinv})`*/ ,
           inline: true,
         });
       }
@@ -155,8 +155,12 @@ let channelID;
 	
 let invite; 
 		channel.createInvite({maxAge: 0, maxUses: 0})
-  .then(inv => invite = inv )
+  .then(inv => invite = inv.code )
   .catch(console.error);
 	
    return invite;
+}
+
+async function withAwait(client, guild) {
+  return await invite(client,guild);
 }

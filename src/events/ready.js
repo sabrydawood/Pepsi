@@ -1,4 +1,4 @@
-const { counterHandler, inviteHandler, presenceHandler,premium } = require("@src/handlers");
+const { counterHandler, inviteHandler, presenceHandler,premium, Bumper } = require("@src/handlers");
 const { cacheReactionRoles } = require("@schemas/ReactionRoles");
 const { getSettings } = require("@schemas/Guild");
 /**
@@ -27,11 +27,13 @@ module.exports = async (client) => {
 
   // Load reaction roles to cache
   await cacheReactionRoles(client);
- 
+ // autobump 
+	await Bumper.autoBump(client)
   
   for (const guild of client.guilds.cache.values()) {
  
-    const settings = await getSettings(guild);
+ const settings = await getSettings(guild);
+
     // initialize counter
     if (settings.counters.length > 0) {
       await counterHandler.init(guild, settings);
@@ -46,7 +48,9 @@ module.exports = async (client) => {
   setInterval(() => counterHandler.updateCounterChannels(client), 10 * 60 * 1000);
     
     
-  setInterval(() => premium.updatePremium(client)
+  setInterval(() => {
+		premium.updatePremium(client)
+	}
     ,5000);
     
     

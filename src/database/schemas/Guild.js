@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { CACHE_SIZE, PREFIX, STATS } = require("@root/config.js");
+const { CACHE_SIZE, PREFIX, STATS, BUMP } = require("@root/config.js");
 const FixedSizeMap = require("fixedsize-map");
 const { getUser } = require("./User");
 
@@ -109,17 +109,48 @@ const Schema = new mongoose.Schema({
     rejected_channel: String,
     staff_roles: [String],
   },
-  share:{
-    channel_id : String,
-    description: String,
-    auto : Boolean,
-    image : String,
-    premium : Boolean,
-    trusted : Boolean,
-    tags : [String],
-    guild_lang : [String],
-    badges : [String],
-  }
+  bump:{
+      trusted : Boolean,
+      auto : Boolean,
+		  auto_count: {
+				type: Number,
+				default: 1 },
+		bots: {
+      enabled: Boolean,
+			name: String,
+			_id: String,
+			avatar: String,
+			tag: String,
+			varifated: Boolean,
+      channel_id : String,
+      description: String,
+      image : String,
+			invite_link: String,
+      tags : [String],
+      bot_lang : [String],
+      badges : [String],
+      times: String,
+			cooldown : Date,
+		},
+    guilds: {
+      enabled: Boolean,
+			name: String,
+			_id: String,
+			avatar: String,
+			tag: String,
+			varifated: Boolean,
+      channel_id : String,
+      description: String,
+      image : String,
+      tags : [String],
+      guild_lang : [String],
+      badges : [String],
+      times: String,
+			cooldown : Date,
+		},
+		
+	},
+
 });
 
 const Model = mongoose.model("guild", Schema);

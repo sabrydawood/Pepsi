@@ -96,15 +96,9 @@ module.exports = {
     image: "https://icons.iconarchive.com/icons/pelfusion/flat-folder/128/Leaf-Folder-icon.png",
     emoji: "💲",
   },
-	  BUMP_GUILDS: {
+	  BUMP: {
     name: "GrowingUpServers",
-		    enabled: config.BUMP.GUILDS.ENABLED,
-    image: "https://media.discordapp.net/attachments/1024477068991410283/1036771848576319609/image0.png",
-    emoji: "🔗",
-  },
-	BUMP_BOTS: {
-    name: "GrowingUpBots",
-		    enabled: config.BUMP.BOTS.ENABLED,
+		    enabled: config.BUMP.ENABLED,
     image: "https://media.discordapp.net/attachments/1024477068991410283/1036771848576319609/image0.png",
     emoji: "🔗",
   },
