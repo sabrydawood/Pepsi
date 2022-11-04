@@ -21,8 +21,6 @@ client.loadCommands("src/commands");
 client.loadContexts("src/contexts");
 client.loadEvents("src/events");
 
-// find unhandled promise rejections
-process.on("unhandledRejection", (err) => client.logger.error(`Unhandled exception`, err));
 
 (async () => {
   await console.clear();
@@ -30,7 +28,7 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
   await initializeMongoose();
 
   // check for updates
- //await checkForUpdates();
+ await checkForUpdates();
 
 
   // start the client	

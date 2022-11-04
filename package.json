@@ -10,8 +10,8 @@
     "npm": ">=8.19.2"
   },
   "scripts": {
-    "dev": "node .",
-    "start": "node ."
+    "dev": "nodemon ./Manger.js",
+    "start": "node ./Manger.js"
   },
   "homepage": "https://github.com/virgel1995/pepsi#readme",
   "repository": {
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@top-gg/sdk": "^3.1.3",
-    "@vitalets/google-translate-api": "^8.0.0",
+    "@vitalets/google-translate-api": "^9.0.0",
     "ascii-table": "0.0.9",
     "btoa": "^1.2.1",
     "cache": "^3.0.0",

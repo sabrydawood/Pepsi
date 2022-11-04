@@ -83,7 +83,7 @@ module.exports = {
   //  const chinv = invite(client,server);
         fields.push({
           name: server.name,
-          value: server.id /*+ `[join](${chinv})`*/,
+          value: server.id + `- [join](${chinv})`,
           inline: true,
         });
       }
@@ -138,19 +138,25 @@ module.exports = {
     });
   },
 };
-async function invite(client,server){
- const guild = client.guilds.cache.get(server.id)
- let invite ;
-    if(guild.systemChannel){
-        invite = guild.systemChannel.createInvite({
-    maxAge: 10 * 60 * 1000,
-    maxUses: 1
-  })
-        }else {
-   invite = await guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT' && channel.permissionsFor(guild.me).has('SEND_MESSAGES')).createInvite({
-    maxAge: 10 * 60 * 1000,
-    maxUses: 1
-  })
-        }
+async function invite(client,guild){
+
+let channelID;
+    const channels = guild.channels.cache;
+  for (let c of channels) {
+      const channelType = c[1].type;
+		// channel type 0 equals GUILD_TEXT
+      if (channelType === 0) {
+        channelID = c[0];
+        break;
+      }
+    }
+
+    const channel = client.channels.cache.get(guild.systemChannelId || channelID);
+	
+let invite; 
+		channel.createInvite({maxAge: 0, maxUses: 0})
+  .then(inv => invite = inv )
+  .catch(console.error);
+	
    return invite;
 }

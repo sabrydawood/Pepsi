@@ -2,7 +2,7 @@ require('module-alias/register');
 const { ShardingManager } = require('discord.js');
 require("dotenv").config();
 const { statusPoster } = require("@handlers/voteManger")
-const { warn } = require("@helpers/Logger")
+const { warn, error } = require("@helpers/Logger")
 const {sendWebhook} =  require("@helpers/Utils")
 
 //const client = require ("@root/client")
@@ -27,4 +27,10 @@ manager.on("shardCreate", shard => {
 statusPoster(manager);
 
 manager.spawn({ amount: 'auto', delay: 15500, timeout: 60000 });
+
+// find unhandled promise rejections
+process.on('unhandledRejection', error => {
+	console.log(error);
+});
+
 module.exports.manager

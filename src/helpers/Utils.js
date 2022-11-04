@@ -176,15 +176,11 @@ static deffDays(start, end) {
 const embed = new EmbedBuilder()
 		.setColor("#00a9d9")
 		.setDescription(message)   
-
-
-
 		webhookSender.send({
 			username: name,
 			avatar_url: client.user.displayAvatarURL(),
 			embeds: [embed]
 		})
-		
 }
 
 
