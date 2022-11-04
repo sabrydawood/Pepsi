@@ -6,11 +6,11 @@ module.exports =  class Bumper {
 
 	
 static bumpBots (data){
- console.log("bumpBots")
+ return "bumpBots"
 }
 
 static bumpGuilds (data){
-	console.log("bumpGuilds")
+	return "bumpGuilds"
 }
 	
 static autoBump(client){
@@ -21,10 +21,10 @@ static autoBump(client){
 setInterval(async () =>{
 let data =  await getSettings(guild);
 	
-  //if(data.bump.auto){
+  if(data.bump.auto){
 	await Bumper.bumpBots(data);
   Bumper.bumpGuilds(data);
-//}
+}
 	}, 5000)
 }
 	} catch (e){
