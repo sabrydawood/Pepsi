@@ -3,9 +3,8 @@ const { getUser } = require("@schemas/User");
 const { EMBED_COLORS, ECONOMY } = require("@root/config");
 
 module.exports = async (user, coins, lang) => {
-    
-  const l = lang.COMMANDS.ECONOMY.SUB.WITHDRAW
-  if (isNaN(coins) || coins <= 0) return l.ERR ;
+  const l = lang.COMMANDS.ECONOMY.SUB.WITHDRAW;
+  if (isNaN(coins) || coins <= 0) return l.ERR;
   const userDb = await getUser(user);
 
   if (coins > userDb.bank) return l.ERR2`${userDb.bank}${ECONOMY.CURRENCY} ` + l.ERR3;

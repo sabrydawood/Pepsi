@@ -34,7 +34,7 @@ module.exports = {
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction, dat) {
+  async interactionRun(interaction, data) {
     const emoji = interaction.options.getString("emoji");
     const response = getEmoji(interaction.user, emoji, data.lang);
     await interaction.followUp(response);
@@ -42,7 +42,7 @@ module.exports = {
 };
 
 function getEmoji(user, emoji, lang) {
-  const l = lang.COMMANDS.UTILS.BIGEMOJIE
+  const l = lang.COMMANDS.UTILS.BIGEMOJIE;
   const custom = parseEmoji(emoji);
 
   const embed = new EmbedBuilder()
@@ -54,7 +54,7 @@ function getEmoji(user, emoji, lang) {
     return { embeds: [embed] };
   }
   const parsed = parse(emoji, { assetType: "png" });
-  if (!parsed[0]) return l.ERR ;
+  if (!parsed[0]) return l.ERR;
 
   embed.setImage(parsed[0].url);
   return { embeds: [embed] };

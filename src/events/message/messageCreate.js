@@ -6,23 +6,21 @@ const { getUser } = require("@schemas/User");
  * @param {import('discord.js').Message} message
  */
 module.exports = async (client, message) => {
-  //define User language 
+  //define User language
   const userDb = await getUser(message.author);
 
   let language = userDb.lang;
-    if (!language) language = "en";
-    const lang = require(`@root/lang/bot/${language}`);
+  if (!language) language = "en";
+  const lang = require(`@root/lang/bot/${language}`);
 
-
-  
   if (!message.guild || message.author.bot) return;
-    
+
   const settings = await getSettings(message.guild),
-    prefix = settings.prefix
+    prefix = settings.prefix;
 
   // check for bot mentions
   if (message.content.includes(`${client.user.id}`)) {
-    message.channel.safeSend(lang.EVENTS.MESSAGE_EVENT.MENTION_REPLY.replace("{prefix}", prefix))
+    message.channel.safeSend(lang.EVENTS.MESSAGE_EVENT.MENTION_REPLY.replace("{prefix}", prefix));
   }
 
   // command handler
@@ -31,10 +29,10 @@ module.exports = async (client, message) => {
     const invoke = message.content.replace(`${settings.prefix}`, "").split(/\s+/)[0];
     const cmd = client.getCommand(invoke);
     if (cmd) {
-  //if (!client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(message.author.id)) {
+      //if (!client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(message.author.id)) {
       isCommand = true;
-    commandHandler.handlePrefixCommand(message, cmd, settings);
-  /*}else {
+      commandHandler.handlePrefixCommand(message, cmd, settings);
+      /*}else {
     message.channel.send(lang.EVENTS.MESSAGE_EVENT.MAINTACE_MESSAGE)
   }*/
     }

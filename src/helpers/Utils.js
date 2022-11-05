@@ -52,24 +52,21 @@ module.exports = class Utils {
     diff /= 60 * 60;
     return Math.abs(Math.round(diff));
   }
-    static diffDays(dt2, dt1) {
-
+  static diffDays(dt2, dt1) {
     let diff = (dt2.getTime() - dt1.getTime()) / 1000;
 
     diff /= 60 * 60 * 24;
 
     return Math.abs(Math.round(diff));
-
   }
-static convertTime(data){
-  var offset = data.getTimezoneOffset() * 60 * 1000;
+  static convertTime(data) {
+    var offset = data.getTimezoneOffset() * 60 * 1000;
 
-var withOffset = data.getTime();
+    var withOffset = data.getTime();
 
-var withoutOffset = withOffset - offset;
-  return Utils.timeformat(withoutOffset);
-
-    }
+    var withoutOffset = withOffset - offset;
+    return Utils.timeformat(withoutOffset);
+  }
   /**
    * Returns remaining time in days, hours, minutes and seconds
    * @param {number} timeInSeconds
@@ -92,10 +89,12 @@ var withoutOffset = withOffset - offset;
    * @param {string} duration
    */
   static durationToMillis(duration) {
-    return duration
-      .split(":")
-      .map(Number)
-      .reduce((acc, curr) => curr + acc * 60) * 1000;
+    return (
+      duration
+        .split(":")
+        .map(Number)
+        .reduce((acc, curr) => curr + acc * 60) * 1000
+    );
   }
 
   /**
@@ -107,7 +106,6 @@ var withoutOffset = withOffset - offset;
     const time = Utils.timeformat(seconds);
     return time;
   }
-    
 
   /**
 
@@ -118,8 +116,7 @@ var withoutOffset = withOffset - offset;
    * @param {Date} end
 
    */
-static deffDays(start, end) {
-
+  static deffDays(start, end) {
     const date1 = new Date(start);
 
     const date2 = new Date(end);
@@ -137,8 +134,7 @@ static deffDays(start, end) {
     const diffInDays = Math.round(diffInTime / oneDay);
 
     return diffInDays;
-
-}
+  }
   /**
    * @param {import("discord.js").PermissionResolvable[]} perms
    */
@@ -172,18 +168,12 @@ static deffDays(start, end) {
     return filePaths;
   }
 
-	static sendWebhook(client, name, message){
-const embed = new EmbedBuilder()
-		.setColor("#00a9d9")
-		.setDescription(message)   
-		webhookSender.send({
-			username: name,
-			avatar_url: client.user.displayAvatarURL(),
-			embeds: [embed]
-		})
-}
-
-
-
-
+  static sendWebhook(client, name, message) {
+    const embed = new EmbedBuilder().setColor("#00a9d9").setDescription(message);
+    webhookSender.send({
+      username: name,
+      avatar_url: client.user.displayAvatarURL(),
+      embeds: [embed],
+    });
+  }
 };

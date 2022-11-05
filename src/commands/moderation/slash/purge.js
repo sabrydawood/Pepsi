@@ -151,7 +151,7 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-let l = data.lang.COMMANDS.MODERATION.SLASH.PURGE
+    let l = data.lang.COMMANDS.MODERATION.SLASH.PURGE;
     const { options, member } = interaction;
 
     const sub = options.getSubcommand();
@@ -202,9 +202,7 @@ let l = data.lang.COMMANDS.MODERATION.SLASH.PURGE
 
     // Member missing permissions
     else if (response === "MEMBER_PERM") {
-      return interaction.followUp(
-        l.PERMS + ` ${channel}`
-      );
+      return interaction.followUp(l.PERMS + ` ${channel}`);
     }
 
     // Bot missing permissions

@@ -25,7 +25,7 @@ module.exports = {
     ModLog: require("./schemas/ModLog").model,
     TranslateLog: require("./schemas/TranslateLog").model,
     User: require("./schemas/User"),
-    Suggestions: require("./schemas/Suggestions").model, 
- Premium: require("./schemas/Premium").model,
+    Suggestions: require("./schemas/Suggestions").model,
+    Premium: require("./schemas/Premium").model,
   },
 };

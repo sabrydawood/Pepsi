@@ -70,8 +70,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-      
-    let l = data.lang.COMMANDS.ADMIN.MAX_WARN
+    let l = data.lang.COMMANDS.ADMIN.MAX_WARN;
     const input = args[0].toLowerCase();
     if (!["limit", "action"].includes(input)) return message.safeReply(data.lang.INVALID_USAGE);
 
@@ -84,8 +83,7 @@ module.exports = {
 
     if (input === "action") {
       const action = args[1]?.toUpperCase();
-      if (!action || !["TIMEOUT", "KICK", "BAN"].includes(action))
-        return message.safeReply(l.ERR2);
+      if (!action || !["TIMEOUT", "KICK", "BAN"].includes(action)) return message.safeReply(l.ERR2);
       response = await setAction(message.guild, action, data.settings, data.lang);
     }
 
@@ -109,16 +107,14 @@ module.exports = {
 };
 
 async function setLimit(limit, settings, lang) {
-    
-
-    let l = lang.COMMANDS.ADMIN.MAX_WARN
+  let l = lang.COMMANDS.ADMIN.MAX_WARN;
   settings.max_warn.limit = limit;
   await settings.save();
   return `${l.DONE} ${limit}`;
 }
 
 async function setAction(guild, action, settings, lang) {
-    let l = lang.COMMANDS.ADMIN.MAX_WARN
+  let l = lang.COMMANDS.ADMIN.MAX_WARN;
   if (action === "TIMEOUT") {
     if (!guild.members.me.permissions.has("ModerateMembers")) {
       return l.ERR3;

@@ -7,7 +7,7 @@ const { EMBED_COLORS } = require("@root/config");
 module.exports = {
   name: "avatar",
   description: "displays avatar information about the user",
-	isPremium: false,
+  isPremium: false,
   type: ApplicationCommandType.User,
   enabled: true,
   ephemeral: false,
@@ -32,7 +32,8 @@ function getAvatar(user, lang) {
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setImage(x256)
     .setDescription(
-      lang.CONTEXT.AVATAR.HEAD + `: • [x64](${x64}) ` +
+      lang.CONTEXT.AVATAR.HEAD +
+        `: • [x64](${x64}) ` +
         `• [x128](${x128}) ` +
         `• [x256](${x256}) ` +
         `• [x512](${x512}) ` +

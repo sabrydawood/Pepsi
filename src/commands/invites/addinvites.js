@@ -36,7 +36,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-      let l = data.lang.COMMANDS.INVITES.ADD
+    let l = data.lang.COMMANDS.INVITES.ADD;
     const target = await message.guild.resolveMember(args[0], true);
     const amount = parseInt(args[1]);
 
@@ -48,9 +48,6 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-      
-
-      let l = data.lang.COMMANDS.INVITES.ADD
     const user = interaction.options.getUser("user");
     const amount = interaction.options.getInteger("invites");
     const response = await addInvites(interaction, user, amount, data.lang);
@@ -59,8 +56,7 @@ module.exports = {
 };
 
 async function addInvites({ guild }, user, amount, lang) {
-    
-      let l = lang.COMMANDS.INVITES.ADD
+  let l = lang.COMMANDS.INVITES.ADD;
   if (user.bot) return l.ERR;
 
   const memberDb = await getMember(guild.id, user.id);

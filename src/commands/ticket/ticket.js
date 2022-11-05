@@ -33,7 +33,7 @@ module.exports = {
         trigger: "log <#channel>",
         description: "setup log channel for tickets",
       },
-    /*  {
+      /*  {
         trigger: "limit <number>",
         description: "set maximum number of concurrent open tickets",
       },*/
@@ -86,7 +86,7 @@ module.exports = {
           },
         ],
       },
-     /* {
+      /* {
         name: "limit",
         description: "set maximum number of concurrent open tickets",
         type: ApplicationCommandOptionType.Subcommand,
@@ -139,7 +139,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-  const l = data.lang.COMMANDS.TICKET.TICKET
+    const l = data.lang.COMMANDS.TICKET.TICKET;
     const input = args[0].toLowerCase();
     let response;
 
@@ -164,7 +164,7 @@ module.exports = {
     }
 
     // Set limit
-  /*  else if (input === "limit") {
+    /*  else if (input === "limit") {
       if (args.length < 2) return message.safeReply("Please provide a number");
       const limit = args[1];
       if (isNaN(limit)) return message.safeReply("Please provide a number input");
@@ -213,7 +213,7 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-  const l = data.lang.COMMANDS.TICKET.TICKET
+    const l = data.lang.COMMANDS.TICKET.TICKET;
     const sub = interaction.options.getSubcommand();
     let response;
 
@@ -236,7 +236,7 @@ module.exports = {
     }
 
     // Limit
-   /* else if (sub === "limit") {
+    /* else if (sub === "limit") {
       const limit = interaction.options.getInteger("amount");
       response = await setupLimit(interaction, limit, data.settings, data.lang);
     }*/
@@ -273,8 +273,7 @@ module.exports = {
  * @param {object} settings
  */
 async function ticketModalSetup({ guild, channel, member }, targetChannel, settings, lang) {
-
-  const l = lang.COMMANDS.TICKET.TICKET
+  const l = lang.COMMANDS.TICKET.TICKET;
   const buttonRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId("ticket_btnSetup").setLabel(l.BTN).setStyle(ButtonStyle.Primary)
   );
@@ -300,14 +299,10 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
   await btnInteraction.showModal(
     new ModalBuilder({
       customId: "ticket-modalSetup",
-      title: l.TITLE ,
+      title: l.TITLE,
       components: [
         new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("title")
-            .setLabel(l.BTN1)
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
+          new TextInputBuilder().setCustomId("title").setLabel(l.BTN1).setStyle(TextInputStyle.Short).setRequired(false)
         ),
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
@@ -324,11 +319,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
             .setRequired(false)
         ),
         new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("staff")
-            .setLabel(l.BTN4)
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
+          new TextInputBuilder().setCustomId("staff").setLabel(l.BTN4).setStyle(TextInputStyle.Short).setRequired(false)
         ),
       ],
     })
@@ -374,9 +365,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
 }
 
 async function setupLogChannel(target, settings, lang) {
-  
-
-  const l = lang.COMMANDS.TICKET.TICKET
+  const l = lang.COMMANDS.TICKET.TICKET;
   if (!target.canSendEmbeds()) return l.LOG_PERMS + ` ${target}`;
 
   settings.ticket.log_channel = target.id;
@@ -385,39 +374,37 @@ async function setupLogChannel(target, settings, lang) {
   return l.LOG_DONE + ` ${target.toString()}`;
 }
 
-async function setupLimit(limit, settings, lang) {
 
-  const l = lang.COMMANDS.TICKET.TICKET
+/*
+async function setupLimit(limit, settings, lang) {
+  const l = lang.COMMANDS.TICKET.TICKET;
   //  if (Number.parseInt(limit,10 ) < 5) return "Ticket limit cannot be less than 5";
 
-  settings.ticket.limit = Number (limit);
+  settings.ticket.limit = Number(limit);
   await settings.save();
 
   return l.LIMIT + ` \`${limit}\` ` + l.LIMIT1;
 }
-
+*/
 async function close({ channel }, author, lang) {
-
-  const l = lang.COMMANDS.TICKET.TICKET
+  const l = lang.COMMANDS.TICKET.TICKET;
   if (!isTicketChannel(channel)) return l.CLOSE_ERR;
   const status = await closeTicket(channel, author, l.CLOSE_REASON);
-  if (status === "MISSING_PERMISSIONS") return l.CLOSE_PERMS ;
+  if (status === "MISSING_PERMISSIONS") return l.CLOSE_PERMS;
   if (status === "ERROR") return l.CLOSE_ERR1;
   return null;
 }
 
 async function closeAll({ guild }, user, lang) {
-    
-  const l = lang.COMMANDS.TICKET.TICKET
+  const l = lang.COMMANDS.TICKET.TICKET;
   const stats = await closeAllTickets(guild, user);
   return l.CLOSE_ALL + `: \`${stats[0]}\` ${l.CLOSE_ALL1}: \`${stats[1]}\``;
 }
 
 async function addToTicket({ channel }, inputId, lang) {
- 
-  const l = lang.COMMANDS.TICKET.TICKET
+  const l = lang.COMMANDS.TICKET.TICKET;
   if (!isTicketChannel(channel)) return l.CLOSE_ERR;
-  if (!inputId || isNaN(inputId)) return l.ADD_ERR ;
+  if (!inputId || isNaN(inputId)) return l.ADD_ERR;
 
   try {
     await channel.permissionOverwrites.create(inputId, {
@@ -432,8 +419,7 @@ async function addToTicket({ channel }, inputId, lang) {
 }
 
 async function removeFromTicket({ channel }, inputId, lang) {
-
-  const l = lang.COMMANDS.TICKET.TICKET
+  const l = lang.COMMANDS.TICKET.TICKET;
   if (!isTicketChannel(channel)) return l.CLOSE_ERR;
   if (!inputId || isNaN(inputId)) return l.ADD_ERR;
 

@@ -71,7 +71,7 @@ module.exports = {
 
     //
     else if (sub === "text") {
-      if (args.length < 2) return message.channel.send(lang.COMMANDS.FUN.FLIP.ERR);
+      if (args.length < 2) return message.channel.send(data.lang.COMMANDS.FUN.FLIP.ERR);
       const input = args.join(" ");
       const response = await flipText(input);
       await message.safeReply(response);
@@ -107,8 +107,9 @@ module.exports = {
 };
 
 const firstEmbed = (user, lang) =>
-  new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, ${lang.COMMANDS.FUN.FLIP.FIRST}`);
-
+  new EmbedBuilder()
+    .setColor(EMBED_COLORS.TRANSPARENT)
+    .setDescription(`${user.username}, ${lang.COMMANDS.FUN.FLIP.FIRST}`);
 
 const secondEmbed = (lang) => new EmbedBuilder().setDescription(lang.COMMANDS.FUN.FLIP.SND);
 

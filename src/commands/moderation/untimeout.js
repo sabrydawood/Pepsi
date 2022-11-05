@@ -36,7 +36,7 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
-    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0] ));
+    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0]));
     const reason = args.slice(1).join(" ").trim();
     const response = await untimeout(message.member, target, reason, data.lang);
     await message.safeReply(response);
@@ -53,8 +53,7 @@ module.exports = {
 };
 
 async function untimeout(issuer, target, reason, lang) {
- 
-   let l = lang.COMMANDS.MODERATION.UNTIMEOUT
+  let l = lang.COMMANDS.MODERATION.UNTIMEOUT;
   const response = await unTimeoutTarget(issuer, target, reason);
   if (typeof response === "boolean") return l.GO + ` ${target.user.tag} ` + l.GO2;
   if (response === "BOT_PERM") return l.PERMS + ` ${target.user.tag}`;

@@ -42,10 +42,9 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-      
-   let l = data.lang.COMMANDS.MODERATION.TIMEOUT
+    let l = data.lang.COMMANDS.MODERATION.TIMEOUT;
     const target = await message.guild.resolveMember(args[0], true);
-    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0] ));
+    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0]));
 
     // parse time
     const ms = ems(args[1]);
@@ -57,8 +56,7 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-   
-   let l = data.lang.COMMANDS.MODERATION.TIMEOUT
+    let l = data.lang.COMMANDS.MODERATION.TIMEOUT;
     const user = interaction.options.getUser("user");
 
     // parse time
@@ -75,13 +73,12 @@ module.exports = {
 };
 
 async function timeout(issuer, target, ms, reason, lang) {
- 
-   let l = lang.COMMANDS.MODERATION.TIMEOUT
+  let l = lang.COMMANDS.MODERATION.TIMEOUT;
   if (!NaN(Number(ms))) return l.ERR;
   const response = await timeoutTarget(issuer, target, ms, reason);
   if (typeof response === "boolean") return `${target.user.tag} ` + l.ERR;
   if (response === "BOT_PERM") return l.PERMS + ` ${target.user.tag}`;
-  else if (response === "MEMBER_PERM") return l.PERMS2 ` ${target.user.tag}`;
-  else if (response === "ALREADY_TIMEOUT") return `${target.user.tag} ` + l.FAIL ;
+  else if (response === "MEMBER_PERM") return l.PERMS2` ${target.user.tag}`;
+  else if (response === "ALREADY_TIMEOUT") return `${target.user.tag} ` + l.FAIL;
   else return l.FAIL2 + ` ${target.user.tag}`;
 }

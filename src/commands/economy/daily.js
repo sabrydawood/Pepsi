@@ -30,9 +30,7 @@ module.exports = {
 };
 
 async function daily(user, lang) {
-    
-
-  const l = lang.COMMANDS.ECONOMY.DAILY
+  const l = lang.COMMANDS.ECONOMY.DAILY;
   const userDb = await getUser(user);
   let streak = 0;
 

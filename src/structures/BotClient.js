@@ -29,19 +29,19 @@ module.exports = class BotClient extends Client {
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.GuildVoiceStates,
       ],
-			
+
       partials: [Partials.User, Partials.Message, Partials.Reaction],
       allowedMentions: {
         repliedUser: true,
-        parse: ['users', 'roles'] 
-                           } ,
-      ws : { properties : { $browser : "Discord Android"}} ,
+        parse: ["users", "roles"],
+      },
+      ws: { properties: { $browser: "Discord Android" } },
       restRequestTimeout: 30000,
     });
 
     this.wait = require("util").promisify(setTimeout); // await client.wait(1000) - Wait 1 second
     this.config = require("@root/config"); // load the config file
-   this.emojie = require("@src/emojie")
+    this.emojie = require("@src/emojie");
 
     /**
      * @type {import('@structures/Command')[]}
@@ -64,7 +64,6 @@ module.exports = class BotClient extends Client {
     this.joinLeaveWebhook = process.env.JOIN_LEAVE_LOGS
       ? new WebhookClient({ url: process.env.JOIN_LEAVE_LOGS })
       : undefined;
-
 
     // Giveaways
     if (this.config.GIVEAWAYS.ENABLED) this.giveawaysManager = giveawaysHandler(this);
@@ -343,6 +342,4 @@ module.exports = class BotClient extends Client {
       ],
     });
   }
-
-	
 };

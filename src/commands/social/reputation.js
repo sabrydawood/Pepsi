@@ -59,7 +59,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-      let l = data.lang.COMMANDS.SOCIAL.REP
+    let l = data.lang.COMMANDS.SOCIAL.REP;
     const sub = args[0];
     let response;
 
@@ -109,9 +109,9 @@ module.exports = {
 };
 
 async function viewReputation(target, lang) {
-   let l = lang.COMMANDS.SOCIAL.REP
+  let l = lang.COMMANDS.SOCIAL.REP;
   const userData = await getUser(target);
-  if (!userData) return `${target.tag} ` + l.NO_REP ;
+  if (!userData) return `${target.tag} ` + l.NO_REP;
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: l.AUTHOR + ` ${target.username}` })
@@ -134,9 +134,9 @@ async function viewReputation(target, lang) {
 }
 
 async function giveReputation(user, target, lang) {
-    let l = lang.COMMANDS.SOCIAL.REP
-  if (target.bot) return l.BOTS_X ;
-  if (target.id === user.id) return l.YOU_X ;
+  let l = lang.COMMANDS.SOCIAL.REP;
+  if (target.bot) return l.BOTS_X;
+  if (target.id === user.id) return l.YOU_X;
 
   const userData = await getUser(user);
   if (userData && userData.reputation.timestamp) {

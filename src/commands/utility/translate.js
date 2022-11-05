@@ -43,15 +43,14 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
+		let l = data.lang.COMMANDS.UTILS.TRANSLATE
     let embed = new EmbedBuilder();
     const outputCode = args.shift();
 
     if (!GOOGLE_TRANSLATE[outputCode]) {
       embed
         .setColor(EMBED_COLORS.WARNING)
-        .setDescription(
-          l.ERR + "[here](https://cloud.google.com/translate/docs/languages) " + l.ERR2
-        );
+        .setDescription(l.ERR + "[here](https://cloud.google.com/translate/docs/languages) " + l.ERR2);
       return message.safeReply({ embeds: [embed] });
     }
 
@@ -71,7 +70,7 @@ module.exports = {
 };
 
 async function getTranslation(author, input, outputCode, lang) {
- const l = lang.COMMANDS.UTILS.TRANSLATE
+  const l = lang.COMMANDS.UTILS.TRANSLATE;
   const data = await translate(input, outputCode);
   if (!data) return l.FAIL;
 

@@ -42,8 +42,7 @@ module.exports = {
 };
 
 async function getInviter({ guild }, user, settings, lang) {
-    
-      let l = lang.COMMANDS.INVITES.INVITER
+  let l = lang.COMMANDS.INVITES.INVITER;
   if (!settings.invite.tracking) return l.ERR;
 
   const inviteData = (await getMember(guild.id, user.id)).invite_data;

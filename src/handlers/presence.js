@@ -5,7 +5,7 @@ const { ActivityType } = require("discord.js");
  */
 function updatePresence(client) {
   let message = client.config.PRESENCE.MESSAGE;
-let mess = message[Math.floor(Math.random() * message.length)]
+  let mess = message[Math.floor(Math.random() * message.length)];
   if (mess.includes("{servers}")) {
     mess = mess.replaceAll("{servers}", client.guilds.cache.size);
   }
@@ -30,10 +30,10 @@ let mess = message[Math.floor(Math.random() * message.length)]
         return ActivityType.Watching;
     }
   };
- let typings = client.config.PRESENCE.TYPE
- let typing = typings[Math.floor(Math.random() * typings.length)]
-let statuses = client.config.PRESENCE.STATUS
-let stat = statuses[Math.floor(Math.random() * statuses.length)]
+  let typings = client.config.PRESENCE.TYPE;
+  let typing = typings[Math.floor(Math.random() * typings.length)];
+  let statuses = client.config.PRESENCE.STATUS;
+  let stat = statuses[Math.floor(Math.random() * statuses.length)];
 
   client.user.setPresence({
     status: stat,
@@ -41,11 +41,11 @@ let stat = statuses[Math.floor(Math.random() * statuses.length)]
       {
         name: mess,
         type: getType(typing),
-         URL: "152.70.156.177:25606"
+        URL: "152.70.156.177:25606",
       },
     ],
   });
-/*
+  /*
 client.user.setActivity(stat, {
 
         type: getType(typing),

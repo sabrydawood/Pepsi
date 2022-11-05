@@ -45,7 +45,7 @@ module.exports = {
  * @param {object} settings
  */
 async function stats(member, settings, lang) {
-    const l = lang.COMMANDS.STATS.STATS
+  const l = lang.COMMANDS.STATS.STATS;
   if (!settings.stats.enabled) return l.DISABLED;
   const memberStats = await getMemberStats(member.guild.id, member.id);
 
@@ -69,7 +69,7 @@ async function stats(member, settings, lang) {
         inline: false,
       },
       {
-        name: l.F4 ,
+        name: l.F4,
         value: stripIndents`
       ❯ ${l.Desc} : ${memberStats.messages}
       ❯ ${l.Desc1}: ${memberStats.commands.prefix}

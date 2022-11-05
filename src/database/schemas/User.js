@@ -10,17 +10,17 @@ const Schema = new mongoose.Schema(
     username: String,
     discriminator: String,
     logged: Boolean,
-    coins: { 
-      type: Number, 
-      default: 0 
-    },
-  lang : {
-    type: String,
-    default: "en",
-  },
-    bank: { 
+    coins: {
       type: Number,
-      default: 0 
+      default: 0,
+    },
+    lang: {
+      type: String,
+      default: "en",
+    },
+    bank: {
+      type: Number,
+      default: 0,
     },
     reputation: {
       received: { type: Number, default: 0 },

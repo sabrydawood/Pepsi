@@ -71,7 +71,7 @@ module.exports = {
   async messageRun(message, args, data) {
     const image = await getImageFromMessage(message, args);
 
-   let l = data.lang.COMMANDS.IMAGE.FILTER
+    let l = data.lang.COMMANDS.IMAGE.FILTER;
     // use invoke as an endpoint
     const url = getGenerator(data.invoke.toLowerCase(), image, data.lang);
     const response = await getBuffer(url);
@@ -88,8 +88,7 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-      
-   let l = data.lang.COMMANDS.IMAGE.FILTER
+    let l = data.lang.COMMANDS.IMAGE.FILTER;
     const author = interaction.user;
     const user = interaction.options.getUser("user");
     const imageLink = interaction.options.getString("link");

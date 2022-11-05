@@ -1,8 +1,8 @@
 const { parseEmoji, EmbedBuilder } = require("discord.js");
 const { EMBED_COLORS } = require("@root/config");
 
-module.exports = (emoji,lang) => {
-       let l = lang.COMMANDS.INFORMATION.SHARED.EMOJIINFO
+module.exports = (emoji, lang) => {
+  let l = lang.COMMANDS.INFORMATION.SHARED.EMOJIINFO;
   let custom = parseEmoji(emoji);
   if (!custom.id) return l.ERR;
 
@@ -12,7 +12,9 @@ module.exports = (emoji,lang) => {
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: l.TITLE })
     .setDescription(
-      `**${l.ID}:** ${custom.id}\n` + `**${l.NAME}:** ${custom.name}\n` + `**${l.ANIM}:** ${custom.animated ? "✅" : "❌"}`
+      `**${l.ID}:** ${custom.id}\n` +
+        `**${l.NAME}:** ${custom.name}\n` +
+        `**${l.ANIM}:** ${custom.animated ? "✅" : "❌"}`
     )
     .setImage(url);
 

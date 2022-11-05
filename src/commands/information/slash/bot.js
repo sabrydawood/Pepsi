@@ -42,7 +42,7 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-   let l = data.lang.COMMANDS.INFORMATION.SLASH.BOT
+    let l = data.lang.COMMANDS.INFORMATION.SLASH.BOT;
     const sub = interaction.options.getSubcommand();
     if (!sub) return interaction.followUp(data.lang.INVALID_SUB);
 
@@ -71,7 +71,7 @@ module.exports = {
 };
 
 function botInvite(client, lang) {
-    let l = lang.COMMANDS.INFORMATION.SLASH.BOT
+  let l = lang.COMMANDS.INFORMATION.SLASH.BOT;
   const embed = new EmbedBuilder()
     .setAuthor({ name: l.LINK })
     .setColor(EMBED_COLORS.BOT_EMBED)
@@ -87,9 +87,7 @@ function botInvite(client, lang) {
   }
 
   if (DASHBOARD.enabled) {
-    components.push(
-      new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
-    );
+    components.push(new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link));
   }
 
   let buttonsRow = new ActionRowBuilder().addComponents(components);

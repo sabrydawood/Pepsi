@@ -14,25 +14,21 @@ module.exports = {
    * @param {import("@structures/BaseContext")} context
    */
   handleContext: async function (interaction, context) {
-      
-const settings = await getSettings(interaction.guild);
+    const settings = await getSettings(interaction.guild);
 
     const userDb = await getUser(interaction.user);
-const premiumDb = await getPremium(interaction.guild)
-  let language = userDb.lang;
+    const premiumDb = await getPremium(interaction.guild);
+    let language = userDb.lang;
 
-  if (!language) language = "en";
+    if (!language) language = "en";
 
-  const lang = require(`@root/lang/bot/${language}`);
-      
-      
+    const lang = require(`@root/lang/bot/${language}`);
 
     const data = {};
     data.settings = settings;
     data.userDb = userDb;
-    data.lang = lang
-      
-      
+    data.lang = lang;
+
     // check cooldown
     if (context.cooldown) {
       const remaining = getRemainingCooldown(interaction.user.id, context);
@@ -54,19 +50,14 @@ const premiumDb = await getPremium(interaction.guild)
       }
     }
     // primum commands
-let premium = premiumDb.status.enabled;
+    let premium = premiumDb.status.enabled;
     if (context.primum.isPremium && !premium) {
-
       return interaction.reply({
-
         content: `This command is only accessible to premium Guilds\n to get premium you can buy it from dashboard or with command \`getpremium\``,
 
         ephemeral: true,
-
       });
-
-		}
-		
+    }
 
     try {
       await interaction.deferReply({ ephemeral: context.ephemeral });

@@ -201,15 +201,14 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-  const l = data.lang.COMMANDS.SUGGESTIONS.SUGGESTION
+    const l = data.lang.COMMANDS.SUGGESTIONS.SUGGESTION;
     const sub = args[0];
     let response;
 
     // status
     if (sub == "status") {
       const status = args[1]?.toUpperCase();
-      if (!status || !["ON", "OFF"].includes(status))
-        return message.safeReply(data.lang.INVALID_STATUS);
+      if (!status || !["ON", "OFF"].includes(status)) return message.safeReply(data.lang.INVALID_STATUS);
       response = await setStatus(data.settings, status, data.lang);
     }
 
@@ -256,8 +255,8 @@ module.exports = {
     // reject
     else if (sub == "reject") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);    
-        if (matched.length == 0) response = l.ERR + ` ${input}`;
+      let matched = message.guild.findMatchingChannels(input);
+      if (matched.length == 0) response = l.ERR + ` ${input}`;
       else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else {
         const messageId = args[2];
@@ -270,7 +269,7 @@ module.exports = {
     else if (sub == "staffadd") {
       const input = args[1];
       let matched = message.guild.findMatchingRoles(input);
-         if (matched.length == 0) response = l.ERR + ` ${input}`;
+      if (matched.length == 0) response = l.ERR + ` ${input}`;
       else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else response = await addStaffRole(data.settings, matched[0], data.lang);
     }
@@ -279,7 +278,7 @@ module.exports = {
     else if (sub == "staffremove") {
       const input = args[1];
       let matched = message.guild.findMatchingRoles(input);
-         if (matched.length == 0) response = l.ERR + ` ${input}`;
+      if (matched.length == 0) response = l.ERR + ` ${input}`;
       else if (matched.length > 1) response = l.ERR1 + ` ${input}. ` + l.ERR2;
       else response = await removeStaffRole(data.settings, matched[0], data.lang);
     }
@@ -350,7 +349,7 @@ module.exports = {
 };
 
 async function setStatus(settings, status, lang) {
-const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION;
   const enabled = status.toUpperCase() === "ON" ? true : false;
   settings.suggestions.enabled = enabled;
   await settings.save();
@@ -358,9 +357,7 @@ const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
 }
 
 async function setChannel(settings, channel, lang) {
- 
-
-  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION;
   if (!channel) {
     settings.suggestions.channel_id = null;
     await settings.save();
@@ -377,11 +374,11 @@ async function setChannel(settings, channel, lang) {
 }
 
 async function setApprovedChannel(settings, channel, lang) {
- const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION;
   if (!channel) {
     settings.suggestions.approved_channel = null;
     await settings.save();
-    return l.CH_APPROVED ;
+    return l.CH_APPROVED;
   }
 
   if (!channel.permissionsFor(channel.guild.members.me).has(CHANNEL_PERMS)) {
@@ -394,11 +391,11 @@ async function setApprovedChannel(settings, channel, lang) {
 }
 
 async function setRejectedChannel(settings, channel, lang) {
-    const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION;
   if (!channel) {
     settings.suggestions.rejected_channel = null;
     await settings.save();
-    return l.CH_REJECT ;
+    return l.CH_REJECT;
   }
 
   if (!channel.permissionsFor(channel.guild.members.me).has(CHANNEL_PERMS)) {
@@ -411,7 +408,7 @@ async function setRejectedChannel(settings, channel, lang) {
 }
 
 async function addStaffRole(settings, role, lang) {
-    const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION;
   if (settings.suggestions.staff_roles.includes(role.id)) {
     return `\`${role.name}\`` + l.ROLE;
   }
@@ -421,7 +418,7 @@ async function addStaffRole(settings, role, lang) {
 }
 
 async function removeStaffRole(settings, role, lang) {
-    const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGESTION;
   if (!settings.suggestions.staff_roles.includes(role.id)) {
     return `${role} ` + l.ROLE2;
   }

@@ -43,9 +43,9 @@ module.exports = {
 };
 
 async function getRank({ guild }, member, settings, lang) {
- const l = lang.COMMANDS.STATS.RANK
+  const l = lang.COMMANDS.STATS.RANK;
   const { user } = member;
-  if (!settings.stats.enabled) return l.DISABLED ;
+  if (!settings.stats.enabled) return l.DISABLED;
 
   const memberStats = await getMemberStats(guild.id, user.id);
   if (!memberStats.xp) return `${user.tag} ` + l.NOT_RANKED;
@@ -72,7 +72,7 @@ async function getRank({ guild }, member, settings, lang) {
   if (pos !== -1) url.searchParams.append("rank", pos);
 
   const response = await getBuffer(url.href);
-  if (!response.success) return l.FAIL ;
+  if (!response.success) return l.FAIL;
 
   const attachment = new AttachmentBuilder(response.buffer, { name: "rank.png" });
   return { files: [attachment] };

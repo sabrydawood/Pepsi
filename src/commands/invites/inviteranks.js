@@ -28,9 +28,8 @@ module.exports = {
 };
 
 async function getInviteRanks({ guild }, settings, lang) {
-    
-      let l = lang.COMMANDS.INVITES.RANKS
-  if (settings.invite.ranks.length === 0) return l.ERR ;
+  let l = lang.COMMANDS.INVITES.RANKS;
+  if (settings.invite.ranks.length === 0) return l.ERR;
   let str = "";
 
   settings.invite.ranks.forEach((data) => {
@@ -40,9 +39,6 @@ async function getInviteRanks({ guild }, settings, lang) {
     }
   });
 
-  const embed = new EmbedBuilder()
-    .setAuthor({ name: l.AUTHOR })
-    .setColor(EMBED_COLORS.BOT_EMBED)
-    .setDescription(str);
+  const embed = new EmbedBuilder().setAuthor({ name: l.AUTHOR }).setColor(EMBED_COLORS.BOT_EMBED).setDescription(str);
   return { embeds: [embed] };
 }

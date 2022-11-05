@@ -99,8 +99,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-  
-  const l = data.lang.COMMANDS.ECONOMY.BANK
+    const l = data.lang.COMMANDS.ECONOMY.BANK;
     const sub = args[0];
     let response;
 

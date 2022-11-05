@@ -135,7 +135,7 @@ module.exports = {
     }
 
     //
-    else response = data.lang.INVALID_USAGE ;
+    else response = data.lang.INVALID_USAGE;
     await message.safeReply(response);
   },
 
@@ -144,13 +144,15 @@ module.exports = {
     const settings = data.settings;
 
     let response;
-    if (sub == "ghostping") response = await antiGhostPing(settings, interaction.options.getString("status"), data.lang);
+    if (sub == "ghostping")
+      response = await antiGhostPing(settings, interaction.options.getString("status"), data.lang);
     else if (sub == "spam") response = await antiSpam(settings, interaction.options.getString("status"), data.lang);
     else if (sub === "massmention") {
       response = await antiMassMention(
         settings,
         interaction.options.getString("status"),
-        interaction.options.getInteger("amount"), data.lang
+        interaction.options.getInteger("amount"),
+        data.lang
       );
     } else response = data.lang.INVALID_USAGE;
 
@@ -169,7 +171,7 @@ async function antiSpam(settings, input, lang) {
   const status = input.toUpperCase() === "ON" ? true : false;
   settings.automod.anti_spam = status;
   await settings.save();
-  return `${lang.COMMANDS.ADMIN.AUTO_MOD.ANTI_COMMAND.ANITESPAM_DONE}\` ${status ? lang.ENABELD : lang.DISABELD }\``;
+  return `${lang.COMMANDS.ADMIN.AUTO_MOD.ANTI_COMMAND.ANITESPAM_DONE}\` ${status ? lang.ENABELD : lang.DISABELD}\``;
 }
 
 async function antiMassMention(settings, input, threshold, lang) {

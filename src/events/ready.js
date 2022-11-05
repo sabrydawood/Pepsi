@@ -1,4 +1,4 @@
-const { counterHandler, inviteHandler, presenceHandler,premium, Bumper } = require("@src/handlers");
+const { counterHandler, inviteHandler, presenceHandler, premium, Bumper } = require("@src/handlers");
 const { cacheReactionRoles } = require("@schemas/ReactionRoles");
 const { getSettings } = require("@schemas/Guild");
 /**
@@ -6,7 +6,6 @@ const { getSettings } = require("@schemas/Guild");
  */
 module.exports = async (client) => {
   client.logger.success(`Logged in as ${client.user.tag}! (${client.user.id})`);
-
 
   // Initialize Giveaways Manager
   if (client.config.GIVEAWAYS.ENABLED) {
@@ -27,12 +26,11 @@ module.exports = async (client) => {
 
   // Load reaction roles to cache
   await cacheReactionRoles(client);
- // autobump 
-	await Bumper.autoBump(client)
-  
+  // autobump
+  await Bumper.autoBump(client);
+
   for (const guild of client.guilds.cache.values()) {
- 
- const settings = await getSettings(guild);
+    const settings = await getSettings(guild);
 
     // initialize counter
     if (settings.counters.length > 0) {
@@ -46,21 +44,8 @@ module.exports = async (client) => {
   }
 
   setInterval(() => counterHandler.updateCounterChannels(client), 10 * 60 * 1000);
-    
-    
+
   setInterval(() => {
-		premium.updatePremium(client)
-	}
-    ,5000);
-    
-    
-
-
-     
-
-	
-	
-
-    
-    
+    premium.updatePremium(client);
+  }, 5000);
 };

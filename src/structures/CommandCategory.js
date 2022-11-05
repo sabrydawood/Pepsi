@@ -92,15 +92,14 @@ module.exports = {
   },
   PERMIUM: {
     name: "Premium",
-		    enabled: config.PREMIUM.ENABLED,
+    enabled: config.PREMIUM.ENABLED,
     image: "https://icons.iconarchive.com/icons/pelfusion/flat-folder/128/Leaf-Folder-icon.png",
     emoji: "💲",
   },
-	  BUMP: {
+  BUMP: {
     name: "GrowingUpServers",
-		    enabled: config.BUMP.ENABLED,
+    enabled: config.BUMP.ENABLED,
     image: "https://media.discordapp.net/attachments/1024477068991410283/1036771848576319609/image0.png",
     emoji: "🔗",
   },
-
 };

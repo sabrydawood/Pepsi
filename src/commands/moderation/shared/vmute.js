@@ -1,8 +1,8 @@
 const { vMuteTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason) => {
-  let l = lang.COMMANDS.MODERATION.SHARED.VMUTE
-  const response = await vMuteTarget(member, target, reason,lang);
+module.exports = async ({ member }, target, reason, lang) => {
+  let l = lang.COMMANDS.MODERATION.SHARED.VMUTE;
+  const response = await vMuteTarget(member, target, reason, lang);
   if (typeof response === "boolean") {
     return `${target.user.tag} ` + l.ERR;
   }
@@ -13,7 +13,7 @@ module.exports = async ({ member }, target, reason) => {
     return l.PERMS2 + ` ${target.user.tag}`;
   }
   if (response === "NO_VOICE") {
-    return `${target.user.tag} ` + l.ERR2 ;
+    return `${target.user.tag} ` + l.ERR2;
   }
   if (response === "ALREADY_MUTED") {
     return `${target.user.tag} ` + l.ERR4;

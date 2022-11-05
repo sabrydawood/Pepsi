@@ -176,7 +176,6 @@ module.exports = {
     const type = args[0].toLowerCase();
     const settings = data.settings;
     let response;
-   let l = data.lang.COMMANDS
     // preview
     if (type === "preview") {
       response = await sendPreview(settings, message.member, data.lang);
@@ -185,8 +184,7 @@ module.exports = {
     // status
     else if (type === "status") {
       const status = args[1]?.toUpperCase();
-      if (!status || !["ON", "OFF"].includes(status))
-        return message.safeReply(data.lang.INVALID_STATUS);
+      if (!status || !["ON", "OFF"].includes(status)) return message.safeReply(data.lang.INVALID_STATUS);
       response = await setStatus(settings, status, data.lang);
     }
 
@@ -206,8 +204,7 @@ module.exports = {
     // thumbnail
     else if (type === "thumbnail") {
       const status = args[1]?.toUpperCase();
-      if (!status || !["ON", "OFF"].includes(status))
-        return message.safeReply(data.lang.INVALID_STATUS);
+      if (!status || !["ON", "OFF"].includes(status)) return message.safeReply(data.lang.INVALID_STATUS);
       response = await setThumbnail(settings, status, data.lang);
     }
 
@@ -238,7 +235,6 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-			let l = data.lang.COMMANDS
     const sub = interaction.options.getSubcommand();
     const settings = data.settings;
 
@@ -285,7 +281,7 @@ module.exports = {
 };
 
 async function sendPreview(settings, member, lang) {
-	let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   if (!settings.farewell?.enabled) return l.NOT_ENABLED;
 
   const targetChannel = member.guild.channels.cache.get(settings.farewell.channel);
@@ -298,7 +294,7 @@ async function sendPreview(settings, member, lang) {
 }
 
 async function setStatus(settings, status, lang) {
-	const l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  const l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   const enabled = status.toUpperCase() === "ON" ? true : false;
   settings.farewell.enabled = enabled;
   await settings.save();
@@ -306,11 +302,9 @@ async function setStatus(settings, status, lang) {
 }
 
 async function setChannel(settings, channel, lang) {
-	let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   if (!channel.canSendEmbeds()) {
-    return ( l.NO_PERMS +
-      channel.toString()
-    );
+    return l.NO_PERMS + channel.toString();
   }
   settings.farewell.channel = channel.id;
   await settings.save();
@@ -318,35 +312,35 @@ async function setChannel(settings, channel, lang) {
 }
 
 async function setDescription(settings, desc, lang) {
-	let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   settings.farewell.embed.description = desc;
   await settings.save();
   return l.SETTINGS_DONE;
 }
 
 async function setThumbnail(settings, status, lang) {
-		let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   settings.farewell.embed.thumbnail = status.toUpperCase() === "ON" ? true : false;
   await settings.save();
   return l.SETTINGS_DONE;
 }
 
 async function setColor(settings, color, lang) {
-		let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   settings.farewell.embed.color = color;
   await settings.save();
   return l.SETTINGS_DONE;
 }
 
 async function setFooter(settings, content, lang) {
-		let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   settings.farewell.embed.footer = content;
   await settings.save();
   return l.SETTINGS_DONE;
 }
 
 async function setImage(settings, url, lang) {
-	let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL
+  let l = lang.COMMANDS.ADMIN.GREETINGS.FARWELL;
   settings.farewell.embed.image = url;
   await settings.save();
   return l.SETTINGS_DONE;

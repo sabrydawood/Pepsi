@@ -63,8 +63,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-  
-   let l = data.lang.COMMANDS.MODERATION.NICK
+    let l = data.lang.COMMANDS.MODERATION.NICK;
     const sub = args[0].toLowerCase();
 
     if (sub === "set") {
@@ -97,8 +96,7 @@ module.exports = {
 };
 
 async function nickname({ member, guild }, target, name, lang) {
-    
-   let l = lang.COMMANDS.MODERATION.NICK
+  let l = lang.COMMANDS.MODERATION.NICK;
   if (!canModerate(member, target)) {
     return l.ERR2 + ` ${target.user.tag}`;
   }

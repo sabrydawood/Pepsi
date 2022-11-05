@@ -14,7 +14,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-let l = data.lang.COMMANDS.INFORMATION.MESSAGE.BOTINVITE
+    let l = data.lang.COMMANDS.INFORMATION.MESSAGE.BOTINVITE;
     const response = botinvite(message.client, data.lang);
     try {
       await message.author.send(response);

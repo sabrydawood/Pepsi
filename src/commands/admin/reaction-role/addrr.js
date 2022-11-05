@@ -76,7 +76,7 @@ module.exports = {
 };
 
 async function addRR(guild, channel, messageId, reaction, role, lang) {
-	let l = lang.COMMANDS.ADMIN.REACTION_ROLL.ADD
+  let l = lang.COMMANDS.ADMIN.REACTION_ROLL.ADD;
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
     return `${l.NEED_PERMS} ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }
@@ -93,7 +93,7 @@ async function addRR(guild, channel, messageId, reaction, role, lang) {
   }
 
   if (guild.roles.everyone.id === role.id) {
-    return l.EVERY_ROLE ;
+    return l.EVERY_ROLE;
   }
 
   if (guild.members.me.roles.highest.position < role.position) {
@@ -114,7 +114,7 @@ async function addRR(guild, channel, messageId, reaction, role, lang) {
   const previousRoles = getReactionRoles(guild.id, channel.id, targetMessage.id);
   if (previousRoles.length > 0) {
     const found = previousRoles.find((rr) => rr.emote === emoji);
-    if (found) reply = l.ROLE_CONFIGED ;
+    if (found) reply = l.ROLE_CONFIGED;
   }
 
   await addReactionRole(guild.id, channel.id, targetMessage.id, emoji, role.id);

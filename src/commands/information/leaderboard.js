@@ -44,7 +44,8 @@ module.exports = {
     let response;
 
     if (type === "xp") response = await getXpLeaderboard(message, message.author, data.settings, data.lang);
-    else if (type === "invite") response = await getInviteLeaderboard(message, message.author, data.settings, data.lang);
+    else if (type === "invite")
+      response = await getInviteLeaderboard(message, message.author, data.settings, data.lang);
     else response = data.lang.COMMANDS.INFORMATION.LEADERBOARD.RES_ERR;
     await message.safeReply(response);
   },
@@ -54,7 +55,8 @@ module.exports = {
     let response;
 
     if (type === "xp") response = await getXpLeaderboard(interaction, interaction.user, data.settings, data.lang);
-    else if (type === "invite") response = await getInviteLeaderboard(interaction, interaction.user, data.settings , data.lang);
+    else if (type === "invite")
+      response = await getInviteLeaderboard(interaction, interaction.user, data.settings, data.lang);
     else response = data.lang.COMMANDS.INFORMATION.LEADERBOARD.RES_ERR;
 
     await interaction.followUp(response);
@@ -62,7 +64,7 @@ module.exports = {
 };
 
 async function getXpLeaderboard({ guild }, author, settings, lang) {
-  if (!settings.stats.enabled) return  lang.COMMANDS.INFORMATION.LEADERBOARD.DISABELD;
+  if (!settings.stats.enabled) return lang.COMMANDS.INFORMATION.LEADERBOARD.DISABELD;
 
   const lb = await getXpLb(guild.id, 10);
   if (lb.length === 0) return lang.COMMANDS.INFORMATION.LEADERBOARD.NO_USERS;
@@ -81,7 +83,7 @@ async function getXpLeaderboard({ guild }, author, settings, lang) {
     .setAuthor({ name: lang.COMMANDS.INFORMATION.LEADERBOARD.XP_AUTHOR })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(collector)
-    .setFooter({ text: lang.REQ_BY.replace("{author}",author.tag) });
+    .setFooter({ text: lang.REQ_BY.replace("{author}", author.tag) });
 
   return { embeds: [embed] };
 }
@@ -110,7 +112,7 @@ async function getInviteLeaderboard({ guild }, author, settings, lang) {
     .setAuthor({ name: lang.COMMANDS.INFORMATION.LEADERBOARD.INV_AUTHOR })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(collector)
-    .setFooter({ text: lang.REQ_BY.replace("{author}",author.tag) });
+    .setFooter({ text: lang.REQ_BY.replace("{author}", author.tag) });
 
   return { embeds: [embed] };
 }

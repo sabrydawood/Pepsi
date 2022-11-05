@@ -40,9 +40,8 @@ module.exports = {
 };
 
 async function importInvites({ guild }, user, lang) {
-    
-      let l = lang.COMMANDS.INVITES.IMPORT
-  if (user && user.bot) return l.ERR ;
+  let l = lang.COMMANDS.INVITES.IMPORT;
+  if (user && user.bot) return l.ERR;
 
   const invites = await guild.invites.fetch({ cache: false });
 

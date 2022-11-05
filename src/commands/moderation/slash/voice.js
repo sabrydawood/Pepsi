@@ -146,8 +146,6 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
- 
-
     const sub = interaction.options.getSubcommand();
     const reason = interaction.options.getString("reason");
 

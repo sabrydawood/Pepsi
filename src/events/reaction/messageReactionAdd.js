@@ -20,7 +20,7 @@ module.exports = async (client, reaction, user) => {
   if (user.bot) return;
 
   // Reaction Roles
- await reactionRoleHandler.handleReactionAdd(reaction, user);
+  await reactionRoleHandler.handleReactionAdd(reaction, user);
   // Handle Reaction Emojis
   if (!emoji.id) {
     // Translation By Flags

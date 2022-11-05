@@ -3,9 +3,7 @@
  * @param {string} messageId
  */
 module.exports = async (member, messageId, lang) => {
- 
-
- let l = lang.COMMANDS.GIVEAWAYS.SUB.END
+  let l = lang.COMMANDS.GIVEAWAYS.SUB.END;
   if (!messageId) return l.ERR;
 
   // Permissions

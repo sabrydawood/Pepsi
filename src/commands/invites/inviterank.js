@@ -63,8 +63,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-      
-      let l = data.lang.COMMANDS.INVITES.RANK
+    let l = data.lang.COMMANDS.INVITES.RANK;
     const sub = args[0].toLowerCase();
 
     if (sub === "add") {
@@ -115,16 +114,15 @@ module.exports = {
 };
 
 async function addInviteRank({ guild }, role, invites, settings, lang) {
-    
-      let l = lang.COMMANDS.INVITES.RANK
-  if (!settings.invite.tracking) return l.ERR3 ;
+  let l = lang.COMMANDS.INVITES.RANK;
+  if (!settings.invite.tracking) return l.ERR3;
 
   if (role.managed) {
-    return l.ERR4 ;
+    return l.ERR4;
   }
 
   if (guild.roles.everyone.id === role.id) {
-    return l.ERR5 ;
+    return l.ERR5;
   }
 
   if (!role.editable) {
@@ -136,7 +134,7 @@ async function addInviteRank({ guild }, role, invites, settings, lang) {
   let msg = "";
   if (exists) {
     exists.invites = invites;
-    msg += l.ERR7 ;
+    msg += l.ERR7;
   }
 
   settings.invite.ranks.push({ _id: role.id, invites });
@@ -145,20 +143,19 @@ async function addInviteRank({ guild }, role, invites, settings, lang) {
 }
 
 async function removeInviteRank({ guild }, role, settings, lang) {
-    
-      let l = lang.COMMANDS.INVITES.RANK
-  if (!settings.invite.tracking) return l.ERR3 ;
+  let l = lang.COMMANDS.INVITES.RANK;
+  if (!settings.invite.tracking) return l.ERR3;
 
   if (role.managed) {
     return l.ERR4;
   }
 
   if (guild.roles.everyone.id === role.id) {
-    return l.ERR5 ;
+    return l.ERR5;
   }
 
   if (!role.editable) {
-    return l.ERR6 ;
+    return l.ERR6;
   }
 
   const exists = settings.invite.ranks.find((obj) => obj._id === role.id);
@@ -169,5 +166,5 @@ async function removeInviteRank({ guild }, role, settings, lang) {
   if (i > -1) settings.invite.ranks.splice(i, 1);
 
   await settings.save();
-  return l.SUCCESS ;
+  return l.SUCCESS;
 }

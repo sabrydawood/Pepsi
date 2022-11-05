@@ -17,8 +17,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-     
-      let l = data.lang.COMMANDS.MODERATION.MESSAGE.MOVE
+    let l = data.lang.COMMANDS.MODERATION.MESSAGE.MOVE;
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(l.ERR + ` ${args[0]}`);
 

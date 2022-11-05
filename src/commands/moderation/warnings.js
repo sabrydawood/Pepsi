@@ -62,14 +62,14 @@ module.exports = {
 
     if (sub === "list") {
       const target = (await message.guild.resolveMember(args[1], true)) || message.member;
-      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1] ));
+      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1]));
       response = await listWarnings(target, message, data.lang);
     }
 
     //
     else if (sub === "clear") {
       const target = await message.guild.resolveMember(args[1], true);
-      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1] ));
+      if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[1]));
       response = await clearWarnings(target, message, data.lang);
     }
 
@@ -108,9 +108,8 @@ module.exports = {
 };
 
 async function listWarnings(target, { guildId }, lang) {
-  
-   let l = lang.COMMANDS.MODERATION.WARNINGS
-  if (!target) return l.NO_USER ;
+  let l = lang.COMMANDS.MODERATION.WARNINGS;
+  if (!target) return l.NO_USER;
   if (target.user.bot) return l.BOTS_X;
 
   const warnings = await getWarningLogs(guildId, target.id);
@@ -118,7 +117,7 @@ async function listWarnings(target, { guildId }, lang) {
 
   const acc = warnings.map((warning, i) => `${i + 1}. ${warning.reason} [By ${warning.admin.tag}]`).join("\n");
   const embed = new EmbedBuilder({
-    author: { name: `${target.user.tag} ` + l.WARNINGS  },
+    author: { name: `${target.user.tag} ` + l.WARNINGS },
     description: acc,
   });
 
@@ -126,8 +125,7 @@ async function listWarnings(target, { guildId }, lang) {
 }
 
 async function clearWarnings(target, { guildId }, lang) {
-  
-   let l = lang.COMMANDS.MODERATION.WARNINGS
+  let l = lang.COMMANDS.MODERATION.WARNINGS;
   if (!target) return l.NO_USER;
   if (target.user.bot) return l.BOTS_X;
 
@@ -136,5 +134,5 @@ async function clearWarnings(target, { guildId }, lang) {
   await memberDb.save();
 
   await clearWarningLogs(guildId, target.id);
-  return `${target.user.tag} ` + l.SUCCESS ;
+  return `${target.user.tag} ` + l.SUCCESS;
 }

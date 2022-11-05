@@ -66,7 +66,7 @@ module.exports = {
 };
 
 async function getTogetherInvite(member, choice, lang) {
-    let l = lang.COMMANDS.FUN.TOGETHER
+  let l = lang.COMMANDS.FUN.TOGETHER;
   choice = choice.toLowerCase();
 
   const vc = member.voice.channel?.id;

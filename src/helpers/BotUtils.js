@@ -5,7 +5,7 @@ module.exports = class BotUtils {
   /**
    * Check if the bot is up to date
    */
-  
+
   static async checkForUpdates() {
     const response = await getJson("https://api.github.com/repos/virgel1995/Pepsi/releases/latest");
     if (!response.success) return error("VersionCheck: Failed to check for bot updates");

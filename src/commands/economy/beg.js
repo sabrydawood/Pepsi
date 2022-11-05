@@ -30,9 +30,7 @@ module.exports = {
 };
 
 async function beg(user, lang) {
-  
-
-  const l = lang.COMMANDS.ECONOMY.BEG
+  const l = lang.COMMANDS.ECONOMY.BEG;
   let users = [
     "PewDiePie",
     "T-Series",

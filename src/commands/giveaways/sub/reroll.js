@@ -2,9 +2,8 @@
  * @param {import('discord.js').GuildMember} member
  * @param {string} messageId
  */
-module.exports = async (member, messageId,lang) => {
-
- let l = lang.COMMANDS.GIVEAWAYS.SUB.REROLL
+module.exports = async (member, messageId, lang) => {
+  let l = lang.COMMANDS.GIVEAWAYS.SUB.REROLL;
   if (!messageId) return l.ERR;
 
   // Permissions
@@ -28,6 +27,6 @@ module.exports = async (member, messageId,lang) => {
     return l.DONE;
   } catch (error) {
     member.client.logger.error("Giveaway Reroll", error);
-    return l.ERR4 `: ${error.message}`;
+    return l.ERR4`: ${error.message}`;
   }
 };

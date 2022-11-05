@@ -36,7 +36,11 @@ module.exports = {
   async messageRun(message, args, data) {
     const category = args[0].toLowerCase();
     if (!choices.includes(category)) {
-      return message.safeReply(`${data.lang.COMMANDS.ANIME.REACT.ERR2} \`${category}\`.\n${data.lang.COMMANDS.ANIME.REACT.ERR3} ${choices.join(", ")}`);
+      return message.safeReply(
+        `${data.lang.COMMANDS.ANIME.REACT.ERR2} \`${category}\`.\n${data.lang.COMMANDS.ANIME.REACT.ERR3} ${choices.join(
+          ", "
+        )}`
+      );
     }
 
     const embed = await genReaction(category, message.author, data.lang);

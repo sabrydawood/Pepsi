@@ -196,7 +196,7 @@ module.exports = {
     }
 
     //
-    else response = data.lang.INVALID_USAGE ;
+    else response = data.lang.INVALID_USAGE;
     await message.safeReply(response);
   },
 
@@ -207,7 +207,8 @@ module.exports = {
     let response;
 
     if (sub === "status") response = await getStatus(settings, interaction.guild, data.lang);
-    else if (sub === "strikes") response = await setStrikes(settings, interaction.options.getInteger("amount"), data.lang);
+    else if (sub === "strikes")
+      response = await setStrikes(settings, interaction.options.getInteger("amount"), data.lang);
     else if (sub === "action")
       response = await setAction(settings, interaction.guild, interaction.options.getString("action"), data.lang);
     else if (sub === "debug") response = await setDebug(settings, interaction.options.getString("status"), data.lang);
@@ -219,8 +220,7 @@ module.exports = {
     } else if (sub === "whitelistremove") {
       const channelId = interaction.options.getChannel("channel").id;
       response = await whiteListRemove(settings, channelId, data.lang);
-    }    
-		else response = data.lang.INVALID_USAGE ;
+    } else response = data.lang.INVALID_USAGE;
 
     await interaction.followUp(response);
   },
@@ -231,7 +231,7 @@ async function getStatus(settings, guild, lang) {
 
   const logChannel = settings.modlog_channel
     ? guild.channels.cache.get(settings.modlog_channel).toString()
-    : lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.NO_CONFIG ;
+    : lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.NO_CONFIG;
 
   // String Builder
   let desc = stripIndent`
@@ -243,15 +243,15 @@ async function getStatus(settings, guild, lang) {
     ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.DESC6}: ${automod.anti_spam ? "✓" : "✕"}
     ❯ ${lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.DESC7}: ${automod.anti_ghostping ? "✓" : "✕"}
   `;
- let autoStrike;
-    if (automod.strikes) {
-        autoStrike = automod.strikes.toString()
-    }else{
-    autoStrike = "✕"
-    }
+  let autoStrike;
+  if (automod.strikes) {
+    autoStrike = automod.strikes.toString();
+  } else {
+    autoStrike = "✕";
+  }
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_AUTHOR , icon_url: guild.iconURL() })
+    .setAuthor({ name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_AUTHOR, icon_url: guild.iconURL() })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
@@ -262,7 +262,7 @@ async function getStatus(settings, guild, lang) {
       },
       {
         name: lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.EMBED_F2,
-        value: autoStrike ,
+        value: autoStrike,
         inline: true,
       },
       {
@@ -314,12 +314,12 @@ async function setDebug(settings, input, lang) {
   const status = input.toLowerCase() === "on" ? true : false;
   settings.automod.debug = status;
   await settings.save();
-  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.DEBUG_DONE + `${status ? lang.ENABLED: lang.DISABLED}`;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.DEBUG_DONE + `${status ? lang.ENABLED : lang.DISABLED}`;
 }
 
 function getWhitelist(guild, settings, lang) {
   const whitelist = settings.automod.wh_channels;
-  if (!whitelist || !whitelist.length) return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.NO_WHITELISTED ;
+  if (!whitelist || !whitelist.length) return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.NO_WHITELISTED;
 
   const channels = [];
   for (const channelId of whitelist) {
@@ -335,11 +335,11 @@ async function whiteListAdd(settings, channelId, lang) {
   if (settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.ALR_WHITELIATED;
   settings.automod.wh_channels.push(channelId);
   await settings.save();
-  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.WHITELISTED ;
+  return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.WHITELISTED;
 }
 
 async function whiteListRemove(settings, channelId, lang) {
-  if (!settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.NOT_WHITELISTED ;
+  if (!settings.automod.wh_channels.includes(channelId)) return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.NOT_WHITELISTED;
   settings.automod.wh_channels.splice(settings.automod.wh_channels.indexOf(channelId), 1);
   await settings.save();
   return lang.COMMANDS.ADMIN.AUTO_MOD.AUTO_MOD.REMOVED_WHITELISTED;

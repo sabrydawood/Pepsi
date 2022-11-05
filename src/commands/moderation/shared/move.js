@@ -1,7 +1,7 @@
 const { moveTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason, channel,lang) => {
-    let l = lang.COMMANDS.MODERATION.SHARED.MOVE
+module.exports = async ({ member }, target, reason, channel, lang) => {
+  let l = lang.COMMANDS.MODERATION.SHARED.MOVE;
   const response = await moveTarget(member, target, reason, channel);
   if (typeof response === "boolean") {
     return `${target.user.tag} ` + l.ERR;
@@ -21,5 +21,5 @@ module.exports = async ({ member }, target, reason, channel,lang) => {
   if (response === "ALREADY_IN_CHANNEL") {
     return `${target.user.tag} ${l.ERR5} ${channel}`;
   }
-  return l.ERR3 ` ${target.user.tag} => ${channel}`;
+  return l.ERR3` ${target.user.tag} => ${channel}`;
 };

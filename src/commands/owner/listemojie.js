@@ -22,13 +22,12 @@ module.exports = {
 
   async messageRun(message, args) {
     const { client, channel, member } = message;
-    
 
-  /*  let response = await listEmojie(message);
+    /*  let response = await listEmojie(message);
 
     await message.safeReply(response);
       */
-const emojis =message.guild.emojis.cache /*.map((e) => 
+    const emojis = message.guild.emojis.cache; /*.map((e) => 
 
    
 
@@ -42,19 +41,11 @@ const emojis =message.guild.emojis.cache /*.map((e) =>
       }
 
       // match by name
-      emojis.filter((g) => g.name.toLowerCase().includes(match.toLowerCase()))
-        .forEach((g) =>
-         matched.push(g)
-          );
-          
+      emojis.filter((g) => g.name.toLowerCase().includes(match.toLowerCase())).forEach((g) => matched.push(g));
     }
 
     const emots = match ? matched : Array.from(emojis.values());
-    
 
-      
-      
-      
     const total = emots.length;
     const maxPerPage = MAX_PER_PAGE;
     const totalPages = Math.ceil(total / maxPerPage);
@@ -86,12 +77,11 @@ const emojis =message.guild.emojis.cache /*.map((e) =>
 
       const fields = [];
       for (let i = start; i < end; i++) {
-          
         const emoji = emots[i];
-          
+
         fields.push({
           name: `${emoji}`,
-          value: `\`\"\"${emoji}\`` ,
+          value: `\`\"\"${emoji}\``,
           inline: true,
         });
       }

@@ -1,7 +1,7 @@
 const { vUnmuteTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason,lang) => {
-let l = lang.COMMANDS.MODERATION.SHARED.VUNMUTE
+module.exports = async ({ member }, target, reason, lang) => {
+  let l = lang.COMMANDS.MODERATION.SHARED.VUNMUTE;
   const response = await vUnmuteTarget(member, target, reason);
   if (typeof response === "boolean") {
     return `${target.user.tag} ` + l.ERR;

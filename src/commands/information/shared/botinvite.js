@@ -2,7 +2,7 @@ const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("
 const { EMBED_COLORS, SUPPORT_SERVER, DASHBOARD } = require("@root/config");
 
 module.exports = (client, lang) => {
-       let l = lang.COMMANDS.INFORMATION.SHARED.BOTINVITE
+  let l = lang.COMMANDS.INFORMATION.SHARED.BOTINVITE;
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Invite" })
     .setColor(EMBED_COLORS.BOT_EMBED)
@@ -18,9 +18,7 @@ module.exports = (client, lang) => {
   }
 
   if (DASHBOARD.enabled) {
-    components.push(
-      new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
-    );
+    components.push(new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link));
   }
 
   let buttonsRow = new ActionRowBuilder().addComponents(components);

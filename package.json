@@ -10,12 +10,12 @@
     "npm": ">=8.19.2"
   },
   "scripts": {
-    "dev": "nodemon ./Manger.js",
-    "lint": "eslint .",
+    "dev": "node ./Manger.js",
+    "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
 		"check-foramt": "prettier --check 'src/**/*.js'",
     "test":"npm run lint && npm run check-format",
-		"push":"git add . && git commit -a -m 'update files' && git push"
+		"push":"git add . && git commit -a -m 'update files' && git push",
     "start": "node ./Manger.js"
   },
   "homepage": "https://github.com/virgel1995/pepsi#readme",

@@ -179,7 +179,7 @@ module.exports = {
     if (sub === "start") {
       if (!args[1]) return message.safeReply(data.lang.COMMANDS.GIVEAWAYS.GIVEWAY.ERR);
       const match = message.guild.findMatchingChannels(args[1]);
-      if (!match.length) return message.safeReply(lang.COMMANDS.GIVEAWAYS.GIVEWAY.NO_CH + args[1]);
+      if (!match.length) return message.safeReply(data.lang.COMMANDS.GIVEAWAYS.GIVEWAY.NO_CH + args[1]);
       return await runModalSetup(message, match[0], data.lang);
     }
 
@@ -289,15 +289,13 @@ module.exports = {
  * @param {import('discord.js').GuildTextBasedChannel} targetCh
  */
 async function runModalSetup({ member, channel, guild }, targetCh, lang) {
- let l = lang.COMMANDS.GIVEAWAYS.GIVEAWAY
+  let l = lang.COMMANDS.GIVEAWAYS.GIVEAWAY;
   const SETUP_PERMS = ["ViewChannel", "SendMessages", "EmbedLinks"];
 
   // validate channel perms
   if (!targetCh) return channel.safeSend(l.CANCELLED);
   if (!targetCh.type === ChannelType.GuildText && !targetCh.permissionsFor(guild.members.me).has(SETUP_PERMS)) {
-    return channel.safeSend(
-      l.NEED_PERMS + ` ${parsePermissions(SETUP_PERMS)} in ${targetCh}`
-    );
+    return channel.safeSend(l.NEED_PERMS + ` ${parsePermissions(SETUP_PERMS)} in ${targetCh}`);
   }
 
   const buttonRow = new ActionRowBuilder().addComponents(
@@ -336,11 +334,7 @@ async function runModalSetup({ member, channel, guild }, targetCh, lang) {
             .setRequired(true)
         ),
         new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("prize")
-            .setLabel(l.PRIZE)
-            .setStyle(TextInputStyle.Short)
-            .setRequired(true)
+          new TextInputBuilder().setCustomId("prize").setLabel(l.PRIZE).setStyle(TextInputStyle.Short).setRequired(true)
         ),
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
@@ -350,18 +344,10 @@ async function runModalSetup({ member, channel, guild }, targetCh, lang) {
             .setRequired(true)
         ),
         new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("roles")
-            .setLabel(l.ROLE)
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
+          new TextInputBuilder().setCustomId("roles").setLabel(l.ROLE).setStyle(TextInputStyle.Short).setRequired(false)
         ),
         new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("host")
-            .setLabel(l.HOST)
-            .setStyle(TextInputStyle.Short)
-            .setRequired(false)
+          new TextInputBuilder().setCustomId("host").setLabel(l.HOST).setStyle(TextInputStyle.Short).setRequired(false)
         ),
       ],
     })
@@ -419,9 +405,7 @@ async function runModalSetup({ member, channel, guild }, targetCh, lang) {
  * @param {string} messageId
  */
 async function runModalEdit(message, messageId, lang) {
-    
-
- let l = lang.COMMANDS.GIVEAWAYS.GIVAEWAY
+  let l = lang.COMMANDS.GIVEAWAYS.GIVAEWAY;
   const { member, channel } = message;
 
   const buttonRow = new ActionRowBuilder().addComponents(
@@ -429,7 +413,7 @@ async function runModalEdit(message, messageId, lang) {
   );
 
   const sentMsg = await channel.send({
-    content: l.EDIT_CTX ,
+    content: l.EDIT_CTX,
     components: [buttonRow],
   });
 
@@ -441,7 +425,7 @@ async function runModalEdit(message, messageId, lang) {
     })
     .catch((ex) => {});
 
-  if (!btnInteraction) return sentMsg.edit({ content: EDIT_NO_RES, components: [] });
+  if (!btnInteraction) return sentMsg.edit({ content: l.EDIT_NO_RES, components: [] });
 
   // display modal
   await btnInteraction.showModal(

@@ -53,10 +53,7 @@ async function getAnimal(user, choice, lang) {
   if (!response.success) return MESSAGES.API_ERROR;
 
   const imageUrl = response.data?.image;
-  const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.TRANSPARENT)
-    .setImage(imageUrl)
-    .setFooter({ text: user.tag });
+  const embed = new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setImage(imageUrl).setFooter({ text: user.tag });
 
   return { embeds: [embed] };
 }

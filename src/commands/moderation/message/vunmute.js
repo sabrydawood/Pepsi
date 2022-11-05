@@ -19,7 +19,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-         let l = data.lang.COMMANDS.MODERATION.MESSAGE.UNDEFINE
+    let l = data.lang.COMMANDS.MODERATION.MESSAGE.UNDEFINE;
     const target = await message.guild.resolveMember(args[0], true);
     if (!target) return message.safeReply(l.ERR` ${args[0]}`);
     const reason = message.content.split(args[0])[1].trim();

@@ -52,13 +52,12 @@ module.exports = {
 };
 
 async function setStatus({ guild }, input, settings, lang) {
-    
-      let l = lang.COMMANDS.INVITES.TRACKER
+  let l = lang.COMMANDS.INVITES.TRACKER;
   const status = input.toUpperCase() === "ON" ? true : false;
 
   if (status) {
     if (!guild.members.me.permissions.has(["ManageGuild", "ManageChannels"])) {
-      return l.ERR ;
+      return l.ERR;
     }
 
     const channelMissing = guild.channels.cache
@@ -66,9 +65,7 @@ async function setStatus({ guild }, input, settings, lang) {
       .map((ch) => ch.name);
 
     if (channelMissing.length > 1) {
-      return l.ERR2 + `\`\`\`${channelMissing.join(
-        ", "
-      )}\`\`\``;
+      return l.ERR2 + `\`\`\`${channelMissing.join(", ")}\`\`\``;
     }
 
     await cacheGuildInvites(guild);

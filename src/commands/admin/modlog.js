@@ -47,7 +47,7 @@ module.exports = {
   },
 };
 
-async function setChannel(targetChannel, settings,lang) {
+async function setChannel(targetChannel, settings, lang) {
   if (targetChannel && !targetChannel.canSendEmbeds()) {
     return lang.COMMANDS.ADMIN.MOD_LOG.ERR;
   }

@@ -130,22 +130,21 @@ module.exports = {
 };
 
 function listCategories(data) {
- 
-  const l = data.lang.COMMANDS.TICKET.TICKET_CAT
+  const l = data.lang.COMMANDS.TICKET.TICKET_CAT;
   const categories = data.settings.ticket.categories;
   if (categories?.length === 0) return l.NO_CAT;
 
   const fields = [];
   for (const category of categories) {
     const roleNames = category.staff_roles.map((r) => `<@&${r}>`).join(", ");
-    fields.push({ name: category.name, value: `**${l.F1}:** ${roleNames || l.F2 }` });
+    fields.push({ name: category.name, value: `**${l.F1}:** ${roleNames || l.F2}` });
   }
   const embed = new EmbedBuilder().setAuthor({ name: l.AUTHOR }).addFields(fields);
   return { embeds: [embed] };
 }
 
 async function addCategory(guild, data, category, staff_roles) {
-  const l = data.lang.COMMANDS.TICKET.TICKET_CAT
+  const l = data.lang.COMMANDS.TICKET.TICKET_CAT;
   if (!category) return l.ERR;
 
   // check if category already exists
@@ -162,7 +161,7 @@ async function addCategory(guild, data, category, staff_roles) {
 }
 
 async function removeCategory(data, category) {
- const l = data.lang.COMMANDS.TICKET.TICKET_CAT
+  const l = data.lang.COMMANDS.TICKET.TICKET_CAT;
   const categories = data.settings.ticket.categories;
   // check if category exists
   if (!categories.find((c) => c.name === category)) {

@@ -47,7 +47,7 @@ module.exports = {
     await message.safeReply(response);
   },
 
-  async interactionRun(interaction , data) {
+  async interactionRun(interaction, data) {
     const targetChannel = interaction.options.getChannel("channel");
     const messageId = interaction.options.getString("message_id");
 
@@ -57,7 +57,7 @@ module.exports = {
 };
 
 async function removeRR(guild, channel, messageId, lang) {
-	let l = lang.COMMANDS.ADMIN.REACTION_ROLL.REMOVE
+  let l = lang.COMMANDS.ADMIN.REACTION_ROLL.REMOVE;
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
     return `${l.NEED_PERMS} ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }
@@ -66,7 +66,7 @@ async function removeRR(guild, channel, messageId, lang) {
   try {
     targetMessage = await channel.messages.fetch({ message: messageId });
   } catch (ex) {
-    return l.ERR_ID ;
+    return l.ERR_ID;
   }
 
   try {
@@ -76,5 +76,5 @@ async function removeRR(guild, channel, messageId, lang) {
     return l.ERR;
   }
 
-  return l.DONE ;
+  return l.DONE;
 }

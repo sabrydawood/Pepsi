@@ -8,7 +8,7 @@ const { stripIndent } = require("common-tags");
  * @param {import('@structures/BotClient')} client
  */
 module.exports = (client, lang) => {
-       let l = lang.COMMANDS.INFORMATION.SHARED.BOTSTATS
+  let l = lang.COMMANDS.INFORMATION.SHARED.BOTSTATS;
   // STATS
   const guilds = client.guilds.cache.size;
   const channels = client.channels.cache.size;
@@ -90,9 +90,7 @@ module.exports = (client, lang) => {
   }
 
   if (DASHBOARD.enabled) {
-    components.push(
-      new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
-    );
+    components.push(new ButtonBuilder().setLabel(l.WEB).setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link));
   }
 
   let buttonsRow = new ActionRowBuilder().addComponents(components);

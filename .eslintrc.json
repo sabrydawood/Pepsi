@@ -10,7 +10,8 @@
   },
   "plugins": ["jsdoc"],
   "rules": {
-    "no-unused-vars": ["error", { "args": "none" }],
+    "no-unused-vars": ["warn", { "args": "none" }],
+"non-useless-escape": ["warn", {"args": "none"}],
     "jsdoc/no-undefined-types": 1,
     "no-cond-assign": 0
   }

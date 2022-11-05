@@ -90,5 +90,4 @@ module.exports = class Logger {
   static debug(content) {
     pinoLogger.debug(content);
   }
-
 };

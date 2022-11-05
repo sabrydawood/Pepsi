@@ -1,10 +1,10 @@
 const { unDeafenTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason,lang) => {
-  let l = lang.COMMANDS.MODERATION.SHARED.UMDEFINE
+module.exports = async ({ member }, target, reason, lang) => {
+  let l = lang.COMMANDS.MODERATION.SHARED.UMDEFINE;
   const response = await unDeafenTarget(member, target, reason);
   if (typeof response === "boolean") {
-    return `${target.user.tag} ` + l.ERR ;
+    return `${target.user.tag} ` + l.ERR;
   }
   if (response === "MEMBER_PERM") {
     return l.PERMS + ` ${target.user.tag}`;

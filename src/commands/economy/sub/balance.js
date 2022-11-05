@@ -3,7 +3,7 @@ const { getUser } = require("@schemas/User");
 const { EMBED_COLORS, ECONOMY } = require("@root/config");
 
 module.exports = async (user, lang) => {
-    const l = lang.COMMANDS.ECONOMY.SUB.BALANCE
+  const l = lang.COMMANDS.ECONOMY.SUB.BALANCE;
   const economy = await getUser(user);
 
   const embed = new EmbedBuilder()

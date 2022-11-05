@@ -30,7 +30,6 @@ module.exports = {
   },
 
   async messageRun(message, args) {
-		let client =  message.client
     const input = args.join(" ");
 
     if (!input) return message.safeReply("Please provide code to eval");
@@ -46,7 +45,6 @@ module.exports = {
   },
 
   async interactionRun(interaction) {
-		let client = message.client;
     const input = interaction.options.getString("expression");
 
     let response;

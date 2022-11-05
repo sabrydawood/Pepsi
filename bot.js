@@ -1,6 +1,5 @@
 require('module-alias/register');
 require("dotenv").config();
-//const {manager } = require("./Manger.js")
 // register extenders
 require("@helpers/extenders/Message");
 require("@helpers/extenders/Guild");
@@ -23,7 +22,6 @@ client.loadEvents("src/events");
 
 
 (async () => {
-  await console.clear();
   // initialize the database
   await initializeMongoose();
 

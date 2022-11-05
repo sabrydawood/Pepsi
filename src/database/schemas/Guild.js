@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { CACHE_SIZE, PREFIX, STATS, BUMP } = require("@root/config.js");
+const { CACHE_SIZE, PREFIX, STATS } = require("@root/config.js");
 const FixedSizeMap = require("fixedsize-map");
 const { getUser } = require("./User");
 
@@ -10,7 +10,7 @@ const Schema = new mongoose.Schema({
   data: {
     name: String,
     region: String,
-    
+
     owner: { type: String, ref: "users" },
     joinedAt: Date,
     leftAt: Date,
@@ -109,48 +109,47 @@ const Schema = new mongoose.Schema({
     rejected_channel: String,
     staff_roles: [String],
   },
-  bump:{
-      trusted : Boolean,
-      auto : Boolean,
-		  auto_count: {
-				type: Number,
-				default: 1 },
-		bots: {
+  bump: {
+    trusted: Boolean,
+    auto: Boolean,
+    auto_count: {
+      type: Number,
+      default: 1,
+    },
+    bots: {
       enabled: Boolean,
-			name: String,
-			_id: String,
-			avatar: String,
-			tag: String,
-			varifated: Boolean,
-      channel_id : String,
+      name: String,
+      _id: String,
+      avatar: String,
+      tag: String,
+      varifated: Boolean,
+      channel_id: String,
       description: String,
-      image : String,
-			invite_link: String,
-      tags : [String],
-      bot_lang : [String],
-      badges : [String],
+      image: String,
+      invite_link: String,
+      tags: [String],
+      bot_lang: [String],
+      badges: [String],
       times: String,
-			cooldown : Date,
-		},
+      cooldown: Date,
+    },
     guilds: {
       enabled: Boolean,
-			name: String,
-			_id: String,
-			avatar: String,
-			tag: String,
-			varifated: Boolean,
-      channel_id : String,
+      name: String,
+      _id: String,
+      avatar: String,
+      tag: String,
+      varifated: Boolean,
+      channel_id: String,
       description: String,
-      image : String,
-      tags : [String],
-      guild_lang : [String],
-      badges : [String],
+      image: String,
+      tags: [String],
+      guild_lang: [String],
+      badges: [String],
       times: String,
-			cooldown : Date,
-		},
-		
-	},
-
+      cooldown: Date,
+    },
+  },
 });
 
 const Model = mongoose.model("guild", Schema);

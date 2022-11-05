@@ -51,9 +51,7 @@ module.exports = {
 };
 
 async function setStatus(input, settings, lang) {
- 
-
-    const l = lang.COMMANDS.STATS.STATS_TRACKING
+  const l = lang.COMMANDS.STATS.STATS_TRACKING;
   const status = input.toLowerCase() === "on" ? true : false;
 
   settings.stats.enabled = status;

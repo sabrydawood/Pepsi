@@ -17,13 +17,14 @@ const parse = async (content, member, inviterData = {}) => {
     if (inviterId !== "VANITY" && inviterId !== "NA") {
       try {
         const inviter = await member.client.users.fetch(inviterId);
-inviteData.name = inviter.username;
-  inviteData.tag = inviter.tag;
-  inviteData.id = inviter.id;
+        inviteData.name = inviter.username;
+        inviteData.tag = inviter.tag;
+        inviteData.id = inviter.id;
       } catch (ex) {
         member.client.logger.error(`Parsing inviterId: ${inviterId}`, ex);
         inviteData.name = "NA";
-        inviteData.tag = "NA";       inviteData.id = "NA";
+        inviteData.tag = "NA";
+        inviteData.id = "NA";
       }
     } else if (member.user.bot) {
       inviteData.name = "OAuth";
@@ -38,19 +39,18 @@ inviteData.name = inviter.username;
   return content
     .replaceAll(/\\n/g, "\n")
     .replaceAll(/{server}/g, member.guild.name)
-      .replaceAll(/{server:icon}/g, member.guild.iconURL({extension: 'jpg'}))
+    .replaceAll(/{server:icon}/g, member.guild.iconURL({ extension: "jpg" }))
     .replaceAll(/{count}/g, member.guild.memberCount)
     .replaceAll(/{member:nick}/g, member.displayName)
     .replaceAll(/{member:name}/g, member.user.username)
-    
 
     .replaceAll(/{member:id}/g, member.user.id)
     .replaceAll(/{member:dis}/g, member.user.discriminator)
     .replaceAll(/{member:tag}/g, member.user.tag)
-    .replaceAll(/{member:avatar}/g, member.displayAvatarURL({extension: 'jpg'}))
+    .replaceAll(/{member:avatar}/g, member.displayAvatarURL({ extension: "jpg" }))
     .replaceAll(/{inviter:name}/g, inviteData.name)
     .replaceAll(/{inviter:tag}/g, inviteData.tag)
-      .replaceAll(/{inviter:id}/g, inviteData.id)
+    .replaceAll(/{inviter:id}/g, inviteData.id)
     .replaceAll(/{invites}/g, getEffectiveInvites(inviterData.invite_data));
 };
 
@@ -70,11 +70,9 @@ const buildGreeting = async (member, type, config, inviterData) => {
   // build embed
   const embed = new EmbedBuilder();
   if (config.embed.description) {
-
     const parsed = await parse(config.embed.description, member, inviterData);
 
     embed.setDescription(parsed);
-
   }
   if (config.embed.color) embed.setColor(config.embed.color);
   if (config.embed.thumbnail) embed.setThumbnail(member.user.displayAvatarURL());
@@ -102,10 +100,10 @@ who have been invited By =><@{inviter:id} >
 `;
     return { content };
   }
-    
+
   return { content, embeds: [embed] };
- 
-/*
+
+  /*
   let onlineUsers = member.guild.members.cache.filter(member => member.presence === "online").size,
 
 offlineUsers = member.guild.members.cache.filter(member => member.presence  ===  "offline").size,
@@ -141,10 +139,6 @@ welcImage.toAttachment().toBuffer();
 const attachment = new AttachmentBuilder(welcImage, { name: 'profile.png' });
 
   return { content, files: [attachment] };*/
-    
-    
-    
-    
 };
 
 /**

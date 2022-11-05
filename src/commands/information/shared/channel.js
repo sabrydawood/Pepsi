@@ -7,7 +7,7 @@ const channelTypes = require("@helpers/channelTypes");
  * @param {import('discord.js').GuildChannel} channel
  */
 module.exports = (channel, lang) => {
-       let l = lang.COMMANDS.INFORMATION.SHARED.CHANNELINFO
+  let l = lang.COMMANDS.INFORMATION.SHARED.CHANNELINFO;
   const { id, name, parent, position, type } = channel;
 
   let desc = stripIndent`
@@ -53,10 +53,7 @@ module.exports = (channel, lang) => {
       `;
   }
 
-  const embed = new EmbedBuilder()
-    .setAuthor({ name: l.AUTHOR })
-    .setColor(EMBED_COLORS.BOT_EMBED)
-    .setDescription(desc);
+  const embed = new EmbedBuilder().setAuthor({ name: l.AUTHOR }).setColor(EMBED_COLORS.BOT_EMBED).setDescription(desc);
 
   return { embeds: [embed] };
 };

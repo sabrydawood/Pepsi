@@ -1,37 +1,36 @@
 const mongoose = require("mongoose");
 const { CACHE_SIZE } = require("@root/config.js");
 const FixedSizeMap = require("fixedsize-map");
-const { getUser } = require("./User");
 const cache = new FixedSizeMap(CACHE_SIZE.PREMIUM);
 
 const Schema = new mongoose.Schema(
   {
     _id: String,
-      
 
-  data: {
-    name: String,
-    region: String,
-    owner: { type: String, ref: "users" },
-    joinedAt: Date,
-    leftAt: Date,
-  },
+    data: {
+      name: String,
+      region: String,
+      owner: { type: String, ref: "users" },
+      joinedAt: Date,
+      leftAt: Date,
+    },
     status: {
       enabled: {
-          type:Boolean, 
-          default: false
- },      isTested: {
-          type:Boolean, 
-          default: false
- },
-         withCoins: {
-          type:Boolean, 
-          default: false
- },
-           withCash: {
-          type:Boolean, 
-          default: false
- },
+        type: Boolean,
+        default: false,
+      },
+      isTested: {
+        type: Boolean,
+        default: false,
+      },
+      withCoins: {
+        type: Boolean,
+        default: false,
+      },
+      withCash: {
+        type: Boolean,
+        default: false,
+      },
       days: Number,
       time: Number,
       start: Date,
@@ -39,8 +38,7 @@ const Schema = new mongoose.Schema(
     },
   },
   {
-    timestamps:
-      {
+    timestamps: {
       createdAt: "created_at",
       updatedAt: "updated_at",
     },
@@ -71,7 +69,7 @@ module.exports = {
           name: guild.name,
           region: guild.preferredLocale,
           owner: guild.ownerId,
-    joinedAt: guild.joinedAt,
+          joinedAt: guild.joinedAt,
         },
       });
 

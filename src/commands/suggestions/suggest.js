@@ -55,8 +55,8 @@ module.exports = {
  * @param {object} settings
  */
 async function suggest(member, suggestion, settings, lang) {
-const l = lang.COMMANDS.SUGGESTIONS.SUGGEST
-  if (!settings.suggestions.enabled) return l.DISABLED ;
+  const l = lang.COMMANDS.SUGGESTIONS.SUGGEST;
+  if (!settings.suggestions.enabled) return l.DISABLED;
   if (!settings.suggestions.channel_id) return l.CH_NOT_CONFIG;
   const channel = member.guild.channels.cache.get(settings.suggestions.channel_id);
   if (!channel) return l.CH_NOT_FOUND;

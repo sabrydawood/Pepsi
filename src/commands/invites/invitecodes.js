@@ -39,8 +39,7 @@ module.exports = {
 };
 
 async function getInviteCodes({ guild }, user, lang) {
-    
-      let l = lang.COMMANDS.INVITES.CODES
+  let l = lang.COMMANDS.INVITES.CODES;
   const invites = await guild.invites.fetch({ cache: false });
   const reqInvites = invites.filter((inv) => inv.inviter.id === user.id);
   if (reqInvites.size === 0) return `\`${user.tag}\` ${l.ERR}`;

@@ -47,12 +47,12 @@ module.exports = {
   async messageRun(message, args, data) {
     const input = args.join(" ");
     let response;
-let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE
+    let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE;
     if (input.toLowerCase() === "off") {
       response = await setAutoRole(message, null, data.settings, data.lang);
     } else {
       const roles = message.guild.findMatchingRoles(input);
-      if (roles.length === 0) response = l.NOT_MATCH ;
+      if (roles.length === 0) response = l.NOT_MATCH;
       else response = await setAutoRole(message, roles[0], data.settings, data.lang);
     }
 
@@ -62,7 +62,7 @@ let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE
   async interactionRun(interaction, data) {
     const sub = interaction.options.getSubcommand();
     let response;
-let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE
+    let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE;
 
     // add
     if (sub === "add") {
@@ -92,12 +92,10 @@ let l = data.lang.COMMANDS.ADMIN.AUTO_ROLE
 };
 
 async function setAutoRole({ guild }, role, settings, lang) {
-   let l = lang.COMMANDS.ADMIN.AUTO_ROLE
   if (role) {
-let l = lang.COMMANDS.ADMIN.AUTO_ROLE
+    let l = lang.COMMANDS.ADMIN.AUTO_ROLE;
     if (!guild.members.me.permissions.has("ManageRoles")) return l.NO_PERMS;
-    if (guild.members.me.roles.highest.position < role.position)
-      return l.NO_PERMS2;
+    if (guild.members.me.roles.highest.position < role.position) return l.NO_PERMS2;
     if (role.managed) return l.ERR;
   }
 

@@ -3,7 +3,7 @@ const { getUser } = require("@schemas/User");
 const { ECONOMY, EMBED_COLORS } = require("@root/config");
 
 module.exports = async (user, coins, lang) => {
-  const l = lang.COMMANDS.ECONOMY.SUB.DEP
+  const l = lang.COMMANDS.ECONOMY.SUB.DEP;
   if (isNaN(coins) || coins <= 0) return l.ERR;
   const userDb = await getUser(user);
 

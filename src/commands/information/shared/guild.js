@@ -6,7 +6,7 @@ const moment = require("moment");
  * @param {import('discord.js').Guild} guild
  */
 module.exports = async (guild, lang) => {
-       let l = lang.COMMANDS.INFORMATION.SHARED.GUILDINFO
+  let l = lang.COMMANDS.INFORMATION.SHARED.GUILDINFO;
   const { name, id, preferredLocale, channels, roles, ownerId } = guild;
 
   const owner = await guild.members.fetch(ownerId);
@@ -106,7 +106,7 @@ module.exports = async (guild, lang) => {
       }
     );
 
-  if (guild.splashURL()) embed.setImage(guild.splashURL({extension: "png", size: 256}));
+  if (guild.splashURL()) embed.setImage(guild.splashURL({ extension: "png", size: 256 }));
 
   return { embeds: [embed] };
 };

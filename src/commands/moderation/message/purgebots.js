@@ -16,7 +16,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-     let l = data.lang.COMMANDS.MODERATION.MESSAGE.PURGE
+    let l = data.lang.COMMANDS.MODERATION.MESSAGE.PURGE;
     const amount = args[0] || 99;
 
     if (amount) {

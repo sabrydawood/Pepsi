@@ -35,7 +35,7 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const target = await message.guild.resolveMember(args[0], true);
-    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0] ));
+    if (!target) return message.safeReply(data.lang.NO_USER.replace("{args}", args[0]));
     const reason = message.content.split(args[0])[1].trim();
     const response = await softban(message.member, target, reason, data.lang);
     await message.safeReply(response);
@@ -52,8 +52,7 @@ module.exports = {
 };
 
 async function softban(issuer, target, reason, lang) {
-    
-   let l = lang.COMMANDS.MODERATION.SOFT_BAN
+  let l = lang.COMMANDS.MODERATION.SOFT_BAN;
   const response = await softbanTarget(issuer, target, reason);
   if (typeof response === "boolean") return `${target.user.tag} ` + l.ERR;
   if (response === "BOT_PERM") return l.PERMS` ${target.user.tag}`;

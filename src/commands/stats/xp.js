@@ -90,7 +90,8 @@ module.exports = {
     let response;
 
     if (sub === "message") response = await setMessage(interaction.options.getString("message"), data.settings);
-    else if (sub === "channel") response = await setChannel(interaction.options.getChannel("channel"), data.settings, data.lang);
+    else if (sub === "channel")
+      response = await setChannel(interaction.options.getChannel("channel"), data.settings, data.lang);
     else response = data.lang.INVALID_SUB;
 
     await interaction.followUp(response);
@@ -98,17 +99,15 @@ module.exports = {
 };
 
 async function setMessage(message, settings, lang) {
- 
-    const l = lang.COMMANDS.STATS.XP
+  const l = lang.COMMANDS.STATS.XP;
   if (!message) return l.ERR1;
   settings.stats.xp.message = message;
   await settings.save();
   return l.MESSAGE_DONE;
 }
 
-async function setChannel(channel, settings,lang) {
- 
-    const l = lang.COMMANDS.STATS.XP
+async function setChannel(channel, settings, lang) {
+  const l = lang.COMMANDS.STATS.XP;
   if (!channel) return l.ERR;
 
   if (channel === "off") settings.stats.xp.channel = null;

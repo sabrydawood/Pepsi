@@ -8,25 +8,23 @@ const { InteractionType } = require("discord.js");
  * @param {import('discord.js').BaseInteraction} interaction
  */
 module.exports = async (client, interaction) => {
-    //define User language 
+  //define User language
   const userDb = await getUser(interaction.user);
 
   let language = userDb.lang;
-    if (!language) language = "en";
-    const lang = require(`@root/lang/bot/${language}`);
+  if (!language) language = "en";
+  const lang = require(`@root/lang/bot/${language}`);
 
   if (!interaction.guild) {
-    return interaction
-      .reply({ content: lang.EVENTS.MESSAGE_EVENT.DM_REPLY, ephemeral: true })
-      .catch(() => {});
+    return interaction.reply({ content: lang.EVENTS.MESSAGE_EVENT.DM_REPLY, ephemeral: true }).catch(() => {});
   }
-//const user = interaction.options.getUser('target');
+  //const user = interaction.options.getUser('target');
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
-      //if (client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(interaction.user.id) ) {
-  await commandHandler.handleSlashCommand(interaction);
-     /* } else {
+    //if (client.config.Maintenance.ENABLED && client.config.OWNER_IDS.includes(interaction.user.id) ) {
+    await commandHandler.handleSlashCommand(interaction);
+    /* } else {
 return interaction.reply({ content: "Sorry But Am Maintance Now \n Just Admins Can Use Interaction's", ephemeral: true })
       }*/
   }

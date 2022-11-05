@@ -3,9 +3,8 @@
  * @param {string} messageId
  */
 module.exports = async (member, messageId, lang) => {
- 
- let l = lang.COMMANDS.GIVEAWAYS.SUB.RESUME
-  if (!messageId) return l.ERR ;
+  let l = lang.COMMANDS.GIVEAWAYS.SUB.RESUME;
+  if (!messageId) return l.ERR;
 
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
@@ -25,7 +24,7 @@ module.exports = async (member, messageId, lang) => {
 
   try {
     await giveaway.unpause();
-    return l.DONE ;
+    return l.DONE;
   } catch (error) {
     member.client.logger.error("Giveaway Resume", error);
     return l.ERR4 + `: ${error.message}`;

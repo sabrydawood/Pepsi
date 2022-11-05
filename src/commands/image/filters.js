@@ -44,8 +44,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-      
-   let l = data.lang.COMMANDS.IMAGE.FILTER
+    let l = data.lang.COMMANDS.IMAGE.FILTER;
     const image = await getImageFromMessage(message, args);
 
     // use invoke as an endpoint
@@ -58,13 +57,13 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setColor(EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
-      .setFooter({ text: message.author.tag});
+      .setFooter({ text: message.author.tag });
 
     await message.safeReply({ embeds: [embed], files: [attachment] });
   },
 
   async interactionRun(interaction, data) {
-   let l = data.lang.COMMANDS.IMAGE.FILTER
+    let l = data.lang.COMMANDS.IMAGE.FILTER;
     const author = interaction.user;
     const user = interaction.options.getUser("user");
     const imageLink = interaction.options.getString("link");

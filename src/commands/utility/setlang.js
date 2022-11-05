@@ -1,10 +1,10 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const { getUser } = require("@schemas/User");
-const { recursiveReadDirSync } = require("@helpers/Utils");
+
+
 const path = require("path");
-var fs = require('fs');   
-var _ = require('lodash'); 
-var fileNames = []
+var fs = require("fs");
+var _ = require("lodash");
+var fileNames = [];
 
 module.exports = {
   name: "setlang",
@@ -24,21 +24,18 @@ module.exports = {
         name: "lang",
         description: "change your owen bot replys language",
         type: ApplicationCommandOptionType.String,
-         required: true,
-        choices :[
-      { name: 'English', value: 'en' },
-			{ name: 'Arabic', value: 'ar' },
-			
-        ]
-			
+        required: true,
+        choices: [
+          { name: "English", value: "en" },
+          { name: "Arabic", value: "ar" },
+        ],
       },
     ],
   },
 
   async messageRun(message, args, data) {
-     //const userDb = await getUser(message.author);
+    //const userDb = await getUser(message.author);
     const newLang = args[0];
- 
 
     const response = await setNewLang(newLang, data.userDb, data.lang);
     await message.safeReply(response);
@@ -51,23 +48,20 @@ module.exports = {
 };
 
 async function setNewLang(newLang, userDb, lang) {
-  const l = lang.COMMANDS.UTILS.SETLANG
-  if (newLang.length > 2) return l.ERR ;
-if(fileNames.includes(newLang)){
-
-  userDb.lang = newLang;
-  await userDb.save();
-  return l.DONE + ` \`${newLang}\``;
-}else {
-  return l.NOT_SUP + ` : \`${fileNames}\``;
+  const l = lang.COMMANDS.UTILS.SETLANG;
+  if (newLang.length > 2) return l.ERR;
+  if (fileNames.includes(newLang)) {
+    userDb.lang = newLang;
+    await userDb.save();
+    return l.DONE + ` \`${newLang}\``;
+  } else {
+    return l.NOT_SUP + ` : \`${fileNames}\``;
+  }
 }
-
-
-}
-(async function getLangs() {         
-fs.readdir("lang/bot", function(err,list){
-    _.forEach(list, function(f){
-        fileNames.push(path.basename(f, ".js"));
-     });
-}); 
+(async function getLangs() {
+  fs.readdir("lang/bot", function (err, list) {
+    _.forEach(list, function (f) {
+      fileNames.push(path.basename(f, ".js"));
+    });
+  });
 })();

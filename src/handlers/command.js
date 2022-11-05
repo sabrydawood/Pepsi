@@ -18,18 +18,18 @@ module.exports = {
     const args = message.content.replace(prefix, "").split(/\s+/);
     const invoke = args.shift().toLowerCase();
 
-  const userDb = await getUser(message.author);
+    const userDb = await getUser(message.author);
 
-  let language = userDb.lang;
-  if (!language) language = "en";
-  const lang = require(`@root/lang/bot/${language}`);
+    let language = userDb.lang;
+    if (!language) language = "en";
+    const lang = require(`@root/lang/bot/${language}`);
 
     const data = {};
     data.settings = settings;
     data.userDb = userDb;
     data.prefix = prefix;
     data.invoke = invoke;
-    data.lang = lang
+    data.lang = lang;
     if (!message.channel.permissionsFor(message.guild.members.me).has("SendMessages")) return;
 
     // callback validations
@@ -75,7 +75,7 @@ module.exports = {
     }
 
     try {
-/************ Run Commands *****/
+      /************ Run Commands *****/
       await cmd.messageRun(message, args, data);
     } catch (ex) {
       message.client.logger.error("messageRun", ex);
@@ -89,15 +89,15 @@ module.exports = {
    * @param {import('discord.js').ChatInputCommandInteraction} interaction
    */
   handleSlashCommand: async function (interaction) {
-            const settings = await getSettings(interaction.guild);
+    const settings = await getSettings(interaction.guild);
 
     const userDb = await getUser(interaction.user);
-const premiumDb = await getPremium(interaction.guild)
-  let language = userDb.lang;
+    const premiumDb = await getPremium(interaction.guild);
+    let language = userDb.lang;
 
-  if (!language) language = "en";
+    if (!language) language = "en";
 
-  const lang = require(`@root/lang/bot/${language}`);
+    const lang = require(`@root/lang/bot/${language}`);
     const cmd = interaction.client.slashCommands.get(interaction.commandName);
     if (!cmd) return interaction.reply({ content: "An error has occurred", ephemeral: true }).catch(() => {});
 
@@ -120,18 +120,14 @@ const premiumDb = await getPremium(interaction.guild)
         ephemeral: true,
       });
     }
-        // primum commands
-let premium = premiumDb.status.enabled;
+    // primum commands
+    let premium = premiumDb.status.enabled;
     if (cmd.isPremium && !premium) {
-
       return interaction.reply({
-
         content: `This command is only accessible to premium Guilds\n to get premium you can buy it from dashboard or with command \`getpremium\``,
 
         ephemeral: true,
-
       });
-
     }
 
     // user permissions
@@ -168,11 +164,11 @@ let premium = premiumDb.status.enabled;
     try {
       await interaction.deferReply({ ephemeral: cmd.slashCommand.ephemeral });
 
-/************ Run intractions *****/
-      await cmd.interactionRun(interaction, { 
+      /************ Run intractions *****/
+      await cmd.interactionRun(interaction, {
         settings,
         userDb,
-        lang
+        lang,
       });
     } catch (ex) {
       await interaction.followUp("Oops! An error occurred while running the command");

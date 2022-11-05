@@ -41,9 +41,8 @@ module.exports = {
 };
 
 async function getInvites({ guild }, user, settings, lang) {
-    
-      let l = lang.COMMANDS.INVITES.INVITES
-  if (!settings.invite.tracking) return l.ERR ;
+  let l = lang.COMMANDS.INVITES.INVITES;
+  if (!settings.invite.tracking) return l.ERR;
 
   const inviteData = (await getMember(guild.id, user.id)).invite_data;
 
@@ -54,12 +53,12 @@ async function getInvites({ guild }, user, settings, lang) {
     .setDescription(`${user.toString()}  => ${getEffectiveInvites(inviteData)} ${l.INV}`)
     .addFields(
       {
-        name: l.F1 ,
+        name: l.F1,
         value: `**${inviteData?.tracked + inviteData?.added || 0}**`,
         inline: true,
       },
       {
-        name: l.F2 ,
+        name: l.F2,
         value: `**${inviteData?.fake || 0}**`,
         inline: true,
       },

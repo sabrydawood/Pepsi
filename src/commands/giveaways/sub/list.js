@@ -4,8 +4,7 @@ const { EMBED_COLORS } = require("@root/config");
  * @param {import('discord.js').GuildMember} member
  */
 module.exports = async (member, lang) => {
- 
- let l = lang.COMMANDS.GIVEAWAYS.SUB.LIST
+  let l = lang.COMMANDS.GIVEAWAYS.SUB.LIST;
   // Permissions
   if (!member.permissions.has("ManageMessages")) {
     return l.PERMS;

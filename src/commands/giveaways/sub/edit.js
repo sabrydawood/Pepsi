@@ -6,7 +6,7 @@
  * @param {number} newWinnerCount
  */
 module.exports = async (member, messageId, addDuration, newPrize, newWinnerCount, lang) => {
- let l = lang.COMMANDS.GIVEAWAYS.SUB.EDIT
+  let l = lang.COMMANDS.GIVEAWAYS.SUB.EDIT;
   if (!messageId) return l.ERR;
 
   // Permissions

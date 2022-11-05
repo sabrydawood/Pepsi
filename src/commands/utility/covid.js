@@ -43,10 +43,10 @@ module.exports = {
 };
 
 async function getCovid(country, lang) {
- const l = lang.COMMANDS.UTILS.COVID
+  const l = lang.COMMANDS.UTILS.COVID;
   const response = await getJson(`https://disease.sh/v2/countries/${country}`);
 
-  if (response.status === 404) return "```css\n"+ l.ERR +"```";
+  if (response.status === 404) return "```css\n" + l.ERR + "```";
   if (!response.success) return MESSAGES.API_ERROR;
   const { data } = response;
 
@@ -57,7 +57,7 @@ async function getCovid(country, lang) {
     .setColor(EMBED_COLORS.BOT_EMBED)
     .addFields(
       {
-        name: l.F1 ,
+        name: l.F1,
         value: data?.cases.toString(),
         inline: true,
       },
@@ -77,7 +77,7 @@ async function getCovid(country, lang) {
         inline: true,
       },
       {
-        name: l.F5 ,
+        name: l.F5,
         value: data?.recovered.toString(),
         inline: true,
       },
@@ -102,7 +102,7 @@ async function getCovid(country, lang) {
         inline: true,
       }
     )
-    .setFooter(l.FOOTER + mg );
+    .setFooter(l.FOOTER + mg);
 
   return { embeds: [embed] };
 }

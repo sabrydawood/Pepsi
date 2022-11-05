@@ -1,7 +1,7 @@
 const { deafenTarget } = require("@helpers/ModUtils");
 
-module.exports = async ({ member }, target, reason,lang) => {
-    let l = lang.COMMANDS.MODERATION.SHARED.DEFINE
+module.exports = async ({ member }, target, reason, lang) => {
+  let l = lang.COMMANDS.MODERATION.SHARED.DEFINE;
   const response = await deafenTarget(member, target, reason);
   if (typeof response === "boolean") {
     return `${target.user.tag}` + l.ERR;

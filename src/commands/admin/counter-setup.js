@@ -48,7 +48,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
- let l = data.lang.COMMANDS.ADMIN.COUNTER
+    let l = data.lang.COMMANDS.ADMIN.COUNTER;
     const type = args[0].toUpperCase();
     if (!type || !["USERS", "MEMBERS", "BOTS"].includes(type)) {
       return message.safeReply(l.ERR);
@@ -62,9 +62,6 @@ module.exports = {
   },
 
   async interactionRun(interaction, data) {
-      
-
- let l = data.lang.COMMANDS.ADMIN.COUNTER
     const type = interaction.options.getString("type");
     const name = interaction.options.getString("name");
 
@@ -80,8 +77,7 @@ module.exports = {
  * @param {object} settings
  */
 async function setupCounter(guild, type, name, settings, lang) {
-    
- let l = lang.COMMANDS.ADMIN.COUNTER
+  let l = lang.COMMANDS.ADMIN.COUNTER;
   let channelName = name;
 
   const stats = await guild.fetchMemberStats();

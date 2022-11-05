@@ -46,9 +46,9 @@ module.exports = {
 const websiteProvided = (text) => (text.startsWith("http://") ? true : text.startsWith("https://"));
 
 async function getGithubUser(target, author, lang) {
-const l = lang.COMMANDS.UTILS.GITHUB
+  const l = lang.COMMANDS.UTILS.GITHUB;
   const response = await getJson(`https://api.github.com/users/${target}`);
-  if (response.status === 404) return l.NO_USER ;
+  if (response.status === 404) return l.NO_USER;
   if (!response.success) return MESSAGES.API_ERROR;
 
   const json = response.data;

@@ -34,18 +34,11 @@ module.exports = {
       // match by name
       client.guilds.cache
         .filter((g) => g.name.toLowerCase().includes(match.toLowerCase()))
-        .forEach((g) =>
-         matched.push(g)
-          );
-          
+        .forEach((g) => matched.push(g));
     }
 
     const servers = match ? matched : Array.from(client.guilds.cache.values());
-    
 
-      
-      
-      
     const total = servers.length;
     const maxPerPage = MAX_PER_PAGE;
     const totalPages = Math.ceil(total / maxPerPage);
@@ -77,13 +70,11 @@ module.exports = {
 
       const fields = [];
       for (let i = start; i < end; i++) {
-          
         const server = servers[i];
-          
-   // const chinv = withAwait(client,server);
+
         fields.push({
           name: server.name,
-          value: server.id/* + `- [join](${chinv})`*/ ,
+          value: server.id ,
           inline: true,
         });
       }
@@ -138,29 +129,3 @@ module.exports = {
     });
   },
 };
-async function invite(client,guild){
-
-let channelID;
-    const channels = guild.channels.cache;
-  for (let c of channels) {
-      const channelType = c[1].type;
-		// channel type 0 equals GUILD_TEXT
-      if (channelType === 0) {
-        channelID = c[0];
-        break;
-      }
-    }
-
-    const channel = client.channels.cache.get(guild.systemChannelId || channelID);
-	
-let invite; 
-		channel.createInvite({maxAge: 0, maxUses: 0})
-  .then(inv => invite = inv.code )
-  .catch(console.error);
-	
-   return invite;
-}
-
-async function withAwait(client, guild) {
-  return await invite(client,guild);
-}
