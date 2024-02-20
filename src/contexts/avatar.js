@@ -11,7 +11,6 @@ module.exports = {
   type: ApplicationCommandType.User,
   enabled: true,
   ephemeral: false,
-
   async run(interaction, data) {
     const user = await interaction.client.users.fetch(interaction.targetId);
     const response = getAvatar(user, data.lang);
@@ -26,7 +25,6 @@ function getAvatar(user, lang) {
   const x512 = user.displayAvatarURL({ extension: "png", size: 512 });
   const x1024 = user.displayAvatarURL({ extension: "png", size: 1024 });
   const x2048 = user.displayAvatarURL({ extension: "png", size: 2048 });
-
   const embed = new EmbedBuilder()
     .setTitle(lang.CONTEXT.AVATAR.TITLE + ` ${user.username}`)
     .setColor(EMBED_COLORS.BOT_EMBED)
@@ -40,7 +38,6 @@ function getAvatar(user, lang) {
         `• [x1024](${x1024}) ` +
         `• [x2048](${x2048}) `
     );
-
   return {
     embeds: [embed],
   };

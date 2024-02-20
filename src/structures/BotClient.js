@@ -41,7 +41,7 @@ module.exports = class BotClient extends Client {
 
     this.wait = require("util").promisify(setTimeout); // await client.wait(1000) - Wait 1 second
     this.config = require("@root/config"); // load the config file
-    this.emojie = require("@src/emojie");
+    this.emojie = require("@root/src/config/emojie");
 
     /**
      * @type {import('@structures/Command')[]}

@@ -20,9 +20,7 @@ module.exports = {
 	CHANGE: "CHANGE",
 	RESET: "RESET",
 	NOT_FOUND: "Not found",
-
 	COMMANDS: {
-
 		ADMIN: {
 			AUTO_MOD: {
 				ANTI_COMMAND: {

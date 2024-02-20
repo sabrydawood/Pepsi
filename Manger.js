@@ -27,7 +27,6 @@ manager.on("shardCreate", shard => {
 statusPoster(manager);
 
 manager.spawn({ amount: 'auto', delay: 15500, timeout: 60000 });
-
 // find unhandled promise rejections
 process.on('unhandledRejection', error => {
 	console.log(error);

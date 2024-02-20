@@ -20,9 +20,7 @@ module.exports = {
 	CHANGE: "تغير",
 	RESET: "إعادة تعيين",
 	NOT_FOUND: "لم يتم العثور على",
-
 	COMMANDS: {
-
 		ADMIN: {
 			AUTO_MOD: {
 				ANTI_COMMAND: {
@@ -41,9 +39,6 @@ module.exports = {
 					MAX_LINES_DONE: "تم تعطيل الحد الأقصى للخط",
 					MAX_LINES_DONE2: "الرسائل أطول من \`{input}\` سيتم الآن حذف الخطوط تلقائيًا"
 				},
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
 				AUTO_MOD: {
 					INVALID_ACTION: "إجراء غير صالح. يمكن أن يكون العمل `Timeout`/`Kick`/`Ban`",
 					NO_CONFIG: "غير مهيأ",
@@ -69,9 +64,9 @@ module.exports = {
 					NOT_WHITELISTED: "القناة غير مدرجة في القائمة البيضاء",
 					REMOVED_WHITELISTED: `تمت إزالة القناة من القائمة البيضاء!`,
 				},
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
+
+
+
 			},
 			GREETINGS: {
 				FARWELL: {
@@ -83,9 +78,9 @@ module.exports = {
 					SETTINGS_DONE: "تم حفظ التكوين! تم تحديث رسالة الوداع",
 
 				},
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
+
+
+
 				WELCOME: {
 					NOT_ENABLED: "رسالة الترحيب غير ممكّنة في هذا الخادم",
 					NO_CONFIG: "لم يتم تكوين قناة لإرسال رسالة ترحيب",
@@ -94,9 +89,9 @@ module.exports = {
 						"لا أستطيع إرسال تحية إلى تلك القناة؟ أحتاج الاذن ل ارسال رسائل و رسائل الايمبد",
 					SETTINGS_DONE: "تم حفظ التكوين! تم تحديث رسالة الترحيب",
 				}
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
+
+
+
 			},
 			REACTION_ROLL: {
 				ADD: {
@@ -112,18 +107,18 @@ module.exports = {
 					ROLE_CONFIGED: "تم تكوين دور بالفعل لهذا الرمز التعبيري. الكتابة فوق البيانات ، \ n",
 					DONE: "فعله! تم حفظ التكوين"
 				},
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
+
+
+
 				REMOVE: {
 					ERR: "أُووبس! حدث خطأ غير متوقع. حاول مرة أخرى في وقت لاحق",
 					NEED_PERMS: "أنت بحاجة إلى الأذونات التالية في",
 					ERR_ID: "تعذر جلب الرسالة. هل قدمت messageId صالحًا؟",
 					DONE: "فعله! تم حفظ التكوين"
 				}
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
-				//translated by abdalla ahmed ya virus
+
+
+
 			},
 			AUTO_ROLE: {
 				NOT_MATCH: "لم يتم العثور على أدوار مطابقة مطابقة الاستعلام الخاص بك",
@@ -132,29 +127,29 @@ module.exports = {
 				NO_PERMS: "ليس لدي إذن ManageRoles ",
 				NO_PERMS2: "ليس لدي أذونات لتعيين هذا الدور",
 			},
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
+
+
+
 			COUNTER: {
 				ERR: "تم تمرير الحجج غير الصحيحة! أنواع العداد: `users/members/bots`",
 				ERR2: "استخدام غير صحيح! لم تقدم الاسم",
 				DONE: "تم حفظ التكوين! تم إنشاء قناة العداد"
 			},
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			FALG_TRANS: "تم حفظ التكوين! ترجمة العلم الآن",
 			MAX_WARN: {
 				ERR: "يجب أن يكون الحد الأقصى للتحذيرات رقمًا صالحًا أكبر من0 ",
@@ -170,11 +165,11 @@ module.exports = {
 				ERR: "لا يمكن أن يتجاوز طول البادئة 2 حرف",
 				DONE: "تم تعيين البادئة الجديدة على"
 			}
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
-			//translated by abdalla ahmed ya virus
+
+
+
+
+
 		},
 		ANIME: {
 			REACT: {
@@ -183,8 +178,6 @@ module.exports = {
 				ERR3: "التفاعلات المتاحة:"
 			},
 		},
-		//translated by abdalla ahmed ya virus
-		//translated by abdalla ahmed ya virus
 		ECONOMY: {
 			SUB: {
 				BALANCE: {
@@ -261,14 +254,13 @@ module.exports = {
 				SND: "العملة في الهواء",
 				WINS: "فاز"
 			},
-			//تم الترجمه من عبدالله الجامد الي هو انا يعني
 			MEME: {
 				ERR: "فشل إحضار الميم. حاول مرة أخرى!",
 				ERR2: "لم يتم العثور على ميمي مطابقة",
 			},
 			SNAKE: {
 				START: "**بدء لعبة الثعبان**",
-				TITLE: "لعبه الثعبان ",//نوكيا مود اون
+				TITLE: "لعبه الثعبان ",
 				OVER: "انتهت اللعبة",
 			},
 			TOGETHER: {
@@ -276,7 +268,7 @@ module.exports = {
 				ERR2: "لعبة غير صالحة. \ n ألعاب صالحة"
 			}
 		},
-		GIVEAWAYS: {//مين الي هيعمل جيف اواي دا احنا كحيانين يا محمد
+		GIVEAWAYS: {
 			SUB: {
 				EDIT: {
 					ERR: "يجب عليك تقديم معرف رسالة صالح.",
@@ -923,4 +915,3 @@ module.exports = {
 		},
 	},
 }
-//الواحد عاوز يوصل ل هنا 
